@@ -6,8 +6,8 @@ const { Loader } = GameEngine // записываем свойство Loader (класс) объекта Game
 const loader = new Loader // создаем экземпл€р класса Loader
 
 // загружаем изображени€ - добавл€ем изображение в очередь на загрузку
-loader.addImage('bunny', `${img}/bunny.jpeg`)
 loader.addImage('tank', `${img}/favicon-full.png`)
+loader.addImage('bunny', `${img}/bunny.jpeg`)
 
 // загружаем данные (json файлы) - добавл€ем json файл в очередь на загрузку
 loader.addJson('persons', `${data}/persons.json`)
@@ -31,6 +31,16 @@ loader.load(() => {
     console.log(jsons)
 
     document.body.append(images['tank']) // выводим фон
+
+    // создаем див-блок дл€ вывода галереии картинок
+    let div = document.createElement('div')
+    document.body.append(div)
+    div.setAttribute('class', 'wrapper')
+
+    // добавл€ем картинки в блок галереи
+    for (const image in images) {
+        div.append(images[image])
+    }
 })
 
 // Loader.loadImage('static/bunny.jpeg').then(image => {

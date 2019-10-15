@@ -1,43 +1,43 @@
 [
-  {
-    "id": 1,
-    "userData": {
-      "login": "nikolay",
-      "password": "123",
-      "email": "nikolay@mail.ru"
-    },
-    "personalData": {
-      "name": "Николай",
-      "lastname": "Мишин",
-      "age": 26,
-      "country": "Russia",
-      "city": "Saint-Petersburg"
-    },
-    "gameData": {
-      "level": 1,
-      "tankId": 1
+    {
+        "id": 1,
+        "userData": {
+            "login": "nikolay",
+            "password": "123",
+            "email": "nikolay@mail.ru"
+        },
+        "personalData": {
+            "name": "Николай",
+            "lastname": "Мишин",
+            "age": 26,
+            "country": "Russia",
+            "city": "Saint-Petersburg"
+        },
+        "gameData": {
+            "level": 1,
+            "tankId": 1
 
+        }
+      },
+
+    {
+        "id": 2,
+        "userData": {
+            "login": "mary",
+            "password": "1234",
+            "email": "mary@mail.ru"
+        },
+        "personalData": {
+            "name": "Мария",
+            "lastname": "Мишина",
+            "age": 26,
+            "country": "Russia",
+            "city": "Saint-Petersburg"
+        },
+        "gameData": {
+            "level": 5,
+            "tankId": 2
+
+        }
     }
-  },
-
-  {
-    "id": 2,
-    "userData": {
-      "login": "mary",
-      "password": "1234",
-      "email": "mary@mail.ru"
-    },
-    "personalData": {
-      "name": "Мария",
-      "lastname": "Мишина",
-      "age": 26,
-      "country": "Russia",
-      "city": "Saint-Petersburg"
-    },
-    "gameData": {
-      "level": 5,
-      "tankId": 2
-
-    }
-  }
 ]

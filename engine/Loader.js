@@ -137,7 +137,7 @@
 
     // если объект GameEngine инициализирован (существует) берем его значение, иначе создаем пустой объект (инициализируем)
     namespace.set('BattleCityGame.GameEngine'); // регистрируем объект GameEngine в объекте window
-    const { GameEngine } = BattleCityGame
+    const { GameEngine } = BattleCityGame // выгружаем свойство GameEngine из объекта BattleCityGame
     GameEngine.Loader = Loader // регистрируем класс Loader в объекте GameEngine
     // window.GameEngine = window.GameEngine || {} // регистрируем объект GameEngine в объекте window
     // GameEngine.Loader = Loader // регистрируем класс Loader в объекте GameEngine

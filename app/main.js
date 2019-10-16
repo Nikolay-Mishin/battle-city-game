@@ -1,6 +1,7 @@
 const img = 'static/img'
 const data = 'static/data'
 
+const { GameEngine } = BattleCityGame
 const { Loader } = GameEngine // записываем свойство Loader (класс) объекта GameEngine в константу
 
 const loader = new Loader // создаем экземпл€р класса Loader
@@ -41,6 +42,8 @@ loader.load(() => {
     for (const image in images) {
         div.append(images[image])
     }
+
+    console.log(window)
 })
 
 // Loader.loadImage('static/bunny.jpeg').then(image => {

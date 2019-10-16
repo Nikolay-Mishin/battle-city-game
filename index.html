@@ -13,10 +13,19 @@
     <!-- 1) Loader -->
     <!-- 2) Application -->
     <!-- 3) Rendring -->
+    <!-- скрипт для установки пространств имен -->
     <script src="app/_namespace.js"></script>
+    <!-- базовый скрипт (установка пространства имени Приложения (Имя Проекта)) -->
     <script src="app/_base.js"></script>
-    <script src="engine/Loader.js"></script>
+    <!-- подключаем классы -->
+        <script src="engine/Container.js"></script>
+        <script src="engine/Loader.js"></script>
+        <script src="engine/Renderer.js"></script>
+        <script src="engine/Sprite.js"></script>
+    <!-- // подключаем классы -->
+    <!-- скрипт для инициализации глобальных переменных, основных объектов и классов -->
     <script src="app/_init.js"></script>
+    <!-- главный скрипт с основной логикой и функционалом приложения -->
     <script src="app/main.js"></script>
 </body>
 </html>

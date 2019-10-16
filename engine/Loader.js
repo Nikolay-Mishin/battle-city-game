@@ -26,6 +26,16 @@
             this.loadOrder.jsons.push({ name, address })
         }
 
+        // получает изображение из ресурсов по имени
+        getImage(name) {
+            return this.resources.images[name]
+        }
+
+        // получает json из ресурсов по имени
+        getJson(name) {
+            return this.resources.jsons[name]
+        }
+
         // загружает данные из очереди загрузки (loadOrder) и сохраняет их в хранилище ресурсов (resources)
         // после загрузки ресурсов вызываем callback-функцию переданную в качестве аргумента
         load (callback) {
@@ -136,8 +146,9 @@
     }
 
     // если объект GameEngine инициализирован (существует) берем его значение, иначе создаем пустой объект (инициализируем)
-    namespace.set('BattleCityGame.GameEngine'); // регистрируем пространство имен BattleCityGame.GameEngine в объекте window
-    BattleCityGame.GameEngine.Loader = Loader // регистрируем класс Loader в объекте GameEngine
     // window.GameEngine = window.GameEngine || {} // регистрируем объект GameEngine в объекте window
     // GameEngine.Loader = Loader // регистрируем класс Loader в объекте GameEngine
+    // регистрируем пространство имен BattleCityGame.GameEngine.Loader в объекте window
+    namespace.set('BattleCityGame.GameEngine.Loader', Loader) // регистрируем класс Loader в объекте GameEngine
+    // BattleCityGame.GameEngine.Loader = Loader // регистрируем класс Loader в объекте GameEngine
 })();

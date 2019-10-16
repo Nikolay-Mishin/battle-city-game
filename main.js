@@ -22,7 +22,7 @@ loader.load(() => {
     const jsons = loader.resources.jsons // загруженные данные (json файлы)
 
     // выгружаем данные из tanks в users.tankInfo по соответствию полей users.tankId и tanks.id
-    Loader.mergeJson(jsons.users, jsons.tanks, 'tankId', 'tankInfo')
+    Loader.joinJson(jsons.users, jsons.tanks, 'tankId', 'tankInfo')
 
     // выводим в консоль загруженные ресурсы
     console.log('Images')

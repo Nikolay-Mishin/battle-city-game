@@ -111,9 +111,11 @@
         }
 
         // слияние json файлов - загружает tanks.json в tankInfo (users.json)
-        static mergeJson(jsonTo, jsonFrom, propertyMerge, propertyTo) {
+        static joinJson(jsonTo, jsonFrom, propertyMerge, propertyTo) {
             // проходим по всем элементам файла, в который выгружаем данные (users)
             for (const itemTo of jsonTo) {
+                // если в файле, в который выгружаем данные нет свойства gameData, создаем его
+                itemTo.gameData = itemTo.gameData || {}
                 // фильтруем файл, из которого выгружаем данные (tanks), по соответветствию полей id
                 // return tanks.id = users.gameData.tankId
                 // возвращаем либо массив с 1 найденным элементом (tank с указанным id), либо пустой массив (length = 0)

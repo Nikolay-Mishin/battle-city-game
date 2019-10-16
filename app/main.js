@@ -1,6 +1,3 @@
-const img = 'static/img'
-const data = 'static/data'
-
 const { GameEngine } = BattleCityGame // выгружаем свойство GameEngine из объекта BattleCityGame
 const { Loader } = GameEngine // записываем свойство Loader (класс) объекта GameEngine в константу
 
@@ -17,6 +14,7 @@ loader.addJson('tanks', `${data}/game/tanks.json`)
 
 // вызываем метод для загрузки данных из зарегистрированной очереди
 loader.load(() => {
+    console.log(window)
     console.log('Resources loaded')
 
     const images = loader.resources.images // загруженные изображения
@@ -42,8 +40,6 @@ loader.load(() => {
     for (const image in images) {
         div.append(images[image])
     }
-
-    console.log(window)
 })
 
 // Loader.loadImage('static/bunny.jpeg').then(image => {

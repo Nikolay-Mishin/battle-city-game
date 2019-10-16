@@ -124,7 +124,7 @@
                 });
                 // в свойство propertyTo объекта gameData (users.gameData.tankInfo) выгружаем полученные данные
                 // либо записываем строку, что данные отсутствуют
-                itemTo.gameData[propertyTo] = itemFrom.length > 0 ? itemFrom : 'Data not available'
+                itemTo.gameData[propertyTo] = itemFrom.length > 0 ? itemFrom[0] : 'Data not available'
                 /* for (const itemFrom of jsonFrom) {
                     if (itemTo.gameData[propertyMerge] == itemFrom.id) {
                         itemTo.gameData[propertyTo] = itemFrom

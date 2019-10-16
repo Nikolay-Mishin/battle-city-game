@@ -22,11 +22,11 @@ loader.load(() => {
 
     // выгружаем данные из tanks в users.tankInfo по соответствию полей users.tankId и tanks.id
     Loader.joinJson(jsons.users, jsons.tanks, 'tankId', 'tankInfo')
+    // output for TankInfo loaded
     let usersTankInfo = []
-    /*for (const user of jsons.users) {
-        console.log(user)
+    for (const user of jsons.users) {
         usersTankInfo.push(user.gameData.tankInfo)
-    }*/
+    }
     console.log('TankInfo loaded in users.gameData from tanks')
     console.log(usersTankInfo)
 

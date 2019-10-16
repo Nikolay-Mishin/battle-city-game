@@ -1,0 +1,1 @@
+namespace.set('BattleCityGame'); // регистрируем пространство имен BattleCityGame в объекте window

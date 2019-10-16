@@ -22,6 +22,13 @@ loader.load(() => {
 
     // выгружаем данные из tanks в users.tankInfo по соответствию полей users.tankId и tanks.id
     Loader.joinJson(jsons.users, jsons.tanks, 'tankId', 'tankInfo')
+    let usersTankInfo = []
+    /*for (const user of jsons.users) {
+        console.log(user)
+        usersTankInfo.push(user.gameData.tankInfo)
+    }*/
+    console.log('TankInfo loaded in users.gameData from tanks')
+    console.log(usersTankInfo)
 
     // выводим в консоль загруженные ресурсы
     console.log('Images')

@@ -13,37 +13,16 @@ loader.addJson('tanks', `${data}/game/tanks.json`)
 loader.load(() => {
     container = new Container() // объект контейнера
     renderer.stage.add(container) // добавляем объект контейнера в свойство Рендера
-
-    sprite1 = new Sprite(loader.getImage('bunny'), {
-        x: 100,
-        y: 200,
-        // rotation: Math.PI / 2,
-        scale: 0.25,
-        anchorX: 0.5,
-        anchorY: 0.5
-    })
-
-    sprite2 = new Sprite(loader.getImage('bunny'), {
-        x: 400,
-        y: 200,
-        // rotation: Math.PI / 2,
-        scale: 0.25,
-        anchorX: 0.5,
-        anchorY: 0.5
-    })
     
     container.x = 100
     container.y = 100
-    container.rotation = Math.PI / 4 // поворачиваем по часовой стрелке на пол круга
-    container.anchorX = 0.5
-    container.anchorY = 0.5
-    container.width = renderer.canvas.width
-    container.height = renderer.canvas.height
-    
-    container.add(sprite1)
-    container.add(sprite2)
+    // container.rotation = Math.PI / 4 // поворачиваем по часовой стрелке на пол круга
+    // container.anchorX = 0.5
+    // container.anchorY = 0.5
+    // container.width = renderer.canvas.width
+    // container.height = renderer.canvas.height
 
-    // createSprites() // создаем спрайты
+    createSprites() // создаем спрайты
     // outputResources() // выводим загруженные ресурсы
 })
 
@@ -59,53 +38,31 @@ loader.load(() => {
 function createSprites () {
     // создаем спрайт
     let sprite1 = new Sprite(loader.getImage('bunny'), {
-        scale: 0.15,
+        x: 100,
+        y: 100,
+        // rotation: Math.PI / 2,
+        scale: 0.25,
         anchorX: 0.5,
-        anchorY: 0.5,
-        // изменяем параметры созданного спрайта
-        /*update(timestamp) {
-            sprite1.changeSprite({
-                absolutePos: null,
-                sprite: {
-                    x: renderer.canvas.width / 2 + 200 * Math.cos(timestamp / 200),
-                    // y: renderer.canvas.height / 2 + 200 * Math.sin(timestamp / 200)
-                },
-                frame: {
-                    // x: sprite.texture.width / 2 + 200 * Math.cos(timestamp / 200),
-                    // y: sprite.texture.height / 2 + 200 * Math.sin(timestamp / 200)
-                }
-            })
-        }*/
+        anchorY: 0.5
     })
     sprites.push(sprite1) // добавляем спрайт в массив для отрисовки
     container.add(sprite1) // добавляем спрайт в контейнер
 
-    let sprite2 = new Sprite(loader.getImage('tank'), {
-        scale: 0.15,
+    let sprite2 = new Sprite(loader.getImage('bunny'), {
+        x: 400,
+        y: 100,
+        // rotation: Math.PI / 2,
+        scale: 0.25,
         anchorX: 0.5,
-        anchorY: 0.5,
-        // изменяем параметры созданного спрайта
-        /*update(timestamp) {
-            sprite2.changeSprite({
-                absolutePos: null,
-                sprite: {
-                    // x: renderer.canvas.width / 2 + 200 * Math.cos(timestamp / 200),
-                    y: renderer.canvas.height / 2 + 200 * Math.sin(timestamp / 200)
-                },
-                frame: {
-                    // x: sprite.texture.width / 2 + 200 * Math.cos(timestamp / 200),
-                    // y: sprite.texture.height / 2 + 200 * Math.sin(timestamp / 200)
-                }
-            })
-        }*/
+        anchorY: 0.5
     })
     sprites.push(sprite2) // добавляем спрайт в массив для отрисовки
     container.add(sprite2) // добавляем спрайт в контейнер
 
-    let sprite3 = new Sprite(loader.getImage('bunny'), {
+    let sprite3 = new Sprite(loader.getImage('tank'), {
         scale: 0.15,
         anchorX: 0.5,
-        anchorY: 0.5,
+        anchorY: 0.5
         // изменяем параметры созданного спрайта
         /*update(timestamp) {
             sprite3.changeSprite({

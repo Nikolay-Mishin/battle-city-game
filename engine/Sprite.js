@@ -7,7 +7,7 @@
      */
 
     class Sprite extends GameEngine.DisplayObject {
-        constructor(texture, args = {}) {
+        constructor (texture, args = {}) {
             super(args) // метод super вызывает родительский конструктор (доступ к родителю идет через super - super.funA())
 
             this.texture = texture // переданное изображение (спрайт)
@@ -32,6 +32,8 @@
             if (args.height === undefined) {
                 this.height = this.frame.height
             }
+
+            this.update = args.update || (() => { }) // задаем значение для метода update()
         }
 
         // отрисовывает спрайт на основе установленных свойств
@@ -57,10 +59,6 @@
             )
 
             context.restore() // восстанавливаем контекст
-        }
-
-        update(timestamp) {
-            this.update(timestamp) // вызываем метод обновления
         }
 
         // изменяет параметры созданного спрайт

@@ -4,7 +4,7 @@
     // Отвечает за отдельную сущность, которая будет отрисовываться (любой объект - спрайт, animationSprite, container...)
 
     class DisplayObject {
-        constructor(args = {}) {
+        constructor (args = {}) {
             // координаты точки отрисовки спрайта
             this.x = args.x || 0
             this.y = args.y || 0
@@ -73,34 +73,12 @@
 
             // если родитель, передан, добавляем его в контейнер и записываем в свойство
             if (parent) {
-                parent.add(this)
-                this.parent = parent
+                parent.add(this) // добавляем в родительский контейнер данный объект
+                this.parent = parent // записываем родителя в свойство
             }
         }
 
         draw() { }
-
-        /*
-        // scaleX,Y - масштаб спрайта по X и Y
-
-        get scaleX() {
-            return this.width / this.frame.width
-        }
-
-        set scaleX(value) {
-            this.width = this.frame.width * value
-            return value
-        }
-
-        get scaleY() {
-            return this.height / this.frame.height
-        }
-
-        set scaleY(value) {
-            this.height = this.frame.height * value
-            return value
-        }
-        */
     }
 
     window.GameEngine = window.GameEngine || {}

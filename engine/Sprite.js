@@ -1,149 +1,104 @@
-;(function () {
+; (function () {
     'use strict'
 
     /*
-     * Р·Р°РЅРёРјР°РµС‚СЃСЏ РЅРµРїРѕСЃСЂРµРґСЃС‚РІРµРЅРЅРѕ РѕС‚СЂРёСЃРѕРІРєРѕР№ РіСЂР°С„РёРєРё (С‚РѕР»СЊРєРѕ РѕС‚СЂРёСЃРѕРІРєРѕР№ РѕС‚РґРµР»СЊРЅРѕРіРѕ РєРѕРЅРєСЂРµС‚РЅРѕРіРѕ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ)
-     * РѕС‚РІРµС‡Р°РµС‚ Р·Р° РѕС‚СЂРёСЃРѕРІРєСѓ РѕС‚РґРµР»СЊРЅРѕРіРѕ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ (РёР»Рё РµРіРѕ СѓС‡Р°СЃС‚РєР°)
+     * занимается непосредственно отрисовкой графики (только отрисовкой отдельного конкретного изображения)
+     * отвечает за отрисовку отдельного изображения (или его участка)
      */
 
-    class Sprite {
-        constructor (texture, args = {}) {
-            this.texture = texture // РїРµСЂРµРґР°РЅРЅРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ (СЃРїСЂР°Р№С‚)
+    class Sprite extends GameEngine.DisplayObject {
+        constructor(texture, args = {}) {
+            super(args) // метод super вызывает родительский конструктор (доступ к родителю идет через super - super.funA())
 
-            const frame = args.frame || {} // СѓС‡Р°СЃС‚РѕРє РёР·РѕР±СЂР°Р¶РµРЅРёСЏ, РєРѕС‚РѕСЂС‹Р№ С‚СЂРµР±СѓРµС‚СЃСЏ РѕС‚СЂРёСЃРѕРІР°С‚СЊ (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ РІРµСЃСЊ СЃРїСЂР°Р№С‚)
+            this.texture = texture // переданное изображение (спрайт)
 
-            // РѕРїСЂРµРґРµР»СЏРµРј РїР°СЂР°РјРµС‚СЂС‹ С„СЂРµР№РјР°
+            const frame = args.frame || {} // участок изображения, который требуется отрисовать (по умолчанию весь спрайт)
+            // определяем параметры фрейма
             this.frame = {
-                // РєРѕРѕСЂРґРёРЅР°С‚С‹ С‚РѕС‡РєРё РЅР°С‡Р°Р»Р° РѕС‚СЂРёСЃРѕРІС‹РІР°РµРјРѕРіРѕ СѓС‡Р°СЃС‚РєР°
+                // координаты точки начала отрисовываемого участка
                 x: frame.x || 0,
                 y: frame.y || 0,
-                // С€РёСЂРёРЅР° Рё РІС‹СЃРѕС‚Р° РѕС‚СЂРёСЃРѕРІС‹РІР°РµРјРѕР№ РѕР±Р»Р°СЃС‚Рё
+                // ширина и высота отрисовываемой области
                 width: frame.width || texture.width,
                 height: frame.height || texture.height
             }
 
-            // РєРѕРѕСЂРґРёРЅР°С‚С‹ С‚РѕС‡РєРё РѕС‚СЂРёСЃРѕРІРєРё СЃРїСЂР°Р№С‚Р°
-            this.x = args.x || 0
-            this.y = args.y || 0
-            // СЏРєРѕСЂСЊ СЃРїСЂР°Р№С‚Р° - С‚РѕС‡РєР° РґР»СЏ РїРѕР·РёС†РёРѕРЅРёСЂРѕРІР°РЅРёСЏ СЃРїСЂР°Р№С‚Р° РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ canvas - % РѕС‚РЅРѕС€РµРЅРёРµ Рє СЂР°Р·РјРµСЂСѓ СЃРїСЂР°Р№С‚Р°
-            this.anchorX = args.anchorX || 0
-            this.anchorY = args.anchorY || 0
-            // С€РёСЂРёРЅР° Рё РІС‹СЃРѕС‚Р° СЃРїСЂР°Р№С‚Р°
-            this.width = args.width || this.frame.width
-            this.height = args.height || this.frame.height
-
-            // РµСЃР»Рё РїРµСЂРµРґР°РЅ РјР°СЃС€С‚Р°Р±, СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј РµРіРѕ
-            if (args.scale !== undefined) {
-                this.setScale(args.scale)
+            // если не передана ширина, устанавливаем значение из фрейма
+            if (args.width === undefined) {
+                this.width = this.frame.width
             }
 
-            this.update = args.update || (() => { }) // Р·Р°РґР°РµРј Р·РЅР°С‡РµРЅРёРµ РґР»СЏ РјРµС‚РѕРґР° update()
+            // если не передана высота, устанавливаем значение из фрейма
+            if (args.height === undefined) {
+                this.height = this.frame.height
+            }
         }
 
-        // СѓСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РјР°СЃС€С‚Р°Р± СЃРїСЂР°Р№С‚Р° РїРѕ X Рё Y (СЃ РїРѕРјРѕС‰СЊСЋ СЃРµС‚С‚РµСЂРѕРІ)
-        setScale (value) {
-            this.scaleX = value
-            this.scaleY = value
-        }
+        // отрисовывает спрайт на основе установленных свойств
+        draw(canvas, context) {
+            context.save() // сохраняем текущее состояние контекста
+            context.translate(this.x, this.y) // переназначает начало системы координат
+            context.rotate(-this.rotation) // поворачивает объект (против часовой стролки)
+            context.scale(this.scaleX, this.scaleY) // масштабирует объект
+            // ширину и высоту не умножаем на масштаб, тк scale используется в момент отрисовки спрайта
 
-        // absoluteX,Y - Р°Р±СЃРѕР»СЋС‚РЅС‹Рµ РєРѕРѕСЂРґРёРЅР°С‚С‹, РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ РєРѕС‚РѕСЂС‹С… РѕС‚СЂРёСЃРѕРІС‹РІР°РµС‚СЃСЏ СЃРїСЂР°Р№С‚ (СЃ СѓС‡РµС‚РѕРј РєРѕРѕСЂРґРёРЅР°С‚ СЏРєРѕСЂСЏ - anchor)
-        // РіРµС‚С‚РµСЂ Рё СЃРµС‚С‚РµСЂ - РїСЃРµРІРґРѕ СЃРІРѕР№СЃС‚РІР° РєР»Р°СЃСЃР°, РєРѕС‚РѕСЂС‹Рµ РјРѕРіСѓС‚ РІС‹СЃС‚СѓРїР°С‚СЊ РІ СЂРѕР»Рё РјРµС‚РѕРґР°
-
-        // РіРµС‚С‚РµСЂ - РІС‹С‡РёСЃР»СЏРµРјРѕРµ РЅР° Р»РµС‚Сѓ СЃРІРѕР№СЃС‚РІРѕ (РїСЂРё РѕР±СЂР°С‰РµРЅРёРё Рє РЅРµРјСѓ)
-        get absoluteX () {
-            return this.x - this.anchorX * this.width
-        }
-
-        // СЃРµС‚С‚РµСЂ - РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ, РєРѕРіРґР° РјС‹ СЌС‚Рѕ Р·РЅР°С‡РµРЅРёРµ Р·Р°РґР°РµРј
-        set absoluteX (value) {
-            this.x = value + this.anchorX * this.width
-            return value
-        }
-        
-        get absoluteY () {
-            return this.y - this.anchorY * this.height
-        }
-        
-        set absoluteY (value) {
-            this.y = value + this.anchorY * this.height
-            return value
-        }
-
-        // scaleX,Y - РјР°СЃС€С‚Р°Р± СЃРїСЂР°Р№С‚Р° РїРѕ X Рё Y
-
-        get scaleX () {
-            return this.width / this.frame.width
-        }
-
-        set scaleX (value) {
-            this.width = this.frame.width * value
-            return value
-        }
-
-        get scaleY () {
-            return this.height / this.frame.height
-        }
-
-        set scaleY (value) {
-            this.height = this.frame.height * value
-            return value
-        }
-
-        // РѕС‚СЂРёСЃРѕРІС‹РІР°РµС‚ СЃРїСЂР°Р№С‚ РЅР° РѕСЃРЅРѕРІРµ СѓСЃС‚Р°РЅРѕРІР»РµРЅРЅС‹С… СЃРІРѕР№СЃС‚РІ
-        draw (canvas, context) {
+            // отрисовываем спрайт
             context.drawImage(
                 this.texture,
                 this.frame.x,
                 this.frame.y,
                 this.frame.width,
                 this.frame.height,
-                this.absoluteX,
-                this.absoluteY,
+                // абсолютные координаты для отрисовки указывает без учета смещения (translate)
+                this.absoluteX - this.x,
+                this.absoluteY - this.y,
                 this.width,
                 this.height
             )
+
+            context.restore() // восстанавливаем контекст
         }
 
-        update (timestamp) {
-            this.update(timestamp) // РІС‹Р·С‹РІР°РµРј РјРµС‚РѕРґ РѕР±РЅРѕРІР»РµРЅРёСЏ
+        update(timestamp) {
+            this.update(timestamp) // вызываем метод обновления
         }
 
-        // РёР·РјРµРЅСЏРµС‚ РїР°СЂР°РјРµС‚СЂС‹ СЃРѕР·РґР°РЅРЅРѕРіРѕ СЃРїСЂР°Р№С‚
-        // РµСЃР»Рё РЅРµ С…РѕС‚РёРј РјРµРЅСЏС‚СЊ Р·РЅР°С‡РµРЅРёСЏ РґР°РЅРЅРѕРіРѕ СЃРІРѕР№СЃС‚РІР°, РЅРµ РїРµСЂРµРґР°РµРј РµРіРѕ
+        // изменяет параметры созданного спрайт
+        // если не хотим менять значения данного свойства, не передаем его
         /* 
          { 
             absolutePos: { x: 50, y: 100},
             frame: { x: 100, y: 100, w: 200, h: 200 } 
          }
          */
-        // { absolutePos: { x: 50, y: null } } // РґРµС„РѕР»С‚РЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РґР»СЏ СЃРІРѕР№СЃС‚РІР°, РїРµСЂРµРґР°РµРј СЃРІРѕР№СЃС‚РІРѕ null
-        // { absolutePos: null } // РґРµС„РѕР»С‚РЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ РґР»СЏ РІСЃРµРіРѕ Р±Р»РѕРєР°, РїРµСЂРµРґР°РµРј null РІ СЃРІРѕР№СЃС‚РІРѕ Р±Р»РѕРєР°
+        // { absolutePos: { x: 50, y: null } } // дефолтное значение для свойства, передаем свойство null
+        // { absolutePos: null } // дефолтные значения для всего блока, передаем null в свойство блока
         changeSprite(args = {}) {
-            // absoluteX,Y - Р°Р±СЃРѕР»СЋС‚РЅС‹Рµ РєРѕРѕСЂРґРёРЅР°С‚С‹, РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ РєРѕС‚РѕСЂС‹С… РѕС‚СЂРёСЃРѕРІС‹РІР°РµС‚СЃСЏ СЃРїСЂР°Р№С‚
-            // СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј Р·РЅР°С‡РµРЅРёСЏ РґР»СЏ СЃРІРѕР№СЃС‚РІ Р±Р»РѕРєР° 'absolutePos' Р»РёР±Рѕ РѕСЃС‚Р°РІР»СЏРµРј Р±РµР· РёР·РјРµРЅРµРЅРёСЏ
+            // absoluteX,Y - абсолютные координаты, относительно которых отрисовывается спрайт
+            // устанавливаем значения для свойств блока 'absolutePos' либо оставляем без изменения
             if (args.absolutePos && Object.keys(args.absolutePos).length > 0) {
-                // РµСЃР»Рё СЃРІРѕР№СЃС‚РІРѕ РЅРµ РїРµСЂРµРґР°РЅРѕ, РѕСЃС‚Р°РІР»СЏРµРј Р·РЅР°С‡РµРЅРёРµ Р±РµР· РёР·РјРµРЅРµРЅРёСЏ
-                // РµСЃР»Рё СЃРІРѕР№СЃС‚РІРѕ РїРµСЂРµРґР°РЅРѕ, Р±РµСЂРµРј РµРіРѕ Р·РЅР°С‡РµРЅРёРµ (РµСЃР»Рё null, СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј РґРµС„РѕР»С‚РЅРѕРµ Р·РЅР°С‡РµРЅРёРµ)
+                // если свойство не передано, оставляем значение без изменения
+                // если свойство передано, берем его значение (если null, устанавливаем дефолтное значение)
                 this.absoluteX = !args.absolutePos.hasOwnProperty('x') ? this.absoluteX : (args.absolutePos.x || 0)
                 this.absoluteY = !args.absolutePos.hasOwnProperty('y') ? this.absoluteY : (args.absolutePos.y || 0)
             }
-            // СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј РґРµС„РѕР»С‚РЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ РґР»СЏ Р±Р»РѕРєР° 'absolutePos'
+            // устанавливаем дефолтные значения для блока 'absolutePos'
             else if (args.hasOwnProperty('absolutePos') && args.absolutePos == null) {
                 this.absoluteX = 0
                 this.absoluteY = 0
             }
 
-            // СЃРІРѕСЃС‚РІР° СЃРїСЂР°Р№С‚Р°
-            // СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј Р·РЅР°С‡РµРЅРёСЏ РґР»СЏ СЃРІРѕР№СЃС‚РІ Р±Р»РѕРєР° 'sprite' Р»РёР±Рѕ РѕСЃС‚Р°РІР»СЏРµРј Р±РµР· РёР·РјРµРЅРµРЅРёСЏ
+            // своства спрайта
+            // устанавливаем значения для свойств блока 'sprite' либо оставляем без изменения
             if (args.sprite && Object.keys(args.sprite).length > 0) {
-                // РєРѕРѕСЂРґРёРЅР°С‚С‹ РЅР°С‡Р°Р»Р° РѕС‚СЂРёСЃРѕРІРєРё СЃРїСЂР°Р№С‚Р°
+                // координаты начала отрисовки спрайта
                 this.x = !args.sprite.hasOwnProperty('x') ? this.x : (args.sprite.x || 100)
                 this.y = !args.sprite.hasOwnProperty('y') ? this.y : (args.sprite.y || 300)
-                // С€РёСЂРёРЅР° Рё РІС‹СЃРѕС‚Р° СЃРїСЂР°Р№С‚Р°
+                // ширина и высота спрайта
                 this.width = !args.sprite.hasOwnProperty('w') ? this.width : (args.sprite.width || 100)
                 this.height = !args.sprite.hasOwnProperty('h') ? this.height : (args.sprite.height || 100)
             }
-            // СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј РґРµС„РѕР»С‚РЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ РґР»СЏ Р±Р»РѕРєР° 'sprite'
+            // устанавливаем дефолтные значения для блока 'sprite'
             else if (args.hasOwnProperty('sprite') && args.sprite == null) {
                 this.x = 100
                 this.y = 300
@@ -151,15 +106,15 @@
                 this.height = 100
             }
 
-            // РѕС‚РґРµР»СЊРЅС‹Р№ СѓС‡Р°СЃС‚РѕРє РёР·РѕР±СЂР°Р¶РµРЅРёСЏ, РєРѕС‚РѕСЂС‹Р№ РЅРµРѕР±С…РѕРґРёРјРѕ РѕС‚СЂРёСЃРѕРІР°С‚СЊ
-            // СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј Р·РЅР°С‡РµРЅРёСЏ РґР»СЏ СЃРІРѕР№СЃС‚РІ Р±Р»РѕРєР° 'frame' Р»РёР±Рѕ РѕСЃС‚Р°РІР»СЏРµРј Р±РµР· РёР·РјРµРЅРµРЅРёСЏ
+            // отдельный участок изображения, который необходимо отрисовать
+            // устанавливаем значения для свойств блока 'frame' либо оставляем без изменения
             if (args.frame && Object.keys(args.frame).length > 0) {
                 this.frame.x = !args.frame.hasOwnProperty('x') ? this.frame.x : (args.frame.x || 278)
                 this.frame.y = !args.frame.hasOwnProperty('y') ? this.frame.y : (args.frame.y || 250)
                 this.frame.width = !args.frame.hasOwnProperty('w') ? this.frame.width : (args.frame.width || 200)
                 this.frame.height = !args.frame.hasOwnProperty('h') ? this.frame.height : (args.frame.height || 170)
             }
-            // СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј РґРµС„РѕР»С‚РЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ РґР»СЏ Р±Р»РѕРєР° 'frame'
+            // устанавливаем дефолтные значения для блока 'frame'
             else if (args.hasOwnProperty('frame') && args.frame == null) {
                 this.frame.x = 278
                 this.frame.y = 250
@@ -171,7 +126,7 @@
 
     // window.GameEngine = window.GameEngine || {}
     // window.GameEngine.Sprite = Sprite
-    // СЂРµРіРёСЃС‚СЂРёСЂСѓРµРј РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІРѕ РёРјРµРЅ BattleCityGame.GameEngine.Sprite РІ РѕР±СЉРµРєС‚Рµ window
-    namespace.set('BattleCityGame.GameEngine.Sprite', Sprite) // СЂРµРіРёСЃС‚СЂРёСЂСѓРµРј РєР»Р°СЃСЃ Sprite РІ РѕР±СЉРµРєС‚Рµ GameEngine
-    // BattleCityGame.GameEngine.Sprite = Sprite // СЂРµРіРёСЃС‚СЂРёСЂСѓРµРј РєР»Р°СЃСЃ Sprite РІ РѕР±СЉРµРєС‚Рµ GameEngine
+    // регистрируем пространство имен BattleCityGame.GameEngine.Sprite в объекте window
+    namespace.set('BattleCityGame.GameEngine.Sprite', Sprite) // регистрируем класс Sprite в объекте GameEngine
+    // BattleCityGame.GameEngine.Sprite = Sprite // регистрируем класс Sprite в объекте GameEngine
 })();

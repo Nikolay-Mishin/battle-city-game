@@ -11,16 +11,59 @@ loader.addJson('tanks', `${data}/game/tanks.json`)
 
 // вызываем метод для загрузки данных из зарегистрированной очереди
 loader.load(() => {
-    const container = new Container() // объект контейнера
+    container = new Container() // объект контейнера
     renderer.stage.add(container) // добавляем объект контейнера в свойство Рендера
 
+    sprite1 = new Sprite(loader.getImage('bunny'), {
+        x: 100,
+        y: 200,
+        // rotation: Math.PI / 2,
+        scale: 0.25,
+        anchorX: 0.5,
+        anchorY: 0.5
+    })
+
+    sprite2 = new Sprite(loader.getImage('bunny'), {
+        x: 400,
+        y: 200,
+        // rotation: Math.PI / 2,
+        scale: 0.25,
+        anchorX: 0.5,
+        anchorY: 0.5
+    })
+    
+    container.x = 100
+    container.y = 100
+    container.rotation = Math.PI / 4 // поворачиваем по часовой стрелке на пол круга
+    container.anchorX = 0.5
+    container.anchorY = 0.5
+    container.width = renderer.canvas.width
+    container.height = renderer.canvas.height
+    
+    container.add(sprite1)
+    container.add(sprite2)
+
+    // createSprites() // создаем спрайты
+    // outputResources() // выводим загруженные ресурсы
+})
+
+/*
+    game
+    el - объект, в который мы встраиваем канвас
+    передаем ширину и высоту для задания размера канваса
+    init - this.add - порядок отрисовки совпадает с порядком добавления в контейнер
+    beforeDestroy - вызывается перед удалением сцены и удаляем все объекты, созданные сценой
+*/
+
+// создаем спрайты
+function createSprites () {
     // создаем спрайт
     let sprite1 = new Sprite(loader.getImage('bunny'), {
         scale: 0.15,
         anchorX: 0.5,
         anchorY: 0.5,
         // изменяем параметры созданного спрайта
-        update (timestamp) {
+        /*update(timestamp) {
             sprite1.changeSprite({
                 absolutePos: null,
                 sprite: {
@@ -32,7 +75,7 @@ loader.load(() => {
                     // y: sprite.texture.height / 2 + 200 * Math.sin(timestamp / 200)
                 }
             })
-        }
+        }*/
     })
     sprites.push(sprite1) // добавляем спрайт в массив для отрисовки
     container.add(sprite1) // добавляем спрайт в контейнер
@@ -42,7 +85,7 @@ loader.load(() => {
         anchorX: 0.5,
         anchorY: 0.5,
         // изменяем параметры созданного спрайта
-        update(timestamp) {
+        /*update(timestamp) {
             sprite2.changeSprite({
                 absolutePos: null,
                 sprite: {
@@ -54,7 +97,7 @@ loader.load(() => {
                     // y: sprite.texture.height / 2 + 200 * Math.sin(timestamp / 200)
                 }
             })
-        }
+        }*/
     })
     sprites.push(sprite2) // добавляем спрайт в массив для отрисовки
     container.add(sprite2) // добавляем спрайт в контейнер
@@ -64,7 +107,7 @@ loader.load(() => {
         anchorX: 0.5,
         anchorY: 0.5,
         // изменяем параметры созданного спрайта
-        update(timestamp) {
+        /*update(timestamp) {
             sprite3.changeSprite({
                 absolutePos: null,
                 sprite: {
@@ -76,76 +119,15 @@ loader.load(() => {
                     y: sprite3.texture.height / 2 + 200 * Math.sin(timestamp / 200)
                 }
             })
-        }
+        }*/
     })
     sprites.push(sprite3) // добавляем спрайт в массив для отрисовки
     container.add(sprite3) // добавляем спрайт в контейнер
-    
+
     console.log(renderer.displayObjects) // выводим список отрисовываемых объектов
-
-    // outputResources() // выводим загруженные ресурсы
-})
-
-// изменяет параметры созданного спрайт
-// если не хотим менять значения данного свойства, не передаем его
-/* 
- { 
-    absolutePos: { x: 50, y: 100},
-    frame: { x: 100, y: 100, w: 200, h: 200 } 
- }
- */
-// { absolutePos: { x: 50, y: null } } // дефолтное значение для свойства, передаем свойство null
-// { absolutePos: null } // дефолтные значения для всего блока, передаем null в свойство блока
-function changeSprite(sprite, args = {}) {
-    // absoluteX,Y - абсолютные координаты, относительно которых отрисовывается спрайт
-    // устанавливаем значения для свойств блока 'absolutePos' либо оставляем без изменения
-    if (args.absolutePos && Object.keys(args.absolutePos).length > 0) {
-        // если свойство не передано, оставляем значение без изменения
-        // если свойство передано, берем его значение (если null, устанавливаем дефолтное значение)
-        sprite.absoluteX = !args.absolutePos.hasOwnProperty('x') ? sprite.absoluteX : (args.absolutePos.x || 0)
-        sprite.absoluteY = !args.absolutePos.hasOwnProperty('y') ? sprite.absoluteY : (args.absolutePos.y || 0)
-    }
-    // устанавливаем дефолтные значения для блока 'absolutePos'
-    else if (args.hasOwnProperty('absolutePos') && args.absolutePos == null) {
-        sprite.absoluteX = 0
-        sprite.absoluteY = 0
-    }
-
-    // своства спрайта
-    // устанавливаем значения для свойств блока 'sprite' либо оставляем без изменения
-    if (args.sprite && Object.keys(args.sprite).length > 0) {
-        // координаты начала отрисовки спрайта
-        sprite.x = !args.sprite.hasOwnProperty('x') ? sprite.x : (args.sprite.x || 100)
-        sprite.y = !args.sprite.hasOwnProperty('y') ? sprite.y : (args.sprite.y || 300)
-        // ширина и высота спрайта
-        sprite.width = !args.sprite.hasOwnProperty('w') ? sprite.width : (args.sprite.width || 100)
-        sprite.height = !args.sprite.hasOwnProperty('h') ? sprite.height : (args.sprite.height || 100)
-    }
-    // устанавливаем дефолтные значения для блока 'sprite'
-    else if (args.hasOwnProperty('sprite') && args.sprite == null) {
-        sprite.x = 100
-        sprite.y = 300
-        sprite.width = 100
-        sprite.height = 100
-    }
-
-    // отдельный участок изображения, который необходимо отрисовать
-    // устанавливаем значения для свойств блока 'frame' либо оставляем без изменения
-    if (args.frame && Object.keys(args.frame).length > 0) {
-        sprite.frame.x = !args.frame.hasOwnProperty('x') ? sprite.frame.x : (args.frame.x || 278)
-        sprite.frame.y = !args.frame.hasOwnProperty('y') ? sprite.frame.y : (args.frame.y || 250)
-        sprite.frame.width = !args.frame.hasOwnProperty('w') ? sprite.frame.width : (args.frame.width || 200)
-        sprite.frame.height = !args.frame.hasOwnProperty('h') ? sprite.frame.height : (args.frame.height || 170)
-    }
-    // устанавливаем дефолтные значения для блока 'frame'
-    else if (args.hasOwnProperty('frame') && args.frame == null) {
-        sprite.frame.x = 278
-        sprite.frame.y = 250
-        sprite.frame.width = 200
-        sprite.frame.height = 170
-    }
 }
 
+// выводим ресурсы
 function outputResources () {
     console.log(window)
     console.log('Resources loaded')

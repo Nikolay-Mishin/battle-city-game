@@ -24,7 +24,7 @@
             this.scaleX = args.scaleX || 1
             this.scaleY = args.scaleY || 1
 
-            this.parent = null
+            this.parent = null // родитель объекта (ссылается на верхний по иерархии объект)
 
             // если передан масштаб, устанавливаем его
             if (args.scale !== undefined) {
@@ -66,6 +66,8 @@
 
         // устанавливает родителя текущего объекта
         setParent(parent) {
+            console.log(parent)
+            console.log(this.parent)
             // если родитель уже присутствует, удаляем его
             if (this.parent) {
                 this.parent.remove(this)

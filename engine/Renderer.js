@@ -16,7 +16,7 @@
             // устанавливаем ширину и высоту канваса
             this.canvas.width = args.width || 50
             this.canvas.height = args.height || 50
-            this.update = args.update || (() => { }) // задаем значение для метода update()
+            this.update = args.update || (() => {}) // задаем значение для метода update()
 
             this.stage = new GameEngine.Container() // контейнер класса Рендер (экземпляр объекта)
 

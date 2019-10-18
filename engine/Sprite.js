@@ -33,14 +33,15 @@
                 this.height = this.frame.height
             }
 
-            this.update = args.update || (() => { }) // задаем значение для метода update()
+            // задаем значение для метода update()
+            this.update = args.hasOwnProperty('update') ? args.update.bind(this) : (() => {})
         }
 
         // отрисовывает спрайт на основе установленных свойств
         draw(canvas, context) {
             context.save() // сохраняем текущее состояние контекста
             context.translate(this.x, this.y) // переназначает начало системы координат
-            context.rotate(-this.rotation) // поворачивает объект (против часовой стролки)
+            context.rotate(this.rotation) // поворачивает объект (по часовой стрелке)
             context.scale(this.scaleX, this.scaleY) // масштабирует объект
             // ширину и высоту не умножаем на масштаб, тк scale используется в момент отрисовки спрайта
 

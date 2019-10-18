@@ -7,17 +7,17 @@ let container = null
 let sprites = [] // значение по умолчанию для переменной спрайта
 
 const renderer = new Renderer({
-    width: 500,
-    height: 500,
-    background: 'gray',
+	width: 500,
+	height: 500,
+	background: 'gray',
 
-    update(timestamp) {
-        if (sprites.length < 1) return
+	update(timestamp) {
+		if (sprites.length < 1) return
 
-        // container.rotation = timestamp / 1000
+		// container.rotation = timestamp / 1000
 
-        for (const sprite of sprites) {
-            sprite.update(timestamp)
-        }
-    }
+		for (const sprite of sprites) {
+			sprite.update(timestamp)
+		}
+	}
 })

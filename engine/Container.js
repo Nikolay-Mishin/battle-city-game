@@ -1,54 +1,54 @@
-;(function () {
+; (function () {
     'use strict'
 
-    // Контейнер для хранения отображаемых объектов (спрайтов)
-    // extends - наследование класса
-    // Container наследуется от GameEngine.DisplayObject
+    // РљРѕРЅС‚РµР№РЅРµСЂ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ РѕС‚РѕР±СЂР°Р¶Р°РµРјС‹С… РѕР±СЉРµРєС‚РѕРІ (СЃРїСЂР°Р№С‚РѕРІ)
+    // extends - РЅР°СЃР»РµРґРѕРІР°РЅРёРµ РєР»Р°СЃСЃР°
+    // Container РЅР°СЃР»РµРґСѓРµС‚СЃСЏ РѕС‚ GameEngine.DisplayObject
 
     class Container extends GameEngine.DisplayObject {
-        constructor (args = {}) {
-            super(args) // метод super вызывает родительский конструктор (доступ к родителю идет через super - super.funA())
-            this.displayObjects = [] // хранилище объектов контейнера (которые отображены на экране - спрайты)
+        constructor(args = {}) {
+            super(args) // РјРµС‚РѕРґ super РІС‹Р·С‹РІР°РµС‚ СЂРѕРґРёС‚РµР»СЊСЃРєРёР№ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ (РґРѕСЃС‚СѓРї Рє СЂРѕРґРёС‚РµР»СЋ РёРґРµС‚ С‡РµСЂРµР· super - super.funA())
+            this.displayObjects = [] // С…СЂР°РЅРёР»РёС‰Рµ РѕР±СЉРµРєС‚РѕРІ РєРѕРЅС‚РµР№РЅРµСЂР° (РєРѕС‚РѕСЂС‹Рµ РѕС‚РѕР±СЂР°Р¶РµРЅС‹ РЅР° СЌРєСЂР°РЅРµ - СЃРїСЂР°Р№С‚С‹)
         }
 
-        // добавляет объект в контейнер (если такого объекта еще нет в списке)
-        add (displayObject) {
+        // РґРѕР±Р°РІР»СЏРµС‚ РѕР±СЉРµРєС‚ РІ РєРѕРЅС‚РµР№РЅРµСЂ (РµСЃР»Рё С‚Р°РєРѕРіРѕ РѕР±СЉРµРєС‚Р° РµС‰Рµ РЅРµС‚ РІ СЃРїРёСЃРєРµ)
+        add(displayObject) {
             if (!this.displayObjects.includes(displayObject)) {
-                this.displayObjects.push(displayObject) // добавляем отображаемый объект в свойство
-                displayObject.setParent(this) // в качестве родителя объекта устанавливаем данный контейнер
+                this.displayObjects.push(displayObject) // РґРѕР±Р°РІР»СЏРµРј РѕС‚РѕР±СЂР°Р¶Р°РµРјС‹Р№ РѕР±СЉРµРєС‚ РІ СЃРІРѕР№СЃС‚РІРѕ
+                displayObject.setParent(this) // РІ РєР°С‡РµСЃС‚РІРµ СЂРѕРґРёС‚РµР»СЏ РѕР±СЉРµРєС‚Р° СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј РґР°РЅРЅС‹Р№ РєРѕРЅС‚РµР№РЅРµСЂ
             }
         }
 
-        // удаляет объект из контейнера (если такой объект существует в списке)
-        remove (displayObject) {
+        // СѓРґР°Р»СЏРµС‚ РѕР±СЉРµРєС‚ РёР· РєРѕРЅС‚РµР№РЅРµСЂР° (РµСЃР»Рё С‚Р°РєРѕР№ РѕР±СЉРµРєС‚ СЃСѓС‰РµСЃС‚РІСѓРµС‚ РІ СЃРїРёСЃРєРµ)
+        remove(displayObject) {
             if (this.displayObjects.includes(displayObject)) {
-                const index = this.displayObjects.indexOf(displayObject) // получаем индекс данного объекта в контейнере
-                this.displayObjects.splice(index, 1) // удаляем из контейнера 1 объект, начиная с найденного индекса
-                displayObject.setParent(null) // удаляем родятеля
+                const index = this.displayObjects.indexOf(displayObject) // РїРѕР»СѓС‡Р°РµРј РёРЅРґРµРєСЃ РґР°РЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р° РІ РєРѕРЅС‚РµР№РЅРµСЂРµ
+                this.displayObjects.splice(index, 1) // СѓРґР°Р»СЏРµРј РёР· РєРѕРЅС‚РµР№РЅРµСЂР° 1 РѕР±СЉРµРєС‚, РЅР°С‡РёРЅР°СЏ СЃ РЅР°Р№РґРµРЅРЅРѕРіРѕ РёРЅРґРµРєСЃР°
+                displayObject.setParent(null) // СѓРґР°Р»СЏРµРј СЂРѕРґСЏС‚РµР»СЏ
             }
         }
 
-        // отрисовывает все объекты из контейнера
-        draw (canvas, context) {
-            // параметры трансформации контейнера применяются для всех displayObject
-            context.save() // сохраняем текущее состояние контекста
-            context.translate(this.x, this.y) // переназначает начало системы координат
-            context.rotate(this.rotation) // поворачивает объект (по часовой стрелке)
-            context.scale(this.scaleX, this.scaleY) // масштабирует объект
+        // РѕС‚СЂРёСЃРѕРІС‹РІР°РµС‚ РІСЃРµ РѕР±СЉРµРєС‚С‹ РёР· РєРѕРЅС‚РµР№РЅРµСЂР°
+        draw(canvas, context) {
+            // РїР°СЂР°РјРµС‚СЂС‹ С‚СЂР°РЅСЃС„РѕСЂРјР°С†РёРё РєРѕРЅС‚РµР№РЅРµСЂР° РїСЂРёРјРµРЅСЏСЋС‚СЃСЏ РґР»СЏ РІСЃРµС… displayObject
+            context.save() // СЃРѕС…СЂР°РЅСЏРµРј С‚РµРєСѓС‰РµРµ СЃРѕСЃС‚РѕСЏРЅРёРµ РєРѕРЅС‚РµРєСЃС‚Р°
+            context.translate(this.x, this.y) // РїРµСЂРµРЅР°Р·РЅР°С‡Р°РµС‚ РЅР°С‡Р°Р»Рѕ СЃРёСЃС‚РµРјС‹ РєРѕРѕСЂРґРёРЅР°С‚
+            context.rotate(this.rotation) // РїРѕРІРѕСЂР°С‡РёРІР°РµС‚ РѕР±СЉРµРєС‚ (РїРѕ С‡Р°СЃРѕРІРѕР№ СЃС‚СЂРµР»РєРµ)
+            context.scale(this.scaleX, this.scaleY) // РјР°СЃС€С‚Р°Р±РёСЂСѓРµС‚ РѕР±СЉРµРєС‚
 
-            // для каждого объекта вызываем метод draw() для отрисовки спрайта
-            // для каждого displayObject применяются дополнительно индивидуальные параметры трансформации для данного объекта
+            // РґР»СЏ РєР°Р¶РґРѕРіРѕ РѕР±СЉРµРєС‚Р° РІС‹Р·С‹РІР°РµРј РјРµС‚РѕРґ draw() РґР»СЏ РѕС‚СЂРёСЃРѕРІРєРё СЃРїСЂР°Р№С‚Р°
+            // РґР»СЏ РєР°Р¶РґРѕРіРѕ displayObject РїСЂРёРјРµРЅСЏСЋС‚СЃСЏ РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅРѕ РёРЅРґРёРІРёРґСѓР°Р»СЊРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ С‚СЂР°РЅСЃС„РѕСЂРјР°С†РёРё РґР»СЏ РґР°РЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°
             for (const displayObject of this.displayObjects) {
                 displayObject.draw(canvas, context)
             }
 
-            context.restore() // восстанавливаем контекст
+            context.restore() // РІРѕСЃСЃС‚Р°РЅР°РІР»РёРІР°РµРј РєРѕРЅС‚РµРєСЃС‚
         }
     }
 
     // window.GameEngine = window.GameEngine || {}
     // window.GameEngine.Container = Container
-    // регистрируем пространство имен BattleCityGame.GameEngine.Container в объекте window
-    namespace.set('BattleCityGame.GameEngine.Container', Container) // регистрируем класс Container в объекте GameEngine
-    // BattleCityGame.GameEngine.Container = Container // регистрируем класс Container в объекте GameEngine
+    // СЂРµРіРёСЃС‚СЂРёСЂСѓРµРј РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІРѕ РёРјРµРЅ BattleCityGame.GameEngine.Container РІ РѕР±СЉРµРєС‚Рµ window
+    namespace.set('BattleCityGame.GameEngine.Container', Container) // СЂРµРіРёСЃС‚СЂРёСЂСѓРµРј РєР»Р°СЃСЃ Container РІ РѕР±СЉРµРєС‚Рµ GameEngine
+    // BattleCityGame.GameEngine.Container = Container // СЂРµРіРёСЃС‚СЂРёСЂСѓРµРј РєР»Р°СЃСЃ Container РІ РѕР±СЉРµРєС‚Рµ GameEngine
 })();

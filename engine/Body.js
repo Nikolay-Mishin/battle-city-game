@@ -2,7 +2,8 @@
     'use strict'
 
     /*
-     * тело спрайта
+     * тело спрайта - Collider
+     * отвечает за пересечение (столкновение) 2 объектов
      */
 
     class Body extends GameEngine.Sprite {

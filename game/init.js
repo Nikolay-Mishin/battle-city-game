@@ -6,9 +6,6 @@ const loader = new Loader // создаем экземпляр класса Load
 let container = null
 let sprites = [] // значение по умолчанию для переменной спрайта
 
-let sprite1 = null
-let sprite2 = null
-
 const renderer = new Renderer({
     width: 500,
     height: 500,
@@ -17,14 +14,11 @@ const renderer = new Renderer({
     update(timestamp) {
         if (sprites.length < 1) return
 
-        container.rotation = timestamp / 1000
-        sprite1.rotation = timestamp / 1000
-        sprite2.rotation = -timestamp / 1000
-        // sprite.rotation = 0
+        // container.rotation = timestamp / 1000
 
         for (const sprite of sprites) {
             sprite.update(timestamp)
+            // sprite.rotation = 0
         }
-        
     }
 })

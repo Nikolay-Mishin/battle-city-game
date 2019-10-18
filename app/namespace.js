@@ -1,30 +1,30 @@
-// Если не хотите привязываться к какому-то фреймворку, для реализации пространства имен можно написать нечто вроде этого:
+// Р•СЃР»Рё РЅРµ С…РѕС‚РёС‚Рµ РїСЂРёРІСЏР·С‹РІР°С‚СЊСЃСЏ Рє РєР°РєРѕРјСѓ-С‚Рѕ С„СЂРµР№РјРІРѕСЂРєСѓ, РґР»СЏ СЂРµР°Р»РёР·Р°С†РёРё РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІР° РёРјРµРЅ РјРѕР¶РЅРѕ РЅР°РїРёСЃР°С‚СЊ РЅРµС‡С‚Рѕ РІСЂРѕРґРµ СЌС‚РѕРіРѕ:
 
 var namespace = new Object(); // someRootNamespace
 
 // someRootNamespace.provide
 namespace.set = function (object_name, object_value) {
-    // object_name - имя пространства имен ('SomeCompany.SomeBigNamespace.SomeBigSubnamespace')
-    // object_value - значение для конечного свойства пространства имен (SomeBigSubnamespace)
-    var objects = object_name.split('.'); // преобразуем строку в массив по разделителю ('.')
+    // object_name - РёРјСЏ РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІР° РёРјРµРЅ ('SomeCompany.SomeBigNamespace.SomeBigSubnamespace')
+    // object_value - Р·РЅР°С‡РµРЅРёРµ РґР»СЏ РєРѕРЅРµС‡РЅРѕРіРѕ СЃРІРѕР№СЃС‚РІР° РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІР° РёРјРµРЅ (SomeBigSubnamespace)
+    var objects = object_name.split('.'); // РїСЂРµРѕР±СЂР°Р·СѓРµРј СЃС‚СЂРѕРєСѓ РІ РјР°СЃСЃРёРІ РїРѕ СЂР°Р·РґРµР»РёС‚РµР»СЋ ('.')
 
-    var object = window; // базовый объект (по умолчанию - window) - для перебора всех свойств объекта пространства имен
+    var object = window; // Р±Р°Р·РѕРІС‹Р№ РѕР±СЉРµРєС‚ (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ - window) - РґР»СЏ РїРµСЂРµР±РѕСЂР° РІСЃРµС… СЃРІРѕР№СЃС‚РІ РѕР±СЉРµРєС‚Р° РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІР° РёРјРµРЅ
     for (var i = 0; i < objects.length; i++) {
-        // проверяем начальное свойство ('SomeCompany') - если в объекте window нет такого свойства, создаем его
+        // РїСЂРѕРІРµСЂСЏРµРј РЅР°С‡Р°Р»СЊРЅРѕРµ СЃРІРѕР№СЃС‚РІРѕ ('SomeCompany') - РµСЃР»Рё РІ РѕР±СЉРµРєС‚Рµ window РЅРµС‚ С‚Р°РєРѕРіРѕ СЃРІРѕР№СЃС‚РІР°, СЃРѕР·РґР°РµРј РµРіРѕ
         // 'SomeCompany' in 'window'
         if (i == 0 && !window[objects[i]])
             window[objects[i]] = new Object();
-        // проверяем остальные свойства на существование - 'SomeBigNamespace' in 'SomeCompany'
+        // РїСЂРѕРІРµСЂСЏРµРј РѕСЃС‚Р°Р»СЊРЅС‹Рµ СЃРІРѕР№СЃС‚РІР° РЅР° СЃСѓС‰РµСЃС‚РІРѕРІР°РЅРёРµ - 'SomeBigNamespace' in 'SomeCompany'
         else if (i > 0 && !object[objects[i]])
             object[objects[i]] = new Object();
 
-        // если это последнее свойство пространства имен (SomeBigSubnamespace), присваиваем ему переданное значение
+        // РµСЃР»Рё СЌС‚Рѕ РїРѕСЃР»РµРґРЅРµРµ СЃРІРѕР№СЃС‚РІРѕ РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІР° РёРјРµРЅ (SomeBigSubnamespace), РїСЂРёСЃРІР°РёРІР°РµРј РµРјСѓ РїРµСЂРµРґР°РЅРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ
         if (i == objects.length - 1) object[objects[i]] = object_value 
 
-        object = object[objects[i]]; // перезаписываем в базовый объект текущее свойство объекта (window => SomeCompany)
+        object = object[objects[i]]; // РїРµСЂРµР·Р°РїРёСЃС‹РІР°РµРј РІ Р±Р°Р·РѕРІС‹Р№ РѕР±СЉРµРєС‚ С‚РµРєСѓС‰РµРµ СЃРІРѕР№СЃС‚РІРѕ РѕР±СЉРµРєС‚Р° (window => SomeCompany)
     }
 }
 
-// После выполнения данных строк, в любом месте js-файлов можно писать
+// РџРѕСЃР»Рµ РІС‹РїРѕР»РЅРµРЅРёСЏ РґР°РЅРЅС‹С… СЃС‚СЂРѕРє, РІ Р»СЋР±РѕРј РјРµСЃС‚Рµ js-С„Р°Р№Р»РѕРІ РјРѕР¶РЅРѕ РїРёСЃР°С‚СЊ
 // namespace.set('SomeCompany.SomeBigNamespace.SomeBigSubnamespace', object_value);
 // SomeCompany.SomeBigNamespace.SomeBigSubnamespace = object_value

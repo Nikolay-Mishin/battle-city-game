@@ -1,9 +1,9 @@
-const { GameEngine } = BattleCityGame // выгружаем свойство GameEngine из объекта BattleCityGame
-const { Container, Loader, Renderer, Sprite } = GameEngine // записываем свойство Loader (класс) объекта GameEngine в константу
+const { GameEngine } = BattleCityGame // РІС‹РіСЂСѓР¶Р°РµРј СЃРІРѕР№СЃС‚РІРѕ GameEngine РёР· РѕР±СЉРµРєС‚Р° BattleCityGame
+const { Container, Loader, Renderer, Sprite } = GameEngine // Р·Р°РїРёСЃС‹РІР°РµРј СЃРІРѕР№СЃС‚РІРѕ Loader (РєР»Р°СЃСЃ) РѕР±СЉРµРєС‚Р° GameEngine РІ РєРѕРЅСЃС‚Р°РЅС‚Сѓ
 
-const loader = new Loader // создаем экземпляр класса Loader
+const loader = new Loader // СЃРѕР·РґР°РµРј СЌРєР·РµРјРїР»СЏСЂ РєР»Р°СЃСЃР° Loader
 
-let sprites = [] // значение по умолчанию для переменной спрайта
+let sprites = [] // Р·РЅР°С‡РµРЅРёРµ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ РґР»СЏ РїРµСЂРµРјРµРЅРЅРѕР№ СЃРїСЂР°Р№С‚Р°
 
 const renderer = new Renderer({
     width: 500,

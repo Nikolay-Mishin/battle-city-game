@@ -1,14 +1,14 @@
 ;(function () {
     'use strict'
 
-    // Контейнер для хранения отображаемых объектов (спрайтов)
+    // РљРѕРЅС‚РµР№РЅРµСЂ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ РѕС‚РѕР±СЂР°Р¶Р°РµРјС‹С… РѕР±СЉРµРєС‚РѕРІ (СЃРїСЂР°Р№С‚РѕРІ)
 
     class Container {
         constructor () {
-            this.displayObjects = [] // хранилище объектов контейнера (которые отображены на экране - спрайты)
+            this.displayObjects = [] // С…СЂР°РЅРёР»РёС‰Рµ РѕР±СЉРµРєС‚РѕРІ РєРѕРЅС‚РµР№РЅРµСЂР° (РєРѕС‚РѕСЂС‹Рµ РѕС‚РѕР±СЂР°Р¶РµРЅС‹ РЅР° СЌРєСЂР°РЅРµ - СЃРїСЂР°Р№С‚С‹)
         }
 
-        // добавляет объект в контейнер (если такого объекта еще нет в списке)
+        // РґРѕР±Р°РІР»СЏРµС‚ РѕР±СЉРµРєС‚ РІ РєРѕРЅС‚РµР№РЅРµСЂ (РµСЃР»Рё С‚Р°РєРѕРіРѕ РѕР±СЉРµРєС‚Р° РµС‰Рµ РЅРµС‚ РІ СЃРїРёСЃРєРµ)
         add (displayObject) {
             if (!this.displayObjects.includes(displayObject)) {
                 this.displayObjects.push(displayObject)
@@ -17,9 +17,9 @@
 
         remove () {}
 
-        // отрисовывает все объекты из контейнера
+        // РѕС‚СЂРёСЃРѕРІС‹РІР°РµС‚ РІСЃРµ РѕР±СЉРµРєС‚С‹ РёР· РєРѕРЅС‚РµР№РЅРµСЂР°
         draw (canvas, context) {
-            // для каждого объекта вызываем метод draw() для отрисовки спрайта
+            // РґР»СЏ РєР°Р¶РґРѕРіРѕ РѕР±СЉРµРєС‚Р° РІС‹Р·С‹РІР°РµРј РјРµС‚РѕРґ draw() РґР»СЏ РѕС‚СЂРёСЃРѕРІРєРё СЃРїСЂР°Р№С‚Р°
             for (const displayObject of this.displayObjects) {
                 displayObject.draw(canvas, context)
             }
@@ -28,7 +28,7 @@
 
     // window.GameEngine = window.GameEngine || {}
     // window.GameEngine.Container = Container
-    // регистрируем пространство имен BattleCityGame.GameEngine.Container в объекте window
-    namespace.set('BattleCityGame.GameEngine.Container', Container) // регистрируем класс Container в объекте GameEngine
-    // BattleCityGame.GameEngine.Container = Container // регистрируем класс Container в объекте GameEngine
+    // СЂРµРіРёСЃС‚СЂРёСЂСѓРµРј РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІРѕ РёРјРµРЅ BattleCityGame.GameEngine.Container РІ РѕР±СЉРµРєС‚Рµ window
+    namespace.set('BattleCityGame.GameEngine.Container', Container) // СЂРµРіРёСЃС‚СЂРёСЂСѓРµРј РєР»Р°СЃСЃ Container РІ РѕР±СЉРµРєС‚Рµ GameEngine
+    // BattleCityGame.GameEngine.Container = Container // СЂРµРіРёСЃС‚СЂРёСЂСѓРµРј РєР»Р°СЃСЃ Container РІ РѕР±СЉРµРєС‚Рµ GameEngine
 })();

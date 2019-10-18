@@ -1,25 +1,25 @@
-document.body.append(renderer.canvas) // добавляем на страницу канвас, созданные с помощью класса Рендер
+document.body.append(renderer.canvas) // РґРѕР±Р°РІР»СЏРµРј РЅР° СЃС‚СЂР°РЅРёС†Сѓ РєР°РЅРІР°СЃ, СЃРѕР·РґР°РЅРЅС‹Рµ СЃ РїРѕРјРѕС‰СЊСЋ РєР»Р°СЃСЃР° Р РµРЅРґРµСЂ
 
-// загружаем изображения - добавляем изображение в очередь на загрузку
+// Р·Р°РіСЂСѓР¶Р°РµРј РёР·РѕР±СЂР°Р¶РµРЅРёСЏ - РґРѕР±Р°РІР»СЏРµРј РёР·РѕР±СЂР°Р¶РµРЅРёРµ РІ РѕС‡РµСЂРµРґСЊ РЅР° Р·Р°РіСЂСѓР·РєСѓ
 loader.addImage('tank', `${img}/favicon-full.png`)
 loader.addImage('bunny', `${img}/bunny.jpeg`)
 
-// загружаем данные (json файлы) - добавляем json файл в очередь на загрузку
+// Р·Р°РіСЂСѓР¶Р°РµРј РґР°РЅРЅС‹Рµ (json С„Р°Р№Р»С‹) - РґРѕР±Р°РІР»СЏРµРј json С„Р°Р№Р» РІ РѕС‡РµСЂРµРґСЊ РЅР° Р·Р°РіСЂСѓР·РєСѓ
 loader.addJson('persons', `${data}/persons.json`)
 loader.addJson('users', `${data}/user/users.json`)
 loader.addJson('tanks', `${data}/game/tanks.json`)
 
-// вызываем метод для загрузки данных из зарегистрированной очереди
+// РІС‹Р·С‹РІР°РµРј РјРµС‚РѕРґ РґР»СЏ Р·Р°РіСЂСѓР·РєРё РґР°РЅРЅС‹С… РёР· Р·Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°РЅРЅРѕР№ РѕС‡РµСЂРµРґРё
 loader.load(() => {
-    const container = new Container() // объект контейнера
-    renderer.stage.add(container) // добавляем объект контейнера в свойство Рендера
+    const container = new Container() // РѕР±СЉРµРєС‚ РєРѕРЅС‚РµР№РЅРµСЂР°
+    renderer.stage.add(container) // РґРѕР±Р°РІР»СЏРµРј РѕР±СЉРµРєС‚ РєРѕРЅС‚РµР№РЅРµСЂР° РІ СЃРІРѕР№СЃС‚РІРѕ Р РµРЅРґРµСЂР°
 
-    // создаем спрайт
+    // СЃРѕР·РґР°РµРј СЃРїСЂР°Р№С‚
     let sprite1 = new Sprite(loader.getImage('bunny'), {
         scale: 0.15,
         anchorX: 0.5,
         anchorY: 0.5,
-        // изменяем параметры созданного спрайта
+        // РёР·РјРµРЅСЏРµРј РїР°СЂР°РјРµС‚СЂС‹ СЃРѕР·РґР°РЅРЅРѕРіРѕ СЃРїСЂР°Р№С‚Р°
         update (timestamp) {
             sprite1.changeSprite({
                 absolutePos: null,
@@ -34,14 +34,14 @@ loader.load(() => {
             })
         }
     })
-    sprites.push(sprite1) // добавляем спрайт в массив для отрисовки
-    container.add(sprite1) // добавляем спрайт в контейнер
+    sprites.push(sprite1) // РґРѕР±Р°РІР»СЏРµРј СЃРїСЂР°Р№С‚ РІ РјР°СЃСЃРёРІ РґР»СЏ РѕС‚СЂРёСЃРѕРІРєРё
+    container.add(sprite1) // РґРѕР±Р°РІР»СЏРµРј СЃРїСЂР°Р№С‚ РІ РєРѕРЅС‚РµР№РЅРµСЂ
 
     let sprite2 = new Sprite(loader.getImage('tank'), {
         scale: 0.15,
         anchorX: 0.5,
         anchorY: 0.5,
-        // изменяем параметры созданного спрайта
+        // РёР·РјРµРЅСЏРµРј РїР°СЂР°РјРµС‚СЂС‹ СЃРѕР·РґР°РЅРЅРѕРіРѕ СЃРїСЂР°Р№С‚Р°
         update(timestamp) {
             sprite2.changeSprite({
                 absolutePos: null,
@@ -56,14 +56,14 @@ loader.load(() => {
             })
         }
     })
-    sprites.push(sprite2) // добавляем спрайт в массив для отрисовки
-    container.add(sprite2) // добавляем спрайт в контейнер
+    sprites.push(sprite2) // РґРѕР±Р°РІР»СЏРµРј СЃРїСЂР°Р№С‚ РІ РјР°СЃСЃРёРІ РґР»СЏ РѕС‚СЂРёСЃРѕРІРєРё
+    container.add(sprite2) // РґРѕР±Р°РІР»СЏРµРј СЃРїСЂР°Р№С‚ РІ РєРѕРЅС‚РµР№РЅРµСЂ
 
     let sprite3 = new Sprite(loader.getImage('bunny'), {
         scale: 0.15,
         anchorX: 0.5,
         anchorY: 0.5,
-        // изменяем параметры созданного спрайта
+        // РёР·РјРµРЅСЏРµРј РїР°СЂР°РјРµС‚СЂС‹ СЃРѕР·РґР°РЅРЅРѕРіРѕ СЃРїСЂР°Р№С‚Р°
         update(timestamp) {
             sprite3.changeSprite({
                 absolutePos: null,
@@ -78,50 +78,50 @@ loader.load(() => {
             })
         }
     })
-    sprites.push(sprite3) // добавляем спрайт в массив для отрисовки
-    container.add(sprite3) // добавляем спрайт в контейнер
+    sprites.push(sprite3) // РґРѕР±Р°РІР»СЏРµРј СЃРїСЂР°Р№С‚ РІ РјР°СЃСЃРёРІ РґР»СЏ РѕС‚СЂРёСЃРѕРІРєРё
+    container.add(sprite3) // РґРѕР±Р°РІР»СЏРµРј СЃРїСЂР°Р№С‚ РІ РєРѕРЅС‚РµР№РЅРµСЂ
     
-    console.log(renderer.displayObjects) // выводим список отрисовываемых объектов
+    console.log(renderer.displayObjects) // РІС‹РІРѕРґРёРј СЃРїРёСЃРѕРє РѕС‚СЂРёСЃРѕРІС‹РІР°РµРјС‹С… РѕР±СЉРµРєС‚РѕРІ
 
-    // outputResources() // выводим загруженные ресурсы
+    // outputResources() // РІС‹РІРѕРґРёРј Р·Р°РіСЂСѓР¶РµРЅРЅС‹Рµ СЂРµСЃСѓСЂСЃС‹
 })
 
-// изменяет параметры созданного спрайт
-// если не хотим менять значения данного свойства, не передаем его
+// РёР·РјРµРЅСЏРµС‚ РїР°СЂР°РјРµС‚СЂС‹ СЃРѕР·РґР°РЅРЅРѕРіРѕ СЃРїСЂР°Р№С‚
+// РµСЃР»Рё РЅРµ С…РѕС‚РёРј РјРµРЅСЏС‚СЊ Р·РЅР°С‡РµРЅРёСЏ РґР°РЅРЅРѕРіРѕ СЃРІРѕР№СЃС‚РІР°, РЅРµ РїРµСЂРµРґР°РµРј РµРіРѕ
 /* 
  { 
     absolutePos: { x: 50, y: 100},
     frame: { x: 100, y: 100, w: 200, h: 200 } 
  }
  */
-// { absolutePos: { x: 50, y: null } } // дефолтное значение для свойства, передаем свойство null
-// { absolutePos: null } // дефолтные значения для всего блока, передаем null в свойство блока
+// { absolutePos: { x: 50, y: null } } // РґРµС„РѕР»С‚РЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РґР»СЏ СЃРІРѕР№СЃС‚РІР°, РїРµСЂРµРґР°РµРј СЃРІРѕР№СЃС‚РІРѕ null
+// { absolutePos: null } // РґРµС„РѕР»С‚РЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ РґР»СЏ РІСЃРµРіРѕ Р±Р»РѕРєР°, РїРµСЂРµРґР°РµРј null РІ СЃРІРѕР№СЃС‚РІРѕ Р±Р»РѕРєР°
 function changeSprite(sprite, args = {}) {
-    // absoluteX,Y - абсолютные координаты, относительно которых отрисовывается спрайт
-    // устанавливаем значения для свойств блока 'absolutePos' либо оставляем без изменения
+    // absoluteX,Y - Р°Р±СЃРѕР»СЋС‚РЅС‹Рµ РєРѕРѕСЂРґРёРЅР°С‚С‹, РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ РєРѕС‚РѕСЂС‹С… РѕС‚СЂРёСЃРѕРІС‹РІР°РµС‚СЃСЏ СЃРїСЂР°Р№С‚
+    // СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј Р·РЅР°С‡РµРЅРёСЏ РґР»СЏ СЃРІРѕР№СЃС‚РІ Р±Р»РѕРєР° 'absolutePos' Р»РёР±Рѕ РѕСЃС‚Р°РІР»СЏРµРј Р±РµР· РёР·РјРµРЅРµРЅРёСЏ
     if (args.absolutePos && Object.keys(args.absolutePos).length > 0) {
-        // если свойство не передано, оставляем значение без изменения
-        // если свойство передано, берем его значение (если null, устанавливаем дефолтное значение)
+        // РµСЃР»Рё СЃРІРѕР№СЃС‚РІРѕ РЅРµ РїРµСЂРµРґР°РЅРѕ, РѕСЃС‚Р°РІР»СЏРµРј Р·РЅР°С‡РµРЅРёРµ Р±РµР· РёР·РјРµРЅРµРЅРёСЏ
+        // РµСЃР»Рё СЃРІРѕР№СЃС‚РІРѕ РїРµСЂРµРґР°РЅРѕ, Р±РµСЂРµРј РµРіРѕ Р·РЅР°С‡РµРЅРёРµ (РµСЃР»Рё null, СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј РґРµС„РѕР»С‚РЅРѕРµ Р·РЅР°С‡РµРЅРёРµ)
         sprite.absoluteX = !args.absolutePos.hasOwnProperty('x') ? sprite.absoluteX : (args.absolutePos.x || 0)
         sprite.absoluteY = !args.absolutePos.hasOwnProperty('y') ? sprite.absoluteY : (args.absolutePos.y || 0)
     }
-    // устанавливаем дефолтные значения для блока 'absolutePos'
+    // СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј РґРµС„РѕР»С‚РЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ РґР»СЏ Р±Р»РѕРєР° 'absolutePos'
     else if (args.hasOwnProperty('absolutePos') && args.absolutePos == null) {
         sprite.absoluteX = 0
         sprite.absoluteY = 0
     }
 
-    // своства спрайта
-    // устанавливаем значения для свойств блока 'sprite' либо оставляем без изменения
+    // СЃРІРѕСЃС‚РІР° СЃРїСЂР°Р№С‚Р°
+    // СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј Р·РЅР°С‡РµРЅРёСЏ РґР»СЏ СЃРІРѕР№СЃС‚РІ Р±Р»РѕРєР° 'sprite' Р»РёР±Рѕ РѕСЃС‚Р°РІР»СЏРµРј Р±РµР· РёР·РјРµРЅРµРЅРёСЏ
     if (args.sprite && Object.keys(args.sprite).length > 0) {
-        // координаты начала отрисовки спрайта
+        // РєРѕРѕСЂРґРёРЅР°С‚С‹ РЅР°С‡Р°Р»Р° РѕС‚СЂРёСЃРѕРІРєРё СЃРїСЂР°Р№С‚Р°
         sprite.x = !args.sprite.hasOwnProperty('x') ? sprite.x : (args.sprite.x || 100)
         sprite.y = !args.sprite.hasOwnProperty('y') ? sprite.y : (args.sprite.y || 300)
-        // ширина и высота спрайта
+        // С€РёСЂРёРЅР° Рё РІС‹СЃРѕС‚Р° СЃРїСЂР°Р№С‚Р°
         sprite.width = !args.sprite.hasOwnProperty('w') ? sprite.width : (args.sprite.width || 100)
         sprite.height = !args.sprite.hasOwnProperty('h') ? sprite.height : (args.sprite.height || 100)
     }
-    // устанавливаем дефолтные значения для блока 'sprite'
+    // СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј РґРµС„РѕР»С‚РЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ РґР»СЏ Р±Р»РѕРєР° 'sprite'
     else if (args.hasOwnProperty('sprite') && args.sprite == null) {
         sprite.x = 100
         sprite.y = 300
@@ -129,15 +129,15 @@ function changeSprite(sprite, args = {}) {
         sprite.height = 100
     }
 
-    // отдельный участок изображения, который необходимо отрисовать
-    // устанавливаем значения для свойств блока 'frame' либо оставляем без изменения
+    // РѕС‚РґРµР»СЊРЅС‹Р№ СѓС‡Р°СЃС‚РѕРє РёР·РѕР±СЂР°Р¶РµРЅРёСЏ, РєРѕС‚РѕСЂС‹Р№ РЅРµРѕР±С…РѕРґРёРјРѕ РѕС‚СЂРёСЃРѕРІР°С‚СЊ
+    // СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј Р·РЅР°С‡РµРЅРёСЏ РґР»СЏ СЃРІРѕР№СЃС‚РІ Р±Р»РѕРєР° 'frame' Р»РёР±Рѕ РѕСЃС‚Р°РІР»СЏРµРј Р±РµР· РёР·РјРµРЅРµРЅРёСЏ
     if (args.frame && Object.keys(args.frame).length > 0) {
         sprite.frame.x = !args.frame.hasOwnProperty('x') ? sprite.frame.x : (args.frame.x || 278)
         sprite.frame.y = !args.frame.hasOwnProperty('y') ? sprite.frame.y : (args.frame.y || 250)
         sprite.frame.width = !args.frame.hasOwnProperty('w') ? sprite.frame.width : (args.frame.width || 200)
         sprite.frame.height = !args.frame.hasOwnProperty('h') ? sprite.frame.height : (args.frame.height || 170)
     }
-    // устанавливаем дефолтные значения для блока 'frame'
+    // СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј РґРµС„РѕР»С‚РЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ РґР»СЏ Р±Р»РѕРєР° 'frame'
     else if (args.hasOwnProperty('frame') && args.frame == null) {
         sprite.frame.x = 278
         sprite.frame.y = 250
@@ -150,10 +150,10 @@ function outputResources () {
     console.log(window)
     console.log('Resources loaded')
 
-    const images = loader.resources.images // загруженные изображения
-    const jsons = loader.resources.jsons // загруженные данные (json файлы)
+    const images = loader.resources.images // Р·Р°РіСЂСѓР¶РµРЅРЅС‹Рµ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ
+    const jsons = loader.resources.jsons // Р·Р°РіСЂСѓР¶РµРЅРЅС‹Рµ РґР°РЅРЅС‹Рµ (json С„Р°Р№Р»С‹)
 
-    // выгружаем данные из tanks в users.tankInfo по соответствию полей users.tankId и tanks.id
+    // РІС‹РіСЂСѓР¶Р°РµРј РґР°РЅРЅС‹Рµ РёР· tanks РІ users.tankInfo РїРѕ СЃРѕРѕС‚РІРµС‚СЃС‚РІРёСЋ РїРѕР»РµР№ users.tankId Рё tanks.id
     Loader.joinJson(jsons.users, jsons.tanks, 'tankId', 'tankInfo')
     // output for TankInfo loaded
     let usersTankInfo = []
@@ -163,20 +163,20 @@ function outputResources () {
     console.log('TankInfo loaded in users.gameData from tanks')
     console.log(usersTankInfo)
 
-    // выводим в консоль загруженные ресурсы
+    // РІС‹РІРѕРґРёРј РІ РєРѕРЅСЃРѕР»СЊ Р·Р°РіСЂСѓР¶РµРЅРЅС‹Рµ СЂРµСЃСѓСЂСЃС‹
     console.log('Images')
     console.log(images)
     console.log('Data')
     console.log(jsons)
 
-    document.body.append(images['tank']) // выводим фон
+    document.body.append(images['tank']) // РІС‹РІРѕРґРёРј С„РѕРЅ
 
-    // создаем див-блок для вывода галереии картинок
+    // СЃРѕР·РґР°РµРј РґРёРІ-Р±Р»РѕРє РґР»СЏ РІС‹РІРѕРґР° РіР°Р»РµСЂРµРёРё РєР°СЂС‚РёРЅРѕРє
     let div = document.createElement('div')
     document.body.append(div)
     div.setAttribute('class', 'wrapper')
 
-    // добавляем картинки в блок галереи
+    // РґРѕР±Р°РІР»СЏРµРј РєР°СЂС‚РёРЅРєРё РІ Р±Р»РѕРє РіР°Р»РµСЂРµРё
     for (const image in images) {
         div.append(images[image])
     }

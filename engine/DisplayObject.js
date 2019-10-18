@@ -25,13 +25,14 @@
 			this.scaleY = args.scaleY || 1
 
 			this.parent = null // родитель объекта (ссылается на верхний по иерархии объект)
+			this.visible = true
 
 			// если передан масштаб, устанавливаем его
 			if (args.scale !== undefined) {
 				this.setScale(args.scale)
 			}
 		}
-		
+
 		// геттер и сеттер - псевдо свойства класса, которые могут выступать в роли метода
 		// обычно все геттеры и сеттеры идут сразу после конструктора
 		// get (геттер) - вычисляемое на лету свойство (при обращении к нему)
@@ -39,17 +40,17 @@
 
 		// absoluteX,Y - абсолютные координаты, относительно которых отрисовывается спрайт (с учетом координат якоря - anchor)
 		// при получении абсолютных координат не умножаем на масштаб, тк scale используется в момент отрисовки спрайта
-		
-		get absoluteX() {
+
+		get absoluteX () {
 			return this.x - this.anchorX * this.width
 		}
-		
+
 		set absoluteX (value) {
 			this.x = value + this.anchorX * this.width
 			return value
 		}
 		
-		get absoluteY() {
+		get absoluteY () {
 			return this.y - this.anchorY * this.height
 		}
 		
@@ -67,20 +68,28 @@
 		// устанавливает родителя текущего объекта
 		setParent(parent) {
 			// если родитель уже присутствует, удаляем его
-			if (this.parent) {
+			if (this.parent && this.parent.remove) {
 				this.parent.remove(this)
 			}
 
 			// если родитель, передан, добавляем его в контейнер и записываем в свойство
-			if (parent) {
+			if (parent && parent.add) {
 				parent.add(this) // добавляем в родительский контейнер данный объект
-				this.parent = parent // записываем родителя в свойство
 			}
+			
+			this.parent = parent // записываем родителя в свойство
 		}
 
-		draw() { }
+		draw (callback) {
+			if (this.visible) {
+				callback()
+			}
+		}
 	}
 
-	window.GameEngine = window.GameEngine || {}
-	window.GameEngine.DisplayObject = DisplayObject
+	// window.GameEngine = window.GameEngine || {}
+	// window.GameEngine.DisplayObject = DisplayObject
+	// регистрируем пространство имен BattleCityGame.GameEngine.DisplayObject в объекте window
+	namespace.set('BattleCityGame.GameEngine.DisplayObject', DisplayObject) // регистрируем класс DisplayObject
+	// BattleCityGame.GameEngine.Renderer = DisplayObject // регистрируем класс DisplayObject в объекте GameEngine
 })();

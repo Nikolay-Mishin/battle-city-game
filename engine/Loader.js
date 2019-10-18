@@ -2,7 +2,7 @@
 	'use strict'
 	
 	class Loader {
-		constructor() {
+		constructor () {
 			// очередь на загрузку - хранит данные, которые должны быть загружены методом load()
 			this.loadOrder = {
 				images: [],
@@ -27,12 +27,12 @@
 		}
 
 		// получает изображение из ресурсов по имени
-		getImage(name) {
+		getImage (name) {
 			return this.resources.images[name]
 		}
 
 		// получает json из ресурсов по имени
-		getJson(name) {
+		getJson (name) {
 			return this.resources.jsons[name]
 		}
 
@@ -89,7 +89,7 @@
 		}
 
 		// загружает избражение
-		static loadImage(src) {
+		static loadImage (src) {
 			// возвращаем промис
 			// промис - это функция, которая позволяет обернуть логику с асинхронным кодом (нужно время на выполнение - ajax и др)
 			// resolve - вызывается при успехе (когда нужный процесс завершен - получили аудио, изображение)
@@ -121,7 +121,7 @@
 		}
 
 		// слияние json файлов - загружает tanks.json в tankInfo (users.json)
-		static joinJson(jsonTo, jsonFrom, propertyMerge, propertyTo) {
+		static joinJson (jsonTo, jsonFrom, propertyMerge, propertyTo) {
 			// проходим по всем элементам файла, в который выгружаем данные (users)
 			for (const itemTo of jsonTo) {
 				// если в файле, в который выгружаем данные нет свойства gameData, создаем его

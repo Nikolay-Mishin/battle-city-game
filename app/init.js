@@ -18,7 +18,6 @@ const renderer = new Renderer({
 
         for (const sprite of sprites) {
             sprite.update(timestamp)
-            // sprite.rotation = 0
         }
     }
 })

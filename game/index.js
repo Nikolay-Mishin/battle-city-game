@@ -43,7 +43,10 @@ function createSprites () {
         // rotation: Math.PI / 2,
         scale: 0.25,
         anchorX: 0.5,
-        anchorY: 0.5
+        anchorY: 0.5,
+        update(timestamp) {
+            this.rotation = timestamp / 1000
+        }
     })
     sprites.push(sprite1) // добавляем спрайт в массив для отрисовки
     container.add(sprite1) // добавляем спрайт в контейнер

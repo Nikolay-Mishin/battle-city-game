@@ -24,7 +24,7 @@
             if (this.displayObjects.includes(displayObject)) {
                 const index = this.displayObjects.indexOf(displayObject) // получаем индекс данного объекта в контейнере
                 this.displayObjects.splice(index, 1) // удаляем из контейнера 1 объект, начиная с найденного индекса
-                displayObject.setParent(null) // устанавливаем родятеля в null
+                displayObject.setParent(null) // удаляем родятеля
             }
         }
 
@@ -33,7 +33,7 @@
             // параметры трансформации контейнера применяются для всех displayObject
             context.save() // сохраняем текущее состояние контекста
             context.translate(this.x, this.y) // переназначает начало системы координат
-            context.rotate(-this.rotation) // поворачивает объект
+            context.rotate(this.rotation) // поворачивает объект (по часовой стрелке)
             context.scale(this.scaleX, this.scaleY) // масштабирует объект
 
             // для каждого объекта вызываем метод draw() для отрисовки спрайта

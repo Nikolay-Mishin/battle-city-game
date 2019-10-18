@@ -1,4 +1,4 @@
-;(function () {
+﻿;(function () {
 	'use strict'
 
 	// занимается непосредственно отрисовкой графики (только отрисовкой отдельного конкретного изображения)
@@ -7,30 +7,43 @@
 
 	class Game {
 		constructor (args = {}) {
-			this.renderer = new GameEngine.Renderer(args)
-			this.loader = new GameEngine.Loader()
-			this.scenesCollection = new GameEngine.Container()
-			this.keyboard = new GameEngine.Keyboard()
+			this.renderer = new GameEngine.Renderer(args) // объект рендера (инициализируем канвас)
+			this.loader = new GameEngine.Loader() // объект загрузчика
+			this.scenesCollection = new GameEngine.Container() // коллекция (массив) сцен - объект контейнера
+			this.keyboard = new GameEngine.Keyboard() // объект клавиатуры
 
+			// коллекция - работает с переданными аргументами, как с массивом
+			// можно передать как коллекцию, так и 1 аргумент - add(...scenes), remove(scene)
+
+			// добавляем сцены, если они заданы
 			if (args.scenes) {
-				this.addScene(...args.scenes)
+				this.addScene(...args.scenes) // передаем сцены в виде коллекции
 			}
 
+			// если передан родительский элемент для установки канваса и в него можно поместить дочерние элементы
+			// устанавливаем канвас в целевой элемент
 			if (args.el && args.el.appendChild) {
 				args.el.appendChild(this.renderer.canvas)
 			}
 
+			// получаем массив всех сцен с активным флагом autoStart
 			const autoStartedScenes = this.scenes.filter(x => x.autoStart)
 
+			// сначала грузим все ресурсы, а потом уже отрисовываем актуальный набор ресурсов
+			// чтобы не грузить самостоятельными объектами вспомогательные ресурсы,
+			// которые нужны исключительно для формирования другого ресурса а не как самостоятельный объект
+
+			// для каждой сцены с автостартом задаем статус и вызываем метод предзагрузки ресурсов (добавление в очередь загрузки)
 			for (const scene of autoStartedScenes) {
 				scene.status = 'loading'
-				scene.loading(this.loader)
+				scene.loading(this.loader) // передаем загрузчик в качестве параметра
 			}
 
+			// вызываем метод загрузки ресурсов
 			this.loader.load(() => {
 				for (const scene of autoStartedScenes) {
 					scene.status = 'init'
-					scene.init()
+					scene.init() // инициализируем сцену
 				}
 
 				for (const scene of autoStartedScenes) {
@@ -38,19 +51,22 @@
 				}
 			})
 
-			requestAnimationFrame(timestamp => this.tick(timestamp))
+			requestAnimationFrame(timestamp => this.tick(timestamp)) // метод отрисовки фреймов (обновляется 60р в сек)
 		}
 
-		addScene (...scenes) {
-			this.scenesCollection.add(...scenes)
+		// геттер для получения сцен из контейнера
+		get scenes() {
+			return this.scenesCollection.displayObjects
+		}
 
+		// добавляет переданную коллекцию сцен в контейнер
+		addScene (...scenes) {
+			this.scenesCollection.add(...scenes) // добавляем в контейнер
+
+			// для каждой сцены устанавливаем родительскую игру
 			for (const scene of scenes) {
 				scene.parent = this
 			}
-		}
-
-		get scenes () {
-			return this.scenesCollection.displayObjects
 		}
 
 		// вызывается при каждом обновлении фрейма (60р в сек)
@@ -72,13 +88,16 @@
 			requestAnimationFrame(timestamp => this.tick(timestamp)) // рекурсивно вызываем функцию tick для обновления фреймов
 		}
 
+		// получает сцену по имени
 		getScene (name) {
+			// если передан объект сцены, ищет такой элемент в коллекции
 			if (name instanceof GameEngine.Scene) {
 				if (this.scenes.includes(name)) {
 					return name
 				}
 			}
 
+			// если передано имя в виде строки, проходим в цикле по коллекции сцен и ищем совпдание имена
 			if (typeof name === 'string') {
 				for (const scene of this.scenes) {
 					if (scene.name === name) {
@@ -88,19 +107,22 @@
 			}
 		}
 
+		// стартует сцену
 		startScene (name) {
-			const scene = this.getScene(name)
+			const scene = this.getScene(name) // получаем сцену
 
+			// если сцена не найдена, возвращаем false
 			if (!scene) {
 				return false
 			}
 			
-			scene.status = 'loading'
-			scene.loading(this.loader)
+			scene.status = 'loading' // меняем статус
+			scene.loading(this.loader) // вызываем загрузчик ресурсов
 
+			// загружаем установленные в очереди ресурсы
 			this.loader.load(() => {
 				scene.status = 'init'
-				scene.init()
+				scene.init() // инициализируем сцену
 
 				scene.status = 'started'
 			})
@@ -108,16 +130,18 @@
 			return true
 		}
 
+		// останавливает сцену
 		finishScene (name) {
-			const scene = this.getScene(name)
+			const scene = this.getScene(name) // получаем сцену
 
+			// если сцена не найдена, возвращаем false
 			if (!scene) {
 				return false
 			}
 
-			scene.status = 'finished'
-			this.scenesCollection.remove(scene)
-			scene.beforeDestroy()
+			scene.status = 'finished' // меняем статус
+			this.scenesCollection.remove(scene) // удаляем сцену
+			scene.beforeDestroy() // вызывается перед удалением сцены и удаляет все объекты, созданные сценой
 
 		}
 	}

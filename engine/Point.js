@@ -1,23 +1,26 @@
 ;(function () {
-    'use strict'
+	'use strict'
 
-    class Point extends GameEngine.DisplayObject {
-        constructor (args = {}) {
-            super(args)
+	// отвечает за отрисовку точки
 
-            this.color = args.color || 'red'
-        }
+	class Point extends GameEngine.DisplayObject {
+		constructor (args = {}) {
+			super(args)
 
-        draw (canvas, context) {
-            super.draw(() => {
-                context.fillStyle = this.color
-                context.beginPath()
-                context.arc(this.x, this.y, 3, 0, Math.PI * 2)
-                context.fill()
-            })
-        }
-    }
+			this.color = args.color || 'red'
+		}
 
-    window.GameEngine = window.GameEngine || {}
-    window.GameEngine.Point = Point
+		draw (canvas, context) {
+			// вызываем метод отрисовки родителя
+			super.draw(() => {
+				context.fillStyle = this.color // цвет точки
+				context.beginPath()
+				// координаты x,y - 
+				context.arc(this.x, this.y, 3, 0, Math.PI * 2) //параметры точки
+				context.fill() // отрисовываем точку
+			})
+		}
+	}
+	
+	namespace.set('BattleCityGame.GameEngine.Point', Point) // регистрируем класс Point в объекте GameEngine
 })();

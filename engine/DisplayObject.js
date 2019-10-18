@@ -1,4 +1,4 @@
-;(function () {
+﻿;(function () {
 	'use strict'
 
 	// Отвечает за отдельную сущность, которая будет отрисовываться (любой объект - спрайт, animationSprite, container...)
@@ -81,6 +81,7 @@
 		}
 
 		draw (callback) {
+			// вызываем callback-функцию, если объект не скрыт
 			if (this.visible) {
 				callback()
 			}

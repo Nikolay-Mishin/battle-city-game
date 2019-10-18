@@ -1,35 +1,23 @@
-;(function () {
+﻿;(function () {
 	'use strict'
 
 	// отдельные сцены игры (меню, уровень, результат боя)
 	// сцена - расширенный контейнер
 
-	/*
-		autoStart - запускать сцену автоматически или нет
-		по умолчанию false
-
-		loading, update и init переопределяем на уровне конструктора
-		bind(this) - копирует код функции и подменяет контекст (this - экземпляр данного класса)
-		без bind this бы ссылался на объект args при определении параметров экземпляра класса
-
-		loading - отвечает за загрузку ресурсов
-		init - инициализирует (создает объекты) ресурсы
-
-		parent - ссылается на Game
-		this.add - вызываем метод контейнер и добавляем объект
-		delete удаляет свойство из объекта
-	*/
-
 	class Scene extends GameEngine.Container {
 		constructor (args = {}) {
 			super()
 
-			this.autoStart = args.autoStart || false
+			this.autoStart = args.autoStart || false // запускать сцену автоматически или нет
 			this.name = args.name || ''
 
-			this.status = 'waiting'
-			this.stage = this.displayObjects
-			this.game = null
+			this.status = 'waiting' // статус сцены по умолчанию
+			this.stage = this.displayObjects // хранилище объектов сцены (stage - алиас)
+			this.game = null // ссылка на объект игры, к которой принадлежит сцена ()
+
+			// loading, update и init переопределяем на уровне конструктора
+			// bind(this) - копирует код функции и подменяет контекст(this - экземпляр данного класса)
+			// без bind this бы ссылался на объект args при определении параметров экземпляра класса
 
 			if (args.loading) {
 				this.loading = args.loading.bind(this)
@@ -48,10 +36,10 @@
 			}
 		}
 
-		loading () {}
-		init () {}
-		update () {}
-		beforeDestroy () {}
+		loading () {} // метод загрузки ресурсов
+		init () {} // метод инициализации сцены - создает объекты загруженных ресурсов
+		update () {} // метод обновления состояния спрайта
+		beforeDestroy () {} // вызывается перед удалением сцены и удаляет все объекты, созданные сценой
 	}
 
 	// window.GameEngine = window.GameEngine || {}

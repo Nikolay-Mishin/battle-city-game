@@ -14,20 +14,20 @@
 	<script src="app/namespace.js"></script>
 	<!-- скрипт конфигурации проекта (установка пространства имени Приложения (Имя Проекта) и констант проекта) -->
 	<script src="app/config.js"></script>
-	<!-- подключаем классы -->
-	<script src="engine/DisplayObject.js"></script>
-	<script src="engine/Container.js"></script>
+	<!-- подключаем самостоятельные классы -->
+	<script src="engine/Game.js"></script>
 	<script src="engine/Loader.js"></script>
 	<script src="engine/Renderer.js"></script>
-	<script src="engine/Sprite.js"></script>
-	<script src="engine/Scene.js"></script>
-	<script src="engine/Mouse.js"></script>
+	<script src="engine/DisplayObject.js"></script>
 	<script src="engine/Keyboard.js"></script>
+	<script src="engine/Mouse.js"></script>
+	<!-- подключаем наследуемые классы -->
+	<script src="engine/Container.js"></script>
+		<script src="engine/Scene.js"></script>
+	<script src="engine/Sprite.js"></script>
+		<script src="engine/Body.js"></script>
 	<script src="engine/Point.js"></script>
 	<script src="engine/Line.js"></script>
-	<script src="engine/Body.js"></script>
-	<script src="engine/Game.js"></script>
-	<!-- // подключаем классы -->
 	<!-- скрипт для инициализации глобальных переменных, основных объектов и классов -->
 	<script src="app/init.js"></script>
 	<!-- главный скрипт с основной логикой и функционалом приложения -->

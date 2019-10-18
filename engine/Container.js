@@ -1,4 +1,4 @@
-;(function () {
+﻿;(function () {
 	'use strict'
 
 	// Контейнер для хранения отображаемых объектов (спрайтов)
@@ -12,7 +12,7 @@
 			this.displayObjects = [] // хранилище объектов контейнера (которые отображены на экране - спрайты)
 		}
 
-		// добавляет объект в контейнер (если такого объекта еще нет в списке)
+		// добавляет коллекцию (массив объектов) в контейнер (если такого объекта еще нет в списке)
 		add (...displayObjects) {
 			for (const displayObject of displayObjects) {
 				if (!this.displayObjects.includes(displayObject)) {
@@ -22,7 +22,7 @@
 			}
 		}
 
-		// удаляет объект из контейнера (если такой объект существует в списке)
+		// удаляет коллекцию (массив объектов) из контейнера (если такой объект существует в списке)
 		remove (...displayObjects) {
 			for (const displayObject of displayObjects) {
 				if (this.displayObjects.includes(displayObject)) {

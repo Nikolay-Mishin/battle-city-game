@@ -17,8 +17,6 @@
 			this.update = args.update || (() => {}) // задаем значение для метода update()
 
 			this.stage = new GameEngine.Container() // контейнер класса Рендер (экземпляр объекта)
-
-			requestAnimationFrame(timestamp => this.tick(timestamp)) // метод отрисовки фреймов (обновляется 60р в сек)
 		}
 
 		/*

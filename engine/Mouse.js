@@ -1,8 +1,11 @@
-;(function () {
-    'use strict'
+﻿;(function () {
+	'use strict'
 
-    class Mouse {}
+	// отвечает за отработку событий при нажатии мыши
 
-    window.GameEngine = window.GameEngine || {}
-    window.GameEngine.Mouse = Mouse
+	class Mouse {
+
+	}
+	
+	namespace.set('BattleCityGame.GameEngine.Mouse', Mouse) // регистрируем класс Mouse в объекте GameEngine
 })();

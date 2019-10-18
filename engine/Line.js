@@ -1,30 +1,32 @@
-;(function () {
-    'use strict'
+﻿;(function () {
+	'use strict'
 
-    class Line extends GameEngine.DisplayObject {
-        constructor (args = {}) {
-            super(args)
+	// отвечает за отрисовку линии
 
-            this.color = args.color || 'red'
-            this.x1 = args.x1 || 0
-            this.y1 = args.y1 || 0
-            this.x2 = args.x2 || 0
-            this.y2 = args.y2 || 0
-        }
+	class Line extends GameEngine.DisplayObject {
+		constructor (args = {}) {
+			super(args)
 
-        draw (canvas, context) {
-            super.draw(() => {
-                context.strokeStyle = this.color
-                context.lineWidth = 1
+			this.color = args.color || 'red'
+			this.x1 = args.x1 || 0
+			this.y1 = args.y1 || 0
+			this.x2 = args.x2 || 0
+			this.y2 = args.y2 || 0
+		}
 
-                context.beginPath()
-                context.moveTo(this.x1, this.y1)
-                context.lineTo(this.x2, this.y2)
-                context.stroke()
-            })
-        }
-    }
+		draw (canvas, context) {
+			// вызываем метод отрисовки родителя
+			super.draw(() => {
+				context.strokeStyle = this.color // задаем цвет линии
+				context.lineWidth = 1 // ширина линии
 
-    window.GameEngine = window.GameEngine || {}
-    window.GameEngine.Line = Line
+				context.beginPath()
+				context.moveTo(this.x1, this.y1) // начальная точка
+				context.lineTo(this.x2, this.y2) // конечная точка
+				context.stroke() // отрисовываем линию
+			})
+		}
+	}
+	
+	namespace.set('BattleCityGame.GameEngine.Line', Line) // регистрируем класс Line в объекте GameEngine
 })();

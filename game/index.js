@@ -1,19 +1,108 @@
-document.body.append(renderer.canvas) // добавляем на страницу канвас, созданные с помощью класса Рендер
+﻿// объект сцены
+const mainScene = new Scene({
+	name: 'mainScene',
+	autoStart: true,
 
-// загружаем изображения - добавляем изображение в очередь на загрузку
-loader.addImage('tank', `${img}/favicon-full.png`)
-loader.addImage('bunny', `${img}/bunny.jpeg`)
+	// метод загрузки ресурсов
+	loading (loader) {
+		// загружаем изображения - добавляем изображение в очередь на загрузку
+		loader.addImage('bunny', `${img}/bunny.jpeg`)
+		// загружаем данные (json файлы) - добавляем json файл в очередь на загрузку
+		loader.addJson('persons', `${data}/persons.json`)
+	},
 
-// загружаем данные (json файлы) - добавляем json файл в очередь на загрузку
-loader.addJson('persons', `${data}/persons.json`)
-loader.addJson('users', `${data}/user/users.json`)
-loader.addJson('tanks', `${data}/game/tanks.json`)
+	// метод инициализации сцены - создаем объекты загруженных ресурсов
+	init () {
+		// получаем изображение - ссылаемся на свойство loader родителя (Game)
+		const bunnyTexture = this.parent.loader.getImage('bunny')
 
+		// создаем спрайт и его тело
+		this.bunny = new Body(bunnyTexture, {
+			scale: 0.25,
+			anchorX: 0.5,
+			anchorY: 0.5,
+			// координаты спрайта - 1/2 от размеров канваса (устанавливаем по-середине)
+			x: this.parent.renderer.canvas.width / 2,
+			y: this.parent.renderer.canvas.height / 2,
+			debug: true, // отображаем тело спрайта
+			// тело спрайта
+			body: {
+				x: 0,
+				y: 0.5,
+				width: 1,
+				height: 0.5
+			},
+			// метод обновления состояния спрайта
+			update(timestamp) {
+				// this.rotation = timestamp / 1000
+			}
+		})
+
+		// добавляем спрайт в контейнер
+		this.add(this.bunny) // порядок отрисовки совпадает с порядком добавления в контейнер
+	},
+
+	// метод обновления состояния спрайта
+	update (timestamp) {
+		const { keyboard } = this.parent // в качестве объекта клавиатуры записываем Game
+
+		let speedRotation = keyboard.space ? Math.PI / 100 : Math.PI / 200 // скорость поворота
+
+		// обрабатываем нажатия клавиш
+
+		if (keyboard.arrowUp) {
+			this.bunny.rotation += speedRotation
+		}
+
+		if (keyboard.arrowDown) {
+			this.bunny.rotation -= speedRotation
+		}
+
+		// для каждого объекта на сцене вызываем метод обновления состояния
+		for (const sprite of this.stage) {
+			sprite.update(timestamp)
+		}
+	}
+})
+
+// объект игры
+const game = new Game({
+	el: document.body, // объект, в который мы встраиваем канвас
+	// параметры для инициализации канваса
+	// передаем ширину и высоту для задания размера канваса
+	width: 500,
+	height: 500,
+	background: 'green',
+	// список сцен игры
+	scenes: [mainScene]
+})
+
+/*
+let sprites = [] // хранилище спрайтов
+
+const renderer = new Renderer({
+	width: 500,
+	height: 500,
+	background: 'gray',
+
+	update(timestamp) {
+		if (sprites.length < 1) return
+
+		// container.rotation = timestamp / 1000
+
+		for (const sprite of sprites) {
+			sprite.update(timestamp)
+		}
+	}
+})
+*/
+
+/*
 // вызываем метод для загрузки данных из зарегистрированной очереди
 loader.load(() => {
 	container = new Container() // объект контейнера
 	renderer.stage.add(container) // добавляем объект контейнера в свойство Рендера
-	
+
 	container.x = 100
 	container.y = 100
 	// container.rotation = Math.PI / 4 // поворачиваем по часовой стрелке на пол круга
@@ -25,17 +114,10 @@ loader.load(() => {
 	createSprites() // создаем спрайты
 	// outputResources() // выводим загруженные ресурсы
 })
-
-/*
-	game
-	el - объект, в который мы встраиваем канвас
-	передаем ширину и высоту для задания размера канваса
-	init - this.add - порядок отрисовки совпадает с порядком добавления в контейнер
-	beforeDestroy - вызывается перед удалением сцены и удаляем все объекты, созданные сценой
 */
 
 // создаем спрайты
-function createSprites () {
+function createSprites() {
 	// создаем спрайт
 	let sprite1 = new Sprite(loader.getImage('bunny'), {
 		x: 100,
@@ -88,7 +170,7 @@ function createSprites () {
 }
 
 // выводим ресурсы
-function outputResources () {
+function outputResources() {
 	console.log(window)
 	console.log('Resources loaded')
 

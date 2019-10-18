@@ -1,10 +1,8 @@
-; (function () {
+﻿;(function () {
 	'use strict'
-	
-	/*
-	 * занимается непосредственно отрисовкой графики (только отрисовкой отдельного конкретного изображения)
-	 * отвечает за отрисовку отдельного изображения (или его участка)
-	 */
+
+	// занимается непосредственно отрисовкой графики (только отрисовкой отдельного конкретного изображения)
+	// отвечает за отрисовку отдельного изображения (или его участка)
 
 	class Sprite extends GameEngine.DisplayObject {
 		constructor (texture, args = {}) {
@@ -34,32 +32,40 @@
 			}
 
 			// задаем значение для метода update()
-			this.update = args.hasOwnProperty('update') ? args.update.bind(this) : (() => {})
+			// this.update = args.hasOwnProperty('update') ? args.update.bind(this) : (() => {})
+			if (args.update) {
+				this.update = args.update.bind(this)
+			}
 		}
 
+		update() {} // метод для обновления состояния спрайта (изменяет параметры созданного спрайт)
+
 		// отрисовывает спрайт на основе установленных свойств
-		draw(canvas, context) {
-			context.save() // сохраняем текущее состояние контекста
-			context.translate(this.x, this.y) // переназначает начало системы координат
-			context.rotate(this.rotation) // поворачивает объект (по часовой стрелке)
-			context.scale(this.scaleX, this.scaleY) // масштабирует объект
-			// ширину и высоту не умножаем на масштаб, тк scale используется в момент отрисовки спрайта
+		draw (canvas, context) {
+			// вызываем родительский метод отрисовки и передаем callback-функцию
+			super.draw(() => {
+				context.save() // сохраняем текущее состояние контекста
+				context.translate(this.x, this.y) // переназначает начало системы координат
+				context.rotate(this.rotation) // поворачивает объект (по часовой стрелке)
+				context.scale(this.scaleX, this.scaleY) // масштабирует объект
 
-			// отрисовываем спрайт
-			context.drawImage(
-				this.texture,
-				this.frame.x,
-				this.frame.y,
-				this.frame.width,
-				this.frame.height,
-				// абсолютные координаты для отрисовки указывает без учета смещения (translate)
-				this.absoluteX - this.x,
-				this.absoluteY - this.y,
-				this.width,
-				this.height
-			)
-
-			context.restore() // восстанавливаем контекст
+				// отрисовываем спрайт
+				context.drawImage(
+					this.texture,
+					this.frame.x,
+					this.frame.y,
+					// ширину и высоту не умножаем на масштаб, тк scale используется в момент отрисовки спрайта
+					this.frame.width,
+					this.frame.height,
+					// абсолютные координаты для отрисовки указывает без учета смещения (translate)
+					this.absoluteX - this.x,
+					this.absoluteY - this.y,
+					this.width,
+					this.height
+				)
+	
+				context.restore() // восстанавливаем контекст
+			})
 		}
 
 		// изменяет параметры созданного спрайт

@@ -66,8 +66,6 @@
 
 		// устанавливает родителя текущего объекта
 		setParent(parent) {
-			console.log(parent)
-			console.log(this.parent)
 			// если родитель уже присутствует, удаляем его
 			if (this.parent) {
 				this.parent.remove(this)

@@ -2,8 +2,8 @@
     'use strict'
 
     /*
-     * тело спрайта - Collider
-     * отвечает за пересечение (столкновение) 2 объектов
+     * С‚РµР»Рѕ СЃРїСЂР°Р№С‚Р° - Collider
+     * РѕС‚РІРµС‡Р°РµС‚ Р·Р° РїРµСЂРµСЃРµС‡РµРЅРёРµ (СЃС‚РѕР»РєРЅРѕРІРµРЅРёРµ) 2 РѕР±СЉРµРєС‚РѕРІ
      */
 
     class Body extends GameEngine.Sprite {
@@ -14,7 +14,7 @@
 
     // window.GameEngine = window.GameEngine || {}
     // window.GameEngine.Body = Body
-    // регистрируем пространство имен BattleCityGame.GameEngine.Sprite в объекте window
-    namespace.set('BattleCityGame.GameEngine.Body', Body) // регистрируем класс Body в объекте GameEngine
-    // BattleCityGame.GameEngine.Body = Body // регистрируем класс Sprite в объекте GameEngine
+    // СЂРµРіРёСЃС‚СЂРёСЂСѓРµРј РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІРѕ РёРјРµРЅ BattleCityGame.GameEngine.Sprite РІ РѕР±СЉРµРєС‚Рµ window
+    namespace.set('BattleCityGame.GameEngine.Body', Body) // СЂРµРіРёСЃС‚СЂРёСЂСѓРµРј РєР»Р°СЃСЃ Body РІ РѕР±СЉРµРєС‚Рµ GameEngine
+    // BattleCityGame.GameEngine.Body = Body // СЂРµРіРёСЃС‚СЂРёСЂСѓРµРј РєР»Р°СЃСЃ Sprite РІ РѕР±СЉРµРєС‚Рµ GameEngine
 })();

@@ -1,34 +1,54 @@
 ;(function () {
     'use strict'
 
-    // РљРѕРЅС‚РµР№РЅРµСЂ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ РѕС‚РѕР±СЂР°Р¶Р°РµРјС‹С… РѕР±СЉРµРєС‚РѕРІ (СЃРїСЂР°Р№С‚РѕРІ)
+    // Контейнер для хранения отображаемых объектов (спрайтов)
+    // extends - наследование класса
+    // Container наследуется от GameEngine.DisplayObject
 
-    class Container {
-        constructor () {
-            this.displayObjects = [] // С…СЂР°РЅРёР»РёС‰Рµ РѕР±СЉРµРєС‚РѕРІ РєРѕРЅС‚РµР№РЅРµСЂР° (РєРѕС‚РѕСЂС‹Рµ РѕС‚РѕР±СЂР°Р¶РµРЅС‹ РЅР° СЌРєСЂР°РЅРµ - СЃРїСЂР°Р№С‚С‹)
+    class Container extends GameEngine.DisplayObject {
+        constructor (args = {}) {
+            super(args) // метод super вызывает родительский конструктор (доступ к родителю идет через super - super.funA())
+            this.displayObjects = [] // хранилище объектов контейнера (которые отображены на экране - спрайты)
         }
 
-        // РґРѕР±Р°РІР»СЏРµС‚ РѕР±СЉРµРєС‚ РІ РєРѕРЅС‚РµР№РЅРµСЂ (РµСЃР»Рё С‚Р°РєРѕРіРѕ РѕР±СЉРµРєС‚Р° РµС‰Рµ РЅРµС‚ РІ СЃРїРёСЃРєРµ)
+        // добавляет объект в контейнер (если такого объекта еще нет в списке)
         add (displayObject) {
             if (!this.displayObjects.includes(displayObject)) {
-                this.displayObjects.push(displayObject)
+                this.displayObjects.push(displayObject) // добавляем отображаемый объект в свойство
+                displayObject.setParent(this) // 
             }
         }
 
-        remove () {}
+        // удаляет объект из контейнера (если такой объект существует в списке)
+        remove (displayObject) {
+            if (this.displayObjects.includes(displayObject)) {
+                const index = this.displayObjects.indexOf(displayObject) // получаем индекс данного объекта в контейнере
+                this.displayObjects.splice(index, 1) // удаляем из контейнера 1 объект, начиная с найденного индекса
+                displayObject.setParent(null) // устанавливаем родятеля в null
+            }
+        }
 
-        // РѕС‚СЂРёСЃРѕРІС‹РІР°РµС‚ РІСЃРµ РѕР±СЉРµРєС‚С‹ РёР· РєРѕРЅС‚РµР№РЅРµСЂР°
+        // отрисовывает все объекты из контейнера
         draw (canvas, context) {
-            // РґР»СЏ РєР°Р¶РґРѕРіРѕ РѕР±СЉРµРєС‚Р° РІС‹Р·С‹РІР°РµРј РјРµС‚РѕРґ draw() РґР»СЏ РѕС‚СЂРёСЃРѕРІРєРё СЃРїСЂР°Р№С‚Р°
+            // параметры трансформации контейнера применяются для всех displayObject
+            context.save() // сохраняем текущее состояние контекста
+            context.translate(this.x, this.y) // переназначает начало системы координат
+            context.rotate(-this.rotation) // поворачивает объект
+            context.scale(this.scaleX, this.scaleY) // масштабирует объект
+
+            // для каждого объекта вызываем метод draw() для отрисовки спрайта
+            // для каждого displayObject применяются дополнительно индивидуальные параметры трансформации для данного объекта
             for (const displayObject of this.displayObjects) {
                 displayObject.draw(canvas, context)
             }
+
+            context.restore() // восстанавливаем контекст
         }
     }
 
     // window.GameEngine = window.GameEngine || {}
     // window.GameEngine.Container = Container
-    // СЂРµРіРёСЃС‚СЂРёСЂСѓРµРј РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІРѕ РёРјРµРЅ BattleCityGame.GameEngine.Container РІ РѕР±СЉРµРєС‚Рµ window
-    namespace.set('BattleCityGame.GameEngine.Container', Container) // СЂРµРіРёСЃС‚СЂРёСЂСѓРµРј РєР»Р°СЃСЃ Container РІ РѕР±СЉРµРєС‚Рµ GameEngine
-    // BattleCityGame.GameEngine.Container = Container // СЂРµРіРёСЃС‚СЂРёСЂСѓРµРј РєР»Р°СЃСЃ Container РІ РѕР±СЉРµРєС‚Рµ GameEngine
+    // регистрируем пространство имен BattleCityGame.GameEngine.Container в объекте window
+    namespace.set('BattleCityGame.GameEngine.Container', Container) // регистрируем класс Container в объекте GameEngine
+    // BattleCityGame.GameEngine.Container = Container // регистрируем класс Container в объекте GameEngine
 })();

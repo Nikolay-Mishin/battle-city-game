@@ -1,6 +1,6 @@
 ﻿'use strict'
 
-console.log('=> "game/mane.js"')
+console.log('=> "game/main.js"')
 
 /*
  * Повторить код урока. Добиться чтобы код работал так же как.

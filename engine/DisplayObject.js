@@ -88,9 +88,5 @@
 		}
 	}
 
-	// window.GameEngine = window.GameEngine || {}
-	// window.GameEngine.DisplayObject = DisplayObject
-	// регистрируем пространство имен BattleCityGame.GameEngine.DisplayObject в объекте window
-	namespace.set('BattleCityGame.GameEngine.DisplayObject', DisplayObject) // регистрируем класс DisplayObject
-	// BattleCityGame.GameEngine.Renderer = DisplayObject // регистрируем класс DisplayObject в объекте GameEngine
+	new Namespace('BattleCityGame.GameEngine.DisplayObject', DisplayObject) // регистрируем класс DisplayObject
 })();

@@ -1,5 +1,11 @@
-[
+﻿[
 	{
-		"projectName": "BattleCityGame"
+		"projectSetting": {
+			"name": "BattleCityGame",
+			"namespace": "GameEngine"
+		},
+		"settings": {
+			"keyboard": {}
+		}
 	}
 ]

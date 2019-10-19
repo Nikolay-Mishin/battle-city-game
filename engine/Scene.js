@@ -42,9 +42,5 @@
 		beforeDestroy () {} // вызывается перед удалением сцены и удаляет все объекты, созданные сценой
 	}
 
-	// window.GameEngine = window.GameEngine || {}
-	// window.GameEngine.Scene = Scene
-	// регистрируем пространство имен BattleCityGame.GameEngine.Sprite в объекте window
-	namespace.set('BattleCityGame.GameEngine.Scene', Scene) // регистрируем класс Sprite в объекте GameEngine
-	// BattleCityGame.GameEngine.Sprite = Sprite // регистрируем класс Sprite в объекте GameEngine
+	new Namespace('BattleCityGame.GameEngine.Scene', Scene) // регистрируем класс Scene
 })();

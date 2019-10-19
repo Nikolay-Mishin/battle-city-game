@@ -70,9 +70,5 @@
 		}
 	}
 
-	// window.GameEngine = window.GameEngine || {}
-	// window.GameEngine.Sprite = Sprite
-	// регистрируем пространство имен BattleCityGame.GameEngine.Sprite в объекте window
-	namespace.set('BattleCityGame.GameEngine.Sprite', Sprite) // регистрируем класс Sprite в объекте GameEngine
-	// BattleCityGame.GameEngine.Sprite = Sprite // регистрируем класс Sprite в объекте GameEngine
+	new Namespace('BattleCityGame.GameEngine.Sprite', Sprite) // регистрируем класс Sprite
 })();

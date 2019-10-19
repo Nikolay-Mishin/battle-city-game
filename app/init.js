@@ -1,1 +1,2 @@
-const { Container, Body, Game, Scene, Point, Line } = GameEngine // выгружаем свойства из объекта GameEngine (деструктуризация)
+﻿// выгружаем свойства из объекта GameEngine (деструктуризация)
+const { Container, Body, Game, Scene, Point, Line, Loader } = GameEngine

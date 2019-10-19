@@ -1,4 +1,17 @@
-﻿// объект сцены
+﻿'use strict'
+
+/*
+ * сделать управляемый мячик + лабиринт
+ * как сделать так, чтобы мячик не стукался об стенки, а проходил только лабиринт
+ * когда доходит до финиша - заканчивается одна сцена и начинается другая
+ * 1 сцена - меню (предлагает сыграть в игру)
+ * 2 сцена - сама игра
+ * 3 сцена - результаты (сообщение 'вы выиграли')
+ * */
+
+console.log('=> "game/index.js"')
+
+// объект сцены
 const mainScene = new Scene({
 	name: 'mainScene',
 	autoStart: true,
@@ -75,7 +88,7 @@ const mainScene = new Scene({
 			// координаты спрайта - 1/2 от размеров канваса (устанавливаем по-середине)
 			x: this.parent.renderer.canvas.width / 2,
 			y: 100,
-			debug: false, // отображаем тело спрайта
+			debug: true, // отображаем тело спрайта
 			// тело спрайта
 			body: {
 				x: 0.15,
@@ -94,7 +107,7 @@ const mainScene = new Scene({
 		for (const user of loader.getJson('users')) {
 			usersTankInfo.push(user.gameData.tankInfo)
 		}
-		console.log('TankInfo loaded in users.gameData from tanks')
+		console.log('=> TankInfo loaded in users.gameData from tanks')
 		console.log(usersTankInfo)
 	},
 
@@ -103,18 +116,27 @@ const mainScene = new Scene({
 		const { keyboard } = this.parent // в качестве объекта клавиатуры записываем Game
 
 		let speedRotation = keyboard.space ? Math.PI / 100 : Math.PI / 200 // скорость поворота
+		let speedMove = keyboard.space ? 2 : 1 // скорость движения
 
 		// обрабатываем нажатия клавиш
 
 		if (keyboard.arrowUp) {
-			this.bunny.rotation += speedRotation
+			this.sceneObjects.bunny1.y -= speedMove
 		}
 
 		if (keyboard.arrowDown) {
-			this.bunny.rotation -= speedRotation
+			this.sceneObjects.bunny1.y += speedMove
 		}
 
-		this.sceneObjects.bunny1.rotation = timestamp / 1000
+		if (keyboard.arrowRight) {
+			this.sceneObjects.bunny1.rotation += speedRotation
+		}
+
+		if (keyboard.arrowLeft) {
+			this.sceneObjects.bunny1.rotation -= speedRotation
+		}
+
+		// this.sceneObjects.bunny1.rotation = timestamp / 1000
 
 		this.sceneObjects.tank1.rotation = timestamp / 1000
 

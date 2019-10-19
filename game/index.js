@@ -1,6 +1,7 @@
 ﻿'use strict'
 
 console.log('=> "game/main.js"')
+console.log(init)
 
 /*
  * Повторить код урока. Добиться чтобы код работал так же как.

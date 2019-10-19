@@ -9,21 +9,14 @@
 			// object_value - значение для конечного свойства пространства имен (SomeBigSubnamespace)
 			// object_name - имя пространства имен ('SomeCompany.SomeBigNamespace.SomeBigSubnamespace')
 
-			object_name = 'BattleCityGame.GameEngine'
-
-			if (init.namespace) {
-				init.namespace
-			}
+			object_name = init.namespace || 'BattleCityGame.GameEngine'
 
 			// если передано значение для объекта (класс), добавляем его имя к имени пространства имен
 			// object_value = Game - 'BattleCityGame.GameEngine' => 'BattleCityGame.GameEngine.Game'
 			if (object_value.name) {
 				object_name += '.' + object_value.name
 			}
-<<<<<<< HEAD:app/Namespace.js
-=======
 			console.log(object_name)
->>>>>>> develop:app/Namespace.js
 
 			let objects = object_name.split('.') // преобразуем строку в массив по разделителю ('.')
 			

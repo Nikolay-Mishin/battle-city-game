@@ -6,15 +6,6 @@
 
 	class Init extends Waiter {
 		constructor() {
-<<<<<<< HEAD
-			super() // наследуем конструктор родителя
-			this.projectSetting = null
-			this.settings = null
-			this.namespace = null
-		}
-
-		setConfig(address) {
-=======
 			super() // наследуем конструктор родителя
 
 			// объекты настроек устанавливаемые из файла конфигурации
@@ -46,7 +37,6 @@
 		}
 
 		setConfig(address, callback) {
->>>>>>> develop
 			this.showPreloader() // показываем прелоадер и скрываем контент
 			/*
 			this.wait(() => Init.getConfig(address))
@@ -58,35 +48,17 @@
 			*/
 			const promise = Init.
 				getConfig(address)
-<<<<<<< HEAD
 				.then(json => {
 					this.projectSetting = json[0].projectSetting
-<<<<<<< HEAD:app/Init.js
 					this.settings = json[0].settings
 					this.namespace = `${this.projectSetting.name}.${this.projectSetting.namespace}`
-=======
 					this.settings = json[0].settings
 					this.namespace = `${this.projectSetting.name}.${this.projectSetting.namespace}`
 					console.log('=> Project namespace initiolized')
->>>>>>> develop:app/Init.js
 					console.log(this.namespace)
 					this.showContent() // показываем контент и скрываем прелоадер
 				})
 			Promise.all([promise]) // выполняем все промисы
-=======
-				.then(json => {
-					for (const prop of Object.keys(json[0])) {
-						this[prop] = json[0][prop]
-					}
-					this.project = window[`${this.projectSettings.name}`]
-					this.Core = this.project[`${this.projectSettings.namespace}`]
-					this.namespace = `${this.projectSettings.name}.${this.projectSettings.namespace}`
-					console.log('=> Project namespace initiolized')
-					new Namespace() // регистрируем пространство имен BattleCityGame.GameEngine в объекте window
-					this.showContent() // показываем контент и скрываем прелоадер
-				})
-			Promise.all([promise]).then(callback) // выполняем все промисы
->>>>>>> develop
 		}
 
 		static getConfig(address) {

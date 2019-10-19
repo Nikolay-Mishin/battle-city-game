@@ -18,22 +18,28 @@
 			this.namespace = null // глобальное пространство имен
 		}
 
-		get Project () {
+		get Project() {
 			return this.project
 		}
 
-		set Project(project) {
-			this.project = project
-			return project
+		set Project(value) {
+			this.project = this.project
 		}
 
-		get Core () {
+		get Core() {
 			return this.core
 		}
 
-		set Core(core) {
-			this.core = core
-			return core
+		set Core(value) {
+			this.core = this.core
+		}
+
+		get Namespace() {
+			return this.namespace
+		}
+
+		set Namespace(value) {
+			this.namespace = this.namespace
 		}
 
 		setConfig(address, callback) {
@@ -49,16 +55,17 @@
 			const promise = Init.
 				getConfig(address)
 				.then(json => {
-					this.projectSetting = json[0].projectSetting
-					this.settings = json[0].settings
-					this.namespace = `${this.projectSetting.name}.${this.projectSetting.namespace}`
-					this.settings = json[0].settings
-					this.namespace = `${this.projectSetting.name}.${this.projectSetting.namespace}`
+					for (const prop of Object.keys(json[0])) {
+						this[prop] = json[0][prop]
+					}
+					this.project = window[`${this.projectSettings.name}`]
+					this.core = this.Project[`${this.projectSettings.namespace}`]
+					this.namespace = `${this.projectSettings.name}.${this.projectSettings.namespace}`
 					console.log('=> Project namespace initiolized')
-					console.log(this.namespace)
+					new Namespace() // регистрируем пространство имен BattleCityGame.GameEngine в объекте window
 					this.showContent() // показываем контент и скрываем прелоадер
 				})
-			Promise.all([promise]) // выполняем все промисы
+			Promise.all([promise]).then(callback) // выполняем все промисы
 		}
 
 		static getConfig(address) {

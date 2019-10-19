@@ -69,11 +69,9 @@
 					this.namespace = `${this.projectSettings.name}.${this.projectSettings.namespace}`
 					// console.log('=> Project namespace initiolized')
 					new Namespace() // регистрируем пространство имен BattleCityGame.GameEngine в объекте window
+					this.showContent() // показываем контент и скрываем прелоадер
 				})
-			// выполняем все промисы
-			Promise.all([promise])
-				.then(callback)
-				.then(this.showContent()) // показываем контент и скрываем прелоадер 
+			Promise.all([promise]).then(callback) // выполняем все промисы
 		}
 
 		static getConfig (address) {

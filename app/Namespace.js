@@ -16,7 +16,7 @@
 			if (object_value.name) {
 				object_name += '.' + object_value.name
 			}
-			// console.log(object_name)
+			console.log(object_name)
 
 			let objects = object_name.split('.') // преобразуем строку в массив по разделителю ('.')
 			

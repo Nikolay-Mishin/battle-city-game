@@ -67,5 +67,5 @@
 		}
 	}
 	
-	namespace.set('BattleCityGame.GameEngine.Keyboard', Keyboard) // регистрируем класс Keyboard в объекте GameEngine
+	new Namespace(Keyboard) // регистрируем класс Keyboard
 })();

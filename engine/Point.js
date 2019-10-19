@@ -1,4 +1,4 @@
-;(function () {
+﻿;(function () {
 	'use strict'
 
 	// отвечает за отрисовку точки
@@ -22,5 +22,5 @@
 		}
 	}
 	
-	namespace.set('BattleCityGame.GameEngine.Point', Point) // регистрируем класс Point в объекте GameEngine
+	new Namespace(Point) // регистрируем класс Point
 })();

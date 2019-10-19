@@ -7,5 +7,5 @@
 
 	}
 	
-	namespace.set('BattleCityGame.GameEngine.Mouse', Mouse) // регистрируем класс Mouse в объекте GameEngine
+	new Namespace(Mouse) // регистрируем класс Mouse
 })();

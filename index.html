@@ -1,36 +1,56 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+	<!-- "/" - строить ссылки от корня сайта (подставляется перед всеми ссылками) -->
+	<!-- добавляет данное значение ко всем относительным ссылкам (без / вначале), делая их абсолютными (от корня) -->
+	<base href="/">
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Battle city</title>
 	<!-- фавиконка -->
-	<link rel="icon" type="image/png" sizes="192x192" href="./static/favicon/favicon-192.png">
-	<link rel="stylesheet" href="css/style.css">
+	<link rel="icon" type="image/png" sizes="192x192" href="static/favicon/favicon-192.png">
+	<link rel="stylesheet" href="app/css/style.css">
 </head>
+
 <body>
-	<!-- скрипт для установки пространств имен -->
-	<script src="app/namespace.js"></script>
-	<!-- скрипт конфигурации проекта (установка пространства имени Приложения (Имя Проекта) и констант проекта) -->
-	<script src="app/config.js"></script>
-	<!-- подключаем самостоятельные классы -->
-	<script src="engine/Game.js"></script>
-	<script src="engine/Loader.js"></script>
-	<script src="engine/Renderer.js"></script>
-	<script src="engine/DisplayObject.js"></script>
-	<script src="engine/Keyboard.js"></script>
-	<script src="engine/Mouse.js"></script>
-	<!-- подключаем наследуемые классы -->
-	<script src="engine/Container.js"></script>
-		<script src="engine/Scene.js"></script>
-	<script src="engine/Sprite.js"></script>
-		<script src="engine/Body.js"></script>
-	<script src="engine/Point.js"></script>
-	<script src="engine/Line.js"></script>
-	<!-- скрипт для инициализации глобальных переменных, основных объектов и классов -->
-	<script src="app/init.js"></script>
-	<!-- главный скрипт с основной логикой и функционалом приложения -->
-	<script src="game/index.js"></script>
+	<!-- контент приложения (игра) -->
+	<div id="game"></div>
+
+	<!-- прелоадер для скрытия контента при ожидании ответа от сервера (ajax-запрос) -->
+	<div class="preloader"><img src="static/preloader/ring.svg" alt=""></div>
+
+	<!-- библиотеки -->
+	<script src="app/libs/jquery-3.3.1.min.js"></script>
+
+	<!-- пользовательские скрипты -->
+		<!-- скрипт инициализации -->
+		<script src="app/Waiter.js"></script>
+		<script src="app/Init.js"></script>
+		<!-- скрипт для установки пространств имен -->
+		<script src="app/Namespace.js"></script>
+		<!-- скрипт конфигурации проекта (установка пространства имени Приложения (Имя Проекта) и констант проекта) -->
+		<script src="app/config.js"></script>
+
+		<!-- подключаем самостоятельные классы -->
+		<script src="engine/Game.js"></script>
+		<script src="engine/Loader.js"></script>
+		<script src="engine/Renderer.js"></script>
+		<script src="engine/DisplayObject.js"></script>
+		<script src="engine/Keyboard.js"></script>
+		<script src="engine/Mouse.js"></script>
+
+		<!-- подключаем наследуемые классы -->
+		<script src="engine/Container.js"></script>
+			<script src="engine/Scene.js"></script>
+		<script src="engine/Sprite.js"></script>
+			<script src="engine/Body.js"></script>
+		<script src="engine/Point.js"></script>
+		<script src="engine/Line.js"></script>
+		<!-- скрипт для инициализации глобальных переменных, основных объектов и классов -->
+		<script src="app/global.js"></script>
+		<!-- главный скрипт с основной логикой и функционалом приложения -->
+		<script src="game/index.js"></script>
+	<!-- // пользовательские скрипты -->
 </body>
 </html>

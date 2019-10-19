@@ -53,9 +53,5 @@
 		}
 	}
 
-	// window.GameEngine = window.GameEngine || {}
-	// window.GameEngine.Container = Container
-	// регистрируем пространство имен BattleCityGame.GameEngine.Container в объекте window
-	namespace.set('BattleCityGame.GameEngine.Container', Container) // регистрируем класс Container в объекте GameEngine
-	// BattleCityGame.GameEngine.Container = Container // регистрируем класс Container в объекте GameEngine
+	new Namespace(Container) // регистрируем класс Container
 })();

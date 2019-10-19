@@ -4,7 +4,7 @@
 	// занимается непосредственно отрисовкой графики (только отрисовкой отдельного конкретного изображения)
 	// отвечает за отрисовку отдельного изображения (или его участка)
 	// следит за всеми сценами
-
+	
 	class Game {
 		constructor (args = {}) {
 			this.renderer = new GameEngine.Renderer(args) // объект рендера (инициализируем канвас)
@@ -146,9 +146,5 @@
 		}
 	}
 
-	// window.GameEngine = window.GameEngine || {}
-	// window.GameEngine.Game = Game
-	// регистрируем пространство имен BattleCityGame.GameEngine.Sprite в объекте window
-	namespace.set('BattleCityGame.GameEngine.Game', Game) // регистрируем класс Sprite в объекте GameEngine
-	// BattleCityGame.GameEngine.Sprite = Sprite // регистрируем класс Sprite в объекте GameEngine
+	new Namespace(Game) // регистрируем класс Game
 })();

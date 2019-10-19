@@ -35,10 +35,6 @@ const mainScene = new Scene({
 				y: 0.5,
 				width: 1,
 				height: 0.5
-			},
-			// метод обновления состояния спрайта
-			update(timestamp) {
-				// this.rotation = timestamp / 1000
 			}
 		})
 
@@ -74,14 +70,14 @@ const mainScene = new Scene({
 
 		// для каждого объекта на сцене вызываем метод обновления состояния
 		for (const sprite of this.stage) {
-			sprite.update(timestamp)
+			sprite.rotation = timestamp / 1000
 		}
 	}
 })
 
 // объект игры
 const game = new Game({
-	el: document.body, // объект, в который мы встраиваем канвас
+	el: document.getElementById('game'), // объект, в который мы встраиваем канвас
 	// параметры для инициализации канваса
 	// передаем ширину и высоту для задания размера канваса
 	width: 500,

@@ -144,11 +144,6 @@
 			}
 		}
 	}
-
-	// если объект GameEngine инициализирован (существует) берем его значение, иначе создаем пустой объект (инициализируем)
-	// window.GameEngine = window.GameEngine || {} // регистрируем объект GameEngine в объекте window
-	// GameEngine.Loader = Loader // регистрируем класс Loader в объекте GameEngine
-	// регистрируем пространство имен BattleCityGame.GameEngine.Loader в объекте window
-	namespace.set('BattleCityGame.GameEngine.Loader', Loader) // регистрируем класс Loader в объекте GameEngine
-	// BattleCityGame.GameEngine.Loader = Loader // регистрируем класс Loader в объекте GameEngine
+	
+	new Namespace(Loader) // регистрируем класс Loader
 })();

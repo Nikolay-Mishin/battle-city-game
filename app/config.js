@@ -1,7 +1,5 @@
-﻿namespace.set('BattleCityGame.GameEngine') // регистрируем пространство имен BattleCityGame в объекте window
+﻿init.setConfig('app/config.json')
+console.log(init.namespace)
+
+new Namespace() // регистрируем пространство имен BattleCityGame.GameEngine в объекте window
 const { GameEngine } = BattleCityGame // выгружаем свойство GameEngine из объекта BattleCityGame (деструктуризация)
-
-// создаем константы для более удобного обращения к путям файлов
-const data = 'static/data'
-const img = 'static/img'
-

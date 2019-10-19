@@ -1,4 +1,4 @@
-;(function () {
+﻿;(function () {
 	'use strict'
 	
 	// отвечает за обработку отрисовываемой графики (занимается обработкой самой графики в целом)
@@ -55,9 +55,5 @@
 		}
 	}
 
-	// window.GameEngine = window.GameEngine || {}
-	// window.GameEngine.Renderer = Renderer
-	// регистрируем пространство имен BattleCityGame.GameEngine.Renderer в объекте window
-	namespace.set('BattleCityGame.GameEngine.Renderer', Renderer) // регистрируем класс Renderer
-	// BattleCityGame.GameEngine.Renderer = Renderer // регистрируем класс Renderer в объекте GameEngine
+	new Namespace(Renderer) // регистрируем класс Renderer
 })();

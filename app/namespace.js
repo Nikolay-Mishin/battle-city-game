@@ -1,30 +1,45 @@
-// Если не хотите привязываться к какому-то фреймворку, для реализации пространства имен можно написать нечто вроде этого:
+﻿const Namespace = (function () {
+	'use strict'
 
-var namespace = new Object() // someRootNamespace
+	// класс задания пространств имен
+	// Если не хотите привязываться к какому-то фреймворку, для реализации пространства имен можно написать нечто вроде этого
 
-// someRootNamespace.provide
-namespace.set = function (object_name, object_value = new Object()) {
-	// object_name - имя пространства имен ('SomeCompany.SomeBigNamespace.SomeBigSubnamespace')
-	// object_value - значение для конечного свойства пространства имен (SomeBigSubnamespace)
-	var objects = object_name.split('.') // преобразуем строку в массив по разделителю ('.')
+	class Namespace {
+		constructor(object_value = new Object(), object_name = 'BattleCityGame.GameEngine') {
+			// object_name - имя пространства имен ('SomeCompany.SomeBigNamespace.SomeBigSubnamespace')
+			// object_value - значение для конечного свойства пространства имен (SomeBigSubnamespace)
 
-	var object = window; // базовый объект (по умолчанию - window) - для перебора всех свойств объекта пространства имен
-	for (var i = 0; i < objects.length; i++) {
-		// проверяем начальное свойство ('SomeCompany') - если в объекте window нет такого свойства, создаем его
-		// 'SomeCompany' in 'window'
-		if (i == 0 && !window[objects[i]])
-			window[objects[i]] = new Object()
-		// проверяем остальные свойства на существование - 'SomeBigNamespace' in 'SomeCompany'
-		else if (i > 0 && !object[objects[i]])
-			object[objects[i]] = new Object()
+			// если передано значение для объекта (класс), добавляем его имя к имени пространства имен
+			// object_value = Game - 'BattleCityGame.GameEngine' => 'BattleCityGame.GameEngine.Game'
+			if (object_value.name) {
+				object_name += '.' + object_value.name
+			}
 
-		// если это последнее свойство пространства имен (SomeBigSubnamespace), присваиваем ему переданное значение
-		if (i == objects.length - 1) object[objects[i]] = object_value 
+			let objects = object_name.split('.') // преобразуем строку в массив по разделителю ('.')
+			
+			let parent = window; // базовый объект (родитель) - для перебора всех свойств объекта пространства имен
+			for (let object of objects) {
+				// проверяем свойство в родительском объекте - 'SomeCompany' in window
+				if (!parent[object]) {
+					parent[object] = new Object()
+				}
 
-		object = object[objects[i]] // перезаписываем в базовый объект текущее свойство объекта (window => SomeCompany)
+				// если это последнее свойство пространства имен (SomeBigSubnamespace), присваиваем ему переданное значение
+				if (object === object_value.name) parent[object] = object_value
+
+				parent = parent[object] // перезаписываем в родителя текущий объект (window => 'SomeCompany')
+			}
+		}
 	}
-}
 
-// После выполнения данных строк, в любом месте js-файлов можно писать
-// namespace.set('SomeCompany.SomeBigNamespace.SomeBigSubnamespace', object_value);
-// SomeCompany.SomeBigNamespace.SomeBigSubnamespace = object_value
+	return Namespace
+
+	// После выполнения данных строк, в любом месте js-файлов можно писать
+	// new Namespace('SomeCompany.SomeBigNamespace.SomeBigSubnamespace', object_value);
+	// SomeCompany.SomeBigNamespace.SomeBigSubnamespace = object_value
+
+	// если объект GameEngine инициализирован (существует) берем его значение, иначе создаем пустой объект (инициализируем)
+	// window.GameEngine = window.GameEngine || {} // регистрируем объект GameEngine в объекте window
+	// регистрируем пространство имен BattleCityGame.GameEngine.Loader в объекте window
+	// GameEngine.Loader = Loader // регистрируем класс Loader в объекте GameEngine
+})();

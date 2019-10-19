@@ -30,17 +30,8 @@
 			if (args.height === undefined) {
 				this.height = this.frame.height
 			}
-
-			// задаем значение для метода update()
-			// метод для обновления состояния спрайта (изменяет параметры созданного спрайт)
-			this.update = args.hasOwnProperty('update') ? args.update.bind(this) : (() => {})
-			/* if (args.update) {
-				this.update = args.update.bind(this)
-			} */
 		}
-
-		// update() {} // метод для обновления состояния спрайта (изменяет параметры созданного спрайт)
-
+		
 		// отрисовывает спрайт на основе установленных свойств
 		draw (canvas, context) {
 			// вызываем родительский метод отрисовки и передаем callback-функцию
@@ -70,9 +61,5 @@
 		}
 	}
 
-	// window.GameEngine = window.GameEngine || {}
-	// window.GameEngine.Sprite = Sprite
-	// регистрируем пространство имен BattleCityGame.GameEngine.Sprite в объекте window
-	namespace.set('BattleCityGame.GameEngine.Sprite', Sprite) // регистрируем класс Sprite в объекте GameEngine
-	// BattleCityGame.GameEngine.Sprite = Sprite // регистрируем класс Sprite в объекте GameEngine
+	new Namespace(Sprite) // регистрируем класс Sprite
 })();

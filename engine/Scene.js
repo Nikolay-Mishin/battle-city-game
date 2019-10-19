@@ -6,13 +6,14 @@
 
 	class Scene extends GameEngine.Container {
 		constructor (args = {}) {
-			super()
+			super(args)
 
 			this.autoStart = args.autoStart || false // запускать сцену автоматически или нет
 			this.name = args.name || ''
 
 			this.status = 'waiting' // статус сцены по умолчанию
 			this.stage = this.displayObjects // хранилище объектов сцены (stage - алиас)
+			this.sceneObjects = {} // контейнер объектов сцены (this.bunny, this.tank...)
 			this.game = null // ссылка на объект игры, к которой принадлежит сцена ()
 
 			// loading, update и init переопределяем на уровне конструктора

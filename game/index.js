@@ -2,6 +2,10 @@
 const mainScene = new Scene({
 	name: 'mainScene',
 	autoStart: true,
+	// параметры контейнера (применяются глобально ко всей сцене и ее объектам)
+	x: 100,
+	y: 200,
+	scale: 0.6,
 
 	// метод загрузки ресурсов
 	loading (loader) {
@@ -25,7 +29,7 @@ const mainScene = new Scene({
 		// порядок отрисовки совпадает с порядком добавления в контейнер
 
 		// создаем спрайт и его тело
-		this.bunny1 = new Body(bunnyTexture, {
+		this.sceneObjects.bunny1 = new Body(bunnyTexture, {
 			scale: 0.25,
 			anchorX: 0.5,
 			anchorY: 0.5,
@@ -42,9 +46,9 @@ const mainScene = new Scene({
 			}
 		})
 		
-		this.add(this.bunny1) // добавляем спрайт в контейнер
+		this.add(this.sceneObjects.bunny1) // добавляем спрайт в контейнер
 		
-		this.tank1 = new Body(tankTexture, {
+		this.sceneObjects.tank1 = new Body(tankTexture, {
 			scale: 0.1,
 			anchorX: 0.2,
 			anchorY: 0.2,
@@ -52,9 +56,9 @@ const mainScene = new Scene({
 			y: 100
 		})
 
-		this.add(this.tank1)
+		this.add(this.sceneObjects.tank1)
 		
-		this.tank2 = new Body(tankTexture, {
+		this.sceneObjects.tank2 = new Body(tankTexture, {
 			scale: 0.2,
 			anchorX: 0.65,
 			anchorY: 0.65,
@@ -62,9 +66,9 @@ const mainScene = new Scene({
 			y: this.parent.renderer.canvas.height,
 		})
 
-		this.add(this.tank2)
+		this.add(this.sceneObjects.tank2)
 
-		this.bunny2 = new Body(bunnyTexture, {
+		this.sceneObjects.bunny2 = new Body(bunnyTexture, {
 			scale: 0.15,
 			anchorX: 0.5,
 			anchorY: 0.5,
@@ -81,7 +85,7 @@ const mainScene = new Scene({
 			}
 		})
 
-		this.add(this.bunny2)
+		this.add(this.sceneObjects.bunny2)
 
 		// выгружаем данные из tanks в users.tankInfo по соответствию полей users.tankId и tanks.id
 		loader.joinJson('users', 'tanks', 'tankId', 'tankInfo')
@@ -110,15 +114,15 @@ const mainScene = new Scene({
 			this.bunny.rotation -= speedRotation
 		}
 
-		this.bunny1.rotation = timestamp / 1000
+		this.sceneObjects.bunny1.rotation = timestamp / 1000
 
-		this.tank1.rotation = timestamp / 1000
+		this.sceneObjects.tank1.rotation = timestamp / 1000
 
-		this.tank2.x = this.parent.renderer.canvas.width / 2 + 200 * Math.cos(timestamp / 200)
+		this.sceneObjects.tank2.x = this.parent.renderer.canvas.width / 2 + 200 * Math.cos(timestamp / 200)
 
-		this.bunny2.x = this.parent.renderer.canvas.width / 2 + 200 * Math.cos(timestamp / 200)
-		this.bunny2.frame.x = this.bunny2.texture.width / 4 + 200 * Math.cos(timestamp / 200)
-		this.bunny2.frame.y = this.bunny2.texture.height / 3 + 200 * Math.sin(timestamp / 200)
+		this.sceneObjects.bunny2.x = this.parent.renderer.canvas.width / 2 + 200 * Math.cos(timestamp / 200)
+		this.sceneObjects.bunny2.frame.x = this.sceneObjects.bunny2.texture.width / 4 + 200 * Math.cos(timestamp / 200)
+		this.sceneObjects.bunny2.frame.y = this.sceneObjects.bunny2.texture.height / 3 + 200 * Math.sin(timestamp / 200)
 	}
 })
 

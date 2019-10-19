@@ -55,5 +55,5 @@
 		}
 	}
 
-	new Namespace('BattleCityGame.GameEngine.Renderer', Renderer) // регистрируем класс Renderer
+	new Namespace(Renderer) // регистрируем класс Renderer
 })();

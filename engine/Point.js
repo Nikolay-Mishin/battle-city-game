@@ -22,5 +22,5 @@
 		}
 	}
 	
-	new Namespace('BattleCityGame.GameEngine.Point', Point) // регистрируем класс Point
+	new Namespace(Point) // регистрируем класс Point
 })();

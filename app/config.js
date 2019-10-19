@@ -1,5 +1,5 @@
-﻿Init.setConfig('app/config.json')
-console.log(Init)
+﻿init.setConfig('app/config.json')
+console.log(init.namespace)
 
-new Namespace('BattleCityGame.GameEngine') // регистрируем пространство имен BattleCityGame в объекте window
+new Namespace() // регистрируем пространство имен BattleCityGame.GameEngine в объекте window
 const { GameEngine } = BattleCityGame // выгружаем свойство GameEngine из объекта BattleCityGame (деструктуризация)

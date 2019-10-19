@@ -88,5 +88,5 @@
 		}
 	}
 
-	new Namespace('BattleCityGame.GameEngine.DisplayObject', DisplayObject) // регистрируем класс DisplayObject
+	new Namespace(DisplayObject) // регистрируем класс DisplayObject
 })();

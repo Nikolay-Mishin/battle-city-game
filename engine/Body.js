@@ -65,5 +65,5 @@
 		}
 	}
 
-	new Namespace('BattleCityGame.GameEngine.Body', Body) // регистрируем класс Body
+	new Namespace(Body) // регистрируем класс Body
 })();

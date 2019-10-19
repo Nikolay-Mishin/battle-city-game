@@ -145,5 +145,5 @@
 		}
 	}
 	
-	new Namespace('BattleCityGame.GameEngine.Loader', Loader) // регистрируем класс Loader
+	new Namespace(Loader) // регистрируем класс Loader
 })();

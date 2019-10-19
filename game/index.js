@@ -35,10 +35,6 @@ const mainScene = new Scene({
 				y: 0.5,
 				width: 1,
 				height: 0.5
-			},
-			// метод обновления состояния спрайта
-			update(timestamp) {
-				// this.rotation = timestamp / 1000
 			}
 		})
 
@@ -74,7 +70,7 @@ const mainScene = new Scene({
 
 		// для каждого объекта на сцене вызываем метод обновления состояния
 		for (const sprite of this.stage) {
-			sprite.update(timestamp)
+			sprite.rotation = timestamp / 1000
 		}
 	}
 })

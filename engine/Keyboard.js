@@ -67,5 +67,5 @@
 		}
 	}
 	
-	new Namespace('BattleCityGame.GameEngine.Keyboard', Keyboard) // регистрируем класс Keyboard
+	new Namespace(Keyboard) // регистрируем класс Keyboard
 })();

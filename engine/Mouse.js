@@ -7,5 +7,5 @@
 
 	}
 	
-	new Namespace('BattleCityGame.GameEngine.Mouse', Mouse) // регистрируем класс Mouse
+	new Namespace(Mouse) // регистрируем класс Mouse
 })();

@@ -28,5 +28,5 @@
 		}
 	}
 	
-	new Namespace('BattleCityGame.GameEngine.Line', Line) // регистрируем класс Line
+	new Namespace(Line) // регистрируем класс Line
 })();

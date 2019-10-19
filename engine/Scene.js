@@ -42,5 +42,5 @@
 		beforeDestroy () {} // вызывается перед удалением сцены и удаляет все объекты, созданные сценой
 	}
 
-	new Namespace('BattleCityGame.GameEngine.Scene', Scene) // регистрируем класс Scene
+	new Namespace(Scene) // регистрируем класс Scene
 })();

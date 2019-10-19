@@ -53,5 +53,5 @@
 		}
 	}
 
-	new Namespace('BattleCityGame.GameEngine.Container', Container) // регистрируем класс Container
+	new Namespace(Container) // регистрируем класс Container
 })();

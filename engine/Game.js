@@ -146,5 +146,5 @@
 		}
 	}
 
-	new Namespace('BattleCityGame.GameEngine.Game', Game) // регистрируем класс Game
+	new Namespace(Game) // регистрируем класс Game
 })();

@@ -26,7 +26,5 @@
 		}
 	}
 
-	console.log(Waiter)
-
-	return new Waiter()
+	return Waiter
 })();

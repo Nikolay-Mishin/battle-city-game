@@ -5,7 +5,7 @@
 	// Если не хотите привязываться к какому-то фреймворку, для реализации пространства имен можно написать нечто вроде этого
 
 	class Namespace {
-		constructor(object_value = new Object(), object_name = '') {
+		constructor (object_value = new Object(), object_name = '') {
 			// object_value - значение для конечного свойства пространства имен (SomeBigSubnamespace)
 			// object_name - имя пространства имен ('SomeCompany.SomeBigNamespace.SomeBigSubnamespace')
 
@@ -16,7 +16,7 @@
 			if (object_value.name) {
 				object_name += '.' + object_value.name
 			}
-			console.log(object_name)
+			// console.log(object_name)
 
 			let objects = object_name.split('.') // преобразуем строку в массив по разделителю ('.')
 

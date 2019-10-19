@@ -52,7 +52,7 @@
 					for (const prop of Object.keys(json[0])) {
 						this[prop] = json[0][prop]
 					}
-					this.project = window[`${this.projectSettings.name}`]
+					this.Project = window[`${this.projectSettings.name}`]
 					this.Core = this.project[`${this.projectSettings.namespace}`]
 					this.namespace = `${this.projectSettings.name}.${this.projectSettings.namespace}`
 					console.log('=> Project namespace initiolized')

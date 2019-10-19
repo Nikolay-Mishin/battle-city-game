@@ -67,8 +67,8 @@
 					this.project = window[`${this.projectSettings.name}`]
 					this.core = this.Project[`${this.projectSettings.namespace}`]
 					this.namespace = `${this.projectSettings.name}.${this.projectSettings.namespace}`
-					console.log('=> Project namespace initiolized')
-					new Namespace // регистрируем пространство имен BattleCityGame.GameEngine в объекте window
+					// console.log('=> Project namespace initiolized')
+					new Namespace() // регистрируем пространство имен BattleCityGame.GameEngine в объекте window
 				})
 			// выполняем все промисы
 			Promise.all([promise])

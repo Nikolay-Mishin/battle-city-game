@@ -5,9 +5,15 @@
 	// Если не хотите привязываться к какому-то фреймворку, для реализации пространства имен можно написать нечто вроде этого
 
 	class Namespace {
-		constructor(object_value = new Object(), object_name = 'BattleCityGame.GameEngine') {
-			// object_name - имя пространства имен ('SomeCompany.SomeBigNamespace.SomeBigSubnamespace')
+		constructor(object_value = new Object(), object_name = '') {
 			// object_value - значение для конечного свойства пространства имен (SomeBigSubnamespace)
+			// object_name - имя пространства имен ('SomeCompany.SomeBigNamespace.SomeBigSubnamespace')
+
+			object_name = 'BattleCityGame.GameEngine'
+
+			if (init.namespace) {
+				init.namespace
+			}
 
 			// если передано значение для объекта (класс), добавляем его имя к имени пространства имен
 			// object_value = Game - 'BattleCityGame.GameEngine' => 'BattleCityGame.GameEngine.Game'

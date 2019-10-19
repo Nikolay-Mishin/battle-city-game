@@ -22,18 +22,24 @@
 			return this.project
 		}
 
-		set Project(project) {
-			this.project = project
-			return project
+		set Project (value) {
+			this.project = this.project
 		}
 
 		get Core () {
 			return this.core
 		}
 
-		set Core(core) {
-			this.core = core
-			return core
+		set Core (value) {
+			this.core = this.core
+		}
+
+		get Namespace () {
+			return this.namespace
+		}
+
+		set Namespace (value) {
+			this.namespace = this.namespace
 		}
 
 		setConfig(address, callback) {
@@ -52,8 +58,8 @@
 					for (const prop of Object.keys(json[0])) {
 						this[prop] = json[0][prop]
 					}
-					this.Project = window[`${this.projectSettings.name}`]
-					this.Core = this.project[`${this.projectSettings.namespace}`]
+					this.project = window[`${this.projectSettings.name}`]
+					this.core = this.Project[`${this.projectSettings.namespace}`]
 					this.namespace = `${this.projectSettings.name}.${this.projectSettings.namespace}`
 					console.log('=> Project namespace initiolized')
 					new Namespace() // регистрируем пространство имен BattleCityGame.GameEngine в объекте window

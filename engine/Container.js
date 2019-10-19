@@ -1,6 +1,6 @@
 ﻿;(function () {
 	'use strict'
-
+	console.log(BattleCityGame)
 	// Контейнер для хранения отображаемых объектов (спрайтов)
 	// extends - наследование класса
 	// Container наследуется от GameEngine.DisplayObject

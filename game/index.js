@@ -34,7 +34,7 @@ const mainScene = new Scene({
 			},
 			// метод обновления состояния спрайта
 			update(timestamp) {
-				this.rotation = timestamp / 1000
+				// this.rotation = timestamp / 1000
 			}
 		})
 

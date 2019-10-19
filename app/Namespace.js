@@ -9,7 +9,7 @@
 			// object_value - значение для конечного свойства пространства имен (SomeBigSubnamespace)
 			// object_name - имя пространства имен ('SomeCompany.SomeBigNamespace.SomeBigSubnamespace')
 
-			object_name = init.namespace || 'BattleCityGame.GameEngine'
+			object_name = init.Namespace || 'BattleCityGame.GameEngine'
 
 			// если передано значение для объекта (класс), добавляем его имя к имени пространства имен
 			// object_value = Game - 'BattleCityGame.GameEngine' => 'BattleCityGame.GameEngine.Game'
@@ -19,7 +19,7 @@
 			console.log(object_name)
 
 			let objects = object_name.split('.') // преобразуем строку в массив по разделителю ('.')
-			
+
 			let parent = window; // базовый объект (родитель) - для перебора всех свойств объекта пространства имен
 			for (let object of objects) {
 				// проверяем свойство в родительском объекте - 'SomeCompany' in window

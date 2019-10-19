@@ -122,6 +122,10 @@
 
 		// слияние json файлов - загружает tanks.json в tankInfo (users.json)
 		joinJson (jsonTo, jsonFrom, propertyMerge, propertyTo) {
+			// получаем данные файлав по их именам
+			jsonTo = this.getJson(jsonTo)
+			jsonFrom = this.getJson(jsonFrom)
+
 			// проходим по всем элементам файла, в который выгружаем данные (users)
 			for (const itemTo of jsonTo) {
 				// если в файле, в который выгружаем данные нет свойства gameData, создаем его

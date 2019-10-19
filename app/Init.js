@@ -26,8 +26,14 @@
 				getConfig(address)
 				.then(json => {
 					this.projectSetting = json[0].projectSetting
+<<<<<<< HEAD:app/Init.js
 					this.settings = json[0].settings
 					this.namespace = `${this.projectSetting.name}.${this.projectSetting.namespace}`
+=======
+					this.settings = json[0].settings
+					this.namespace = `${this.projectSetting.name}.${this.projectSetting.namespace}`
+					console.log('=> Project namespace initiolized')
+>>>>>>> develop:app/Init.js
 					console.log(this.namespace)
 					this.showContent() // показываем контент и скрываем прелоадер
 				})

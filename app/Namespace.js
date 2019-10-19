@@ -14,6 +14,10 @@
 			if (object_value.name) {
 				object_name += '.' + object_value.name
 			}
+<<<<<<< HEAD:app/Namespace.js
+=======
+			console.log(object_name)
+>>>>>>> develop:app/Namespace.js
 
 			let objects = object_name.split('.') // преобразуем строку в массив по разделителю ('.')
 			

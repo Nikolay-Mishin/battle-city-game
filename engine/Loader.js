@@ -1,4 +1,4 @@
-;(function () {
+﻿;(function () {
 	'use strict'
 	
 	class Loader {
@@ -121,7 +121,7 @@
 		}
 
 		// слияние json файлов - загружает tanks.json в tankInfo (users.json)
-		static joinJson (jsonTo, jsonFrom, propertyMerge, propertyTo) {
+		joinJson (jsonTo, jsonFrom, propertyMerge, propertyTo) {
 			// проходим по всем элементам файла, в который выгружаем данные (users)
 			for (const itemTo of jsonTo) {
 				// если в файле, в который выгружаем данные нет свойства gameData, создаем его

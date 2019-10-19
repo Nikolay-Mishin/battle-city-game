@@ -9,12 +9,16 @@ const mainScene = new Scene({
 		loader.addImage('bunny', `${img}/bunny.jpeg`)
 		// загружаем данные (json файлы) - добавляем json файл в очередь на загрузку
 		loader.addJson('persons', `${data}/persons.json`)
+
+		loader.addJson('users', `${data}/user/users.json`)
+		loader.addJson('tanks', `${data}/game/tanks.json`)
 	},
 
 	// метод инициализации сцены - создаем объекты загруженных ресурсов
-	init () {
+	init() {
+		const loader = this.parent.loader
 		// получаем изображение - ссылаемся на свойство loader родителя (Game)
-		const bunnyTexture = this.parent.loader.getImage('bunny')
+		const bunnyTexture = loader.getImage('bunny')
 
 		// создаем спрайт и его тело
 		this.bunny = new Body(bunnyTexture, {
@@ -40,6 +44,16 @@ const mainScene = new Scene({
 
 		// добавляем спрайт в контейнер
 		this.add(this.bunny) // порядок отрисовки совпадает с порядком добавления в контейнер
+
+		// выгружаем данные из tanks в users.tankInfo по соответствию полей users.tankId и tanks.id
+		loader.joinJson(loader.getJson("users"), loader.getJson("tanks"), 'tankId', 'tankInfo')
+		// output for TankInfo loaded
+		let usersTankInfo = []
+		for (const user of loader.getJson("users")) {
+			usersTankInfo.push(user.gameData.tankInfo)
+		}
+		console.log('TankInfo loaded in users.gameData from tanks')
+		console.log(usersTankInfo)
 	},
 
 	// метод обновления состояния спрайта

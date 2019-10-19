@@ -28,6 +28,7 @@
 					this.projectSetting = json[0].projectSetting
 					this.settings = json[0].settings
 					this.namespace = `${this.projectSetting.name}.${this.projectSetting.namespace}`
+					console.log('=> Project namespace initiolized')
 					console.log(this.namespace)
 					this.showContent() // показываем контент и скрываем прелоадер
 				})

@@ -17,8 +17,6 @@
 			this.namespace = new Namespace()
 			this.instance = Namespace.instance
 			console.log(this.instance)
-			console.log(Singleton.instance)
-			console.log(Singleton.instance.Instance)
 
 			this.project = window[`${this.projectName}`] // объект проекта приложения
 			this.core = this.project[`${this.projectNamespace}`] // объект ядра приложения

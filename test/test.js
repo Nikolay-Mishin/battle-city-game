@@ -15,11 +15,6 @@ console.log('obj0', obj0);
 let obj1 = Singleton.instance;
 let obj2 = Singleton.instance;
 
-console.log(obj2.foo === 123);
 obj1.foo = 456;
 console.log('obj2', obj2);
 console.log('obj1 === obj2', obj1 === obj2);
-
-var obj3 = new Singleton()
-//try { var obj3 = new Singleton() } catch (c) { console.log(c) }
-console.log('obj3', obj3);

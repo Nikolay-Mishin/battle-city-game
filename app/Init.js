@@ -13,8 +13,12 @@
 
 			// глобальное пространство имен
 			Namespace.init = this.projectNamespace ? `${this.projectName}.${this.projectNamespace}` : this.projectName
-			this.namespace = new Namespace() // регистрируем пространство имен BattleCityGame.GameEngine в объекте window
-			Init.instance = this.namespace
+			// регистрируем пространство имен BattleCityGame.GameEngine в объекте window
+			this.namespace = new Namespace()
+			this.instance = Namespace.instance
+			console.log(this.instance)
+			console.log(Singleton.instance)
+			console.log(Singleton.instance.Instance)
 
 			this.project = window[`${this.projectName}`] // объект проекта приложения
 			this.core = this.project[`${this.projectNamespace}`] // объект ядра приложения
@@ -26,19 +30,6 @@
 					console.log(this.config)
 				})
 			}
-		}
-
-		// глобальное пространство имен
-
-		static get instance() {
-			if (!this[singleton])
-				this[singleton] = new Singleton(singletonEnforcer);
-			return this[singleton];
-		}
-
-		static set instance(v) {
-			try { throw "Can't change constant property!" }
-			catch (err) { console.error(err) }
 		}
 
 		setConfig (address, args, callback) {

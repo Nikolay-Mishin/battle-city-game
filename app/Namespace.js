@@ -4,11 +4,11 @@
 	// класс задания пространств имен
 	// Если не хотите привязываться к какому-то фреймворку, для реализации пространства имен можно написать нечто вроде этого
 
-	class Namespace /*extends Singleton*/ {
+	class Namespace extends Singleton {
 		static init
 
 		constructor (object_value = new Object(), object_namespace = '') {
-			// super()
+			super()
 			this.init = this.init || Namespace.init
 			this.set(object_value, object_namespace)
 		}

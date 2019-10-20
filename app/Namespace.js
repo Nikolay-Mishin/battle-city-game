@@ -1,4 +1,4 @@
-﻿const Namespace = (function () {
+﻿;const Namespace = (function () {
 	'use strict'
 
 	// класс задания пространств имен

@@ -1,8 +1,17 @@
-﻿const Singleton = (function () {
+﻿/**
+ * Singleton
+ * https://medium.com/@frontman/реализация-одиночки-в-js-20d64da9d44b
+ * https://habr.com/ru/post/132472/
+ * https://stackoverflow.com/questions/48366563/es6-singleton-vs-instantiating-a-class-once
+ * Тип данных Symbol
+ * https://learn.javascript.ru/symbol
+ */
+
+;const Singleton = (function () {
 	'use strict'
 
-	let singleton = Symbol();
-	let singletonEnforcer = Symbol();
+	let singleton = Symbol()
+	let singletonEnforcer = Symbol()
 
 	class Singleton {
 
@@ -32,31 +41,3 @@
 
 	return Singleton
 }());
-
-/**
- * Singleton
- * https://habr.com/ru/post/132472/
- * https://stackoverflow.com/questions/48366563/es6-singleton-vs-instantiating-a-class-once
- * 
-*/
-/*
-let singleton = Symbol();
-let singletonEnforcer = Symbol();
-
-class Singleton {
-
-	constructor(enforcer) {
-		if (enforcer !== singletonEnforcer)
-			throw "Instantiation failed: use Singleton.getInstance() instead of new.";
-		// код конструктора
-	}
-
-	static get instance() {
-		if (!this[singleton])
-			this[singleton] = new Singleton(singletonEnforcer);
-		return this[singleton];
-	}
-
-	static set instance(v) { throw "Can't change constant property!" }
-}
-*/

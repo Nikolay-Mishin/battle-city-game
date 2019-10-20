@@ -8,7 +8,7 @@ factory.makeCircle() // new red circle created with radius 50px
 factory.makeTrinagle() // new red triangle created with 100px on a side 
 
 // Test constructor
-try { var obj0 = new Singleton() } catch (c) { console.log(c) }
+var obj0 = new Singleton()
 console.log('obj0', obj0);
 
 // Create and get object

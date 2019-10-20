@@ -28,5 +28,5 @@
 		}
 	}
 	
-	new Namespace(Line) // регистрируем класс Line
+	namespace.set(Line) // регистрируем класс Line
 })();

@@ -4,7 +4,7 @@
 	// класс ожидания
 	// ждет выполнения полученной callback-функции, после чего продолжает выполнение последующего кода
 
-	class Waiter {
+	class Waiter extends Singleton {
 		// асинхронный метод, ожидающий выполнения callback-функции
 		async wait(callback) {
 			return await callback()

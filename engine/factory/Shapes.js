@@ -11,3 +11,5 @@
 		console.log("new " + param.color + " triangle created with " + param.side + "px on a side ");
 	}
 }
+
+// export default Shapes;

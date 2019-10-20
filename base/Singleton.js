@@ -7,18 +7,23 @@
 	class Singleton {
 
 		constructor(enforcer) {
-			if (enforcer !== singletonEnforcer)
-				throw "Instantiation failed: use Singleton.getInstance() instead of new.";
+			if (enforcer !== singletonEnforcer) {
+				try { throw "Instantiation failed: use Singleton.getInstance() instead of new." }
+				catch (err) { console.error(err) }
+			}
 			// код конструктора
 		}
 
 		static get instance() {
 			if (!this[singleton])
-				this[singleton] = new Singleton(singletonEnforcer);
-			return this[singleton];
+				this[singleton] = new Singleton(singletonEnforcer)
+			return this[singleton]
 		}
 
-		static set instance(v) { throw "Can't change constant property!" }
+		static set instance(v) {
+			try { throw "Can't change constant property!" }
+			catch (err) { console.error(err) }
+		}
 	}
 
 	return Singleton

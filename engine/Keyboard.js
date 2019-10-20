@@ -67,5 +67,5 @@
 		}
 	}
 	
-	new Namespace(Keyboard) // регистрируем класс Keyboard
+	namespace.set(Keyboard) // регистрируем класс Keyboard
 })();

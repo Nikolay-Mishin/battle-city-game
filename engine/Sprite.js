@@ -61,5 +61,5 @@
 		}
 	}
 
-	new Namespace(Sprite) // регистрируем класс Sprite
+	namespace.set(Sprite) // регистрируем класс Sprite
 })();

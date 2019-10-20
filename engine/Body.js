@@ -65,5 +65,5 @@
 		}
 	}
 
-	new Namespace(Body) // регистрируем класс Body
+	namespace.set(Body) // регистрируем класс Body
 })();

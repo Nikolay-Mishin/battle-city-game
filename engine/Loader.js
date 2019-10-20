@@ -149,5 +149,5 @@
 		}
 	}
 	
-	new Namespace(Loader) // регистрируем класс Loader
+	namespace.set(Loader) // регистрируем класс Loader
 })();

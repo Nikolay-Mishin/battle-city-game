@@ -53,5 +53,5 @@
 		}
 	}
 
-	new Namespace(Container) // регистрируем класс Container
+	namespace.set(Container) // регистрируем класс Container
 })();

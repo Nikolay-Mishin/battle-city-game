@@ -55,5 +55,5 @@
 		}
 	}
 
-	new Namespace(Renderer) // регистрируем класс Renderer
+	namespace.set(Renderer) // регистрируем класс Renderer
 })();

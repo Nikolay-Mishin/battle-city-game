@@ -17,17 +17,20 @@
 
 		constructor (enforcer) {
 			if (enforcer !== singletonEnforcer) {
-				try { throw "Instantiation failed: use Singleton.instance instead of new." }
-				catch (err) { console.error(err) }
+				try {
+					throw `${this.__proto__.constructor.name} instantiation failed \n`+
+						`use ${this.__proto__.constructor.name}.instance instead of new.`
+				}
+				catch (err) { console.error(err, this) }
 			}
 			// код конструктора
 			console.log(enforcer)
 			console.log(singletonEnforcer)
 		}
 
-		static get instance () {
+		static get instance() {
 			if (!this[singleton])
-				this[singleton] = new Singleton(singletonEnforcer)
+				this[singleton] = new this(singletonEnforcer)
 			console.log(this[Symbol()])
 			console.log(this[singleton])
 			return this[singleton]

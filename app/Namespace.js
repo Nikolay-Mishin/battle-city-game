@@ -1,6 +1,9 @@
 ﻿;const Namespace = (function () {
 	'use strict'
 
+	let singleton = Symbol()
+	let singletonEnforcer = Symbol()
+
 	// класс задания пространств имен
 	// Если не хотите привязываться к какому-то фреймворку, для реализации пространства имен можно написать нечто вроде этого
 
@@ -8,11 +11,29 @@
 		static init
 
 		constructor (object_value = new Object(), object_namespace = '') {
-			super()
+			super(singletonEnforcer) // наследуем конструктор родителя
+			if (object_value !== singletonEnforcer) {
+				try { throw "Instantiation failed: use Singleton.instance instead of new." }
+				catch (err) { console.error(err, this) }
+			}
+			// код конструктора
 			this.init = this.init || Namespace.init
 			this.set(object_value, object_namespace)
 		}
+		
+		static get instance() {
+			if (!this[singleton])
+				this[singleton] = new this(singletonEnforcer)
+			console.log(this[Symbol()])
+			console.log(this[singleton])
+			return this[singleton]
+		}
 
+		static set instance(v) {
+			try { throw "Can't change constant property!" }
+			catch (err) { console.error(err) }
+		}
+		
 		set (object_value = new Object(), object_namespace = '') {
 			// object_value - значение для конечного свойства пространства имен (SomeBigSubnamespace)
 			// object_name - имя пространства имен ('SomeCompany.SomeBigNamespace.SomeBigSubnamespace')

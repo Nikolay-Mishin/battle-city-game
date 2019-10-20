@@ -13,10 +13,8 @@
 
 			// глобальное пространство имен
 			Namespace.init = this.projectNamespace ? `${this.projectName}.${this.projectNamespace}` : this.projectName
-			// регистрируем пространство имен BattleCityGame.GameEngine в объекте window
-			this.namespace = new Namespace()
-			this.instance = Namespace.instance
-			console.log(this.instance)
+			// this.namespace = new Namespace()
+			this.namespace = Namespace.instance // регистрируем пространство имен BattleCityGame.GameEngine в объекте window
 
 			this.project = window[`${this.projectName}`] // объект проекта приложения
 			this.core = this.project[`${this.projectNamespace}`] // объект ядра приложения

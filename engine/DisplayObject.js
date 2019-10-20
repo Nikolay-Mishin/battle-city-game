@@ -88,5 +88,5 @@
 		}
 	}
 
-	new Namespace(DisplayObject) // регистрируем класс DisplayObject
+	namespace.set(DisplayObject) // регистрируем класс DisplayObject
 })();

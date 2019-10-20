@@ -1,14 +1,11 @@
 ﻿'use strict'
-/*
-console.log('=> Init start - "app/config.js"')
-console.log(init)
-*/
-init.setConfig('app/config.json', () => {
-	// console.log('=> Init finish - "app/config.js"')
-	console.log(init)
-})
 
-new Namespace() // регистрируем пространство имен BattleCityGame.GameEngine в объекте window
-// выгружаем свойство GameEngine из объекта BattleCityGame (деструктуризация)
-const { GameEngine } = BattleCityGame
-// const GameEngine = window[init.namespace] // задаем алиас для пространства имен проекта (BattleCityGame.GameEngine)
+const projectSettings = {
+	name: "BattleCityGame",
+	namespace: "GameEngine",
+	config: "app/settings.json"
+}
+
+// создаем константы для более удобного обращения к путям файлов
+const data = 'static/data'
+const img = 'static/img'

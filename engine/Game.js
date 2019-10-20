@@ -146,5 +146,5 @@
 		}
 	}
 
-	new Namespace(Game) // регистрируем класс Game
+	namespace.set(Game) // регистрируем класс Game
 })();

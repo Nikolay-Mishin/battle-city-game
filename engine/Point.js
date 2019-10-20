@@ -22,5 +22,5 @@
 		}
 	}
 	
-	new Namespace(Point) // регистрируем класс Point
+	namespace.set(Point) // регистрируем класс Point
 })();

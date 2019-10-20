@@ -4,15 +4,28 @@
 	// класс задания пространств имен
 	// Если не хотите привязываться к какому-то фреймворку, для реализации пространства имен можно написать нечто вроде этого
 
-	class Namespace {
-		constructor (object_value = new Object(), object_name = '') {
+	class Namespace extends Singleton {
+		static init
+
+		constructor (object_value = new Object(), object_namespace = '') {
+			super()
+			this.init = this.init || Namespace.init
+			this.set(object_value, object_namespace)
+		}
+
+		set (object_value = new Object(), object_namespace = '') {
 			// object_value - значение для конечного свойства пространства имен (SomeBigSubnamespace)
 			// object_name - имя пространства имен ('SomeCompany.SomeBigNamespace.SomeBigSubnamespace')
 
-			object_name = init.Namespace || 'BattleCityGame.GameEngine'
-
+			let object_name = this.init
+			// если передано значение для подпространства имен объекта (класса), добавляем его имя к имени пространства имен
+			// object_name = Game | 'BattleCityGame.GameEngine' => 'BattleCityGame.GameEngine.Game'
+			if (object_namespace) {
+				object_name += '.' + object_namespace
+			}
 			// если передано значение для объекта (класс), добавляем его имя к имени пространства имен
-			// object_value = Game - 'BattleCityGame.GameEngine' => 'BattleCityGame.GameEngine.Game'
+			// object_value = Scene | 'BattleCityGame.GameEngine' => 'BattleCityGame.GameEngine.Scene'
+			// object_name = Game | 'BattleCityGame.GameEngine.Game' => 'BattleCityGame.GameEngine.Game.Scene'
 			if (object_value.name) {
 				object_name += '.' + object_value.name
 			}

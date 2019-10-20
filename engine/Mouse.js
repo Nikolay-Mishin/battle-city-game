@@ -7,5 +7,5 @@
 
 	}
 	
-	new Namespace(Mouse) // регистрируем класс Mouse
+	namespace.set(Mouse) // регистрируем класс Mouse
 })();

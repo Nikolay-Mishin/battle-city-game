@@ -17,25 +17,30 @@
 			this.space = false
 			this.enter = false
 
+			this.keyboardInit(keyboard)
+		}
+
+		keyboardInit (keyboard) {
+			console.log(keyboard.settings)
 			// событие нажатия клавиши
 			document.body.addEventListener('keydown', function (event) {
 				// event.preventDefault()
-				console.log(this.settings)
+				console.log(keyboard.settings)
 				keyboard.checkKey(event)
 				// event.code - код клавиши
 				switch (event.code) {
 					case "ArrowUp":
 						keyboard.arrowUp = true
 						break
-					
+
 					case "ArrowDown":
 						keyboard.arrowDown = true
 						break
-					
+
 					case "ArrowRight":
 						keyboard.arrowRight = true
 						break
-					
+
 					case "ArrowLeft":
 						keyboard.arrowLeft = true
 						break
@@ -55,15 +60,15 @@
 					case "ArrowUp":
 						keyboard.arrowUp = false
 						break
-					
+
 					case "ArrowDown":
 						keyboard.arrowDown = false
 						break
-					
+
 					case "ArrowRight":
 						keyboard.arrowRight = false
 						break
-					
+
 					case "ArrowLeft":
 						keyboard.arrowLeft = false
 						break

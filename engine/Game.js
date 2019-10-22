@@ -12,6 +12,21 @@
 			this.scenesCollection = new GameEngine.Container() // коллекция (массив) сцен - объект контейнера
 			this.keyboard = new GameEngine.Keyboard() // объект клавиатуры
 
+			init.loadConfig(() => {
+				init.setConfig(this)
+				console.log(this.keyboard.settings)
+				this.loadGame(args) // загружаем игру
+				init.showContent() // показываем контент и скрываем прелоадер
+			})
+		}
+
+		// геттер для получения сцен из контейнера
+		get scenes() {
+			return this.scenesCollection.displayObjects
+		}
+
+		// загружает ресурсы из очереди контейнера и инициализирует сцены
+		loadGame (args) {
 			// коллекция - работает с переданными аргументами, как с массивом
 			// можно передать как коллекцию, так и 1 аргумент - add(...scenes), remove(scene)
 
@@ -52,11 +67,6 @@
 			})
 
 			requestAnimationFrame(timestamp => this.tick(timestamp)) // метод отрисовки фреймов (обновляется 60р в сек)
-		}
-
-		// геттер для получения сцен из контейнера
-		get scenes() {
-			return this.scenesCollection.displayObjects
 		}
 
 		// добавляет переданную коллекцию сцен в контейнер

@@ -1,6 +1,8 @@
 ﻿;const init = (function () {
 	'use strict'
 
+	const config = Symbol() // имя защищенного свойства объекта конфигурации
+
 	// класс инициализации
 	// служит для инициализации конфигурационных файлов проекта и задания пространств имен
 
@@ -19,38 +21,41 @@
 			this.project = window[`${this.projectName}`] // объект проекта приложения
 			this.core = this.project[`${this.projectNamespace}`] // объект ядра приложения
 
-			this.config // объект с конфигурацией
-			// если передан файл конфигурации - загружаем его
-			if (args.config) {
-				this.setConfig(args.config, args, () => {
-					console.log(this.config)
-				})
-			}
+			this.configPath = args.config // путь к файлу с конфигурацией
 		}
 
-		setConfig (address, args, callback) {
+		// геттер объекта конфигурации
+		get config () {
+			return this[config]
+		}
+
+		// сеттер объекта конфигурации
+		set config (value) {
+			this[config] = this[config] || value
+		}
+
+		setConfig (game) {
+			game.keyboard.settings = this.config.keyboard
+		}
+
+		// загружает конфигурацию и выполняет переданную callback-функцию
+		loadConfig (callback) {
 			this.showPreloader() // показываем прелоадер и скрываем контент
-			/*
-			this.wait(() => Init.getConfig(address))
-				.then(json => {
-					for (const prop of Object.keys(json[0])) {
-						this[prop] = json[0][prop]
-					}
-					this.project = window[`${this.projectSettings.name}`]
-					this.core = this.Project[`${this.projectSettings.namespace}`]
-					this.namespace = `${this.projectSettings.name}.${this.projectSettings.namespace}`
-					console.log('=> Project namespace initiolized')
-					new Namespace // регистрируем пространство имен BattleCityGame.GameEngine в объекте window
-					this.showContent() // показываем контент и скрываем прелоадер
-				})
-			*/
-			const promise = Init.
-				getConfig(address)
-				.then(json => {
-					this.config = json[0] // объект с конфигурацией
-					this.showContent() // показываем контент и скрываем прелоадер
-				})
-			Promise.all([promise]).then(callback) // выполняем все промисы
+			// если передан файл конфигурации - загружаем его
+			if (this.configPath) {
+				/* return this.wait(() => Init.getConfig(address))
+					.then(json => {
+						this.config = json[0] // объект с конфигурацией
+					}) */
+				const promise = Init.
+					getConfig(this.configPath)
+					.then(json => {
+						this.config = json[0] // объект конфигурации
+					})
+				// выполняем все промисы и затем выполняем переданную callback-функцию
+				return Promise.all([promise]).then(callback)
+			}
+			callback() // выполняем переданную callback-функцию
 		}
 
 		static getConfig (address) {

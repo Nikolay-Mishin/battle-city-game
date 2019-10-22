@@ -7,15 +7,21 @@
 		constructor () {
 			const keyboard = this // instance (экземпляр класса клавиатуры)
 
+			this.settings // объект настроек клавиатуры
+
 			// состояние нажатия по умолчанию
 			this.arrowUp = false
 			this.arrowDown = false
 			this.arrowLeft = false
 			this.arrowRight = false
 			this.space = false
+			this.enter = false
 
 			// событие нажатия клавиши
 			document.body.addEventListener('keydown', function (event) {
+				// event.preventDefault()
+				console.log(this.settings)
+				keyboard.checkKey(event)
 				// event.code - код клавиши
 				switch (event.code) {
 					case "ArrowUp":
@@ -36,6 +42,9 @@
 
 					case "Space":
 						keyboard.space = true
+						break
+					case "Enter":
+						keyboard.enter = true
 						break
 				}
 			})
@@ -62,8 +71,18 @@
 					case "Space":
 						keyboard.space = false
 						break
+					case "Enter":
+						keyboard.enter = false
+						break
 				}
 			})
+		}
+
+		checkKey (event) {
+			console.log(event)
+			console.log('location: ' + event.location)
+			console.log('code: ' + event.code)
+			console.log('key: ' + event.key)
 		}
 	}
 	

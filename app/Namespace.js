@@ -7,11 +7,11 @@
 	// класс задания пространств имен
 	// Если не хотите привязываться к какому-то фреймворку, для реализации пространства имен можно написать нечто вроде этого
 
-	class Namespace extends Singleton {
+	class Namespace /*extends Singleton*/ {
 		static init
 
 		constructor (object_value = new Object(), object_namespace = '') {
-			super(singletonEnforcer) // наследуем конструктор родителя
+			// super(singletonEnforcer) // наследуем конструктор родителя
 			if (object_value !== singletonEnforcer) {
 				try { throw "Instantiation failed: use Singleton.instance instead of new." }
 				catch (err) { console.error(err, this) }
@@ -24,8 +24,8 @@
 		static get instance() {
 			if (!this[singleton])
 				this[singleton] = new this(singletonEnforcer)
-			console.log(this[Symbol()])
-			console.log(this[singleton])
+			// console.log(this[Symbol()])
+			// console.log(this[singleton])
 			return this[singleton]
 		}
 

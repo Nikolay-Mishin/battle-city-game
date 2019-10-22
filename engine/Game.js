@@ -14,7 +14,6 @@
 
 			init.loadConfig(() => {
 				init.setConfig(this)
-				console.log(this.keyboard.settings)
 				this.loadGame(args) // загружаем игру
 				init.showContent() // показываем контент и скрываем прелоадер
 			})

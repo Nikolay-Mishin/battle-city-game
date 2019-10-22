@@ -21,7 +21,6 @@
 		}
 
 		keyboardInit (keyboard) {
-			console.log(keyboard.settings)
 			// событие нажатия клавиши
 			document.body.addEventListener('keydown', function (event) {
 				// event.preventDefault()

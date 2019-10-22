@@ -24,15 +24,15 @@
 				catch (err) { console.error(err, this) }
 			}
 			// код конструктора
-			console.log(enforcer)
-			console.log(singletonEnforcer)
+			// console.log(enforcer)
+			// console.log(singletonEnforcer)
 		}
 
 		static get instance() {
 			if (!this[singleton])
 				this[singleton] = new this(singletonEnforcer)
-			console.log(this[Symbol()])
-			console.log(this[singleton])
+			// console.log(this[Symbol()])
+			// console.log(this[singleton])
 			return this[singleton]
 		}
 

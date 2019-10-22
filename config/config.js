@@ -3,7 +3,7 @@
 const projectSettings = {
 	name: "BattleCityGame",
 	namespace: "GameEngine",
-	config: "app/settings.json"
+	config: "config/settings.json"
 }
 
 // создаем константы для более удобного обращения к путям файлов

@@ -151,11 +151,7 @@ const helloScene = new Scene({
 		this.sceneObjects.bunny2.frame.x = this.sceneObjects.bunny2.texture.width / 4 + 200 * Math.cos(timestamp / 200)
 		this.sceneObjects.bunny2.frame.y = this.sceneObjects.bunny2.texture.height / 3 + 200 * Math.sin(timestamp / 200)
 
-		if (keyboard.enter) {
-			game.addScene(beginScene)
-			game.finishScene(helloScene)
-			game.startScene(beginScene)
-		}
+		game.changeScene(['beginScene'], keyboard.enter) // меняем сцену по нажатию Enter
 	}
 })
 
@@ -404,5 +400,7 @@ const game = new Game({
 	height: 500,
 	background: 'green',
 	// список сцен игры
-	scenes: [helloScene]
+	scenes: [helloScene, beginScene]
 })
+
+console.log(game)

@@ -1,4 +1,23 @@
-﻿.wrapper {
+﻿.preloader {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 9999;
+	background-color: #fefefe;
+	opacity: .7;
+	display: none;
+}
+
+.preloader .content {
+	position: relative;
+	left: 50%;
+	top: 50vh;
+	margin: -100px 0 0 -100px;
+}
+
+.wrapper {
 	width: 100%;
 	height: 100px;
 	border: 1px solid #515151;
@@ -13,23 +32,4 @@
 .wrapper img {
 	height: 100%;
 	width: auto;
-}
-
-.preloader {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	z-index: 9999;
-	background-color: #fefefe;
-	opacity: .7;
-	display: none;
-}
-
-.preloader img {
-	position: relative;
-	left: 50%;
-	top: 50vh;
-	margin: -100px 0 0 -100px;
 }

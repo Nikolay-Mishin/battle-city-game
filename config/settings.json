@@ -1,5 +1,12 @@
 ﻿[
 	{
-		"keyboard": {}
+		"keyboard": {
+			"moveUp": "ArrowUp",
+			"moveDown": "ArrowDown",
+			"moveLeft": "ArrowLeft",
+			"moveRight": "ArrowRight",
+			"jump": "Space",
+			"enter": "Enter"
+		}
 	}
 ]

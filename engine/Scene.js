@@ -1,6 +1,8 @@
 ﻿;(function () {
 	'use strict'
 
+	const sceneObjects = Symbol()
+
 	// отдельные сцены игры (меню, уровень, результат боя)
 	// сцена - расширенный контейнер
 
@@ -12,7 +14,7 @@
 			this.name = args.name || ''
 
 			this.status = 'waiting' // статус сцены по умолчанию
-			this.stage = this.displayObjects // хранилище объектов сцены (stage - алиас)
+			this.stage = this.displayObjects // хранилище объектов? отображаемых на сцене (stage - алиас)
 			this.sceneObjects = {} // контейнер объектов сцены (this.bunny, this.tank...)
 			this.game = null // ссылка на объект игры, к которой принадлежит сцена ()
 
@@ -35,6 +37,16 @@
 			if (args.beforeDestroy) {
 				this.beforeDestroy = args.beforeDestroy.bind(this)
 			}
+		}
+
+		// контейнер объектов сцены (this.bunny, this.tank...)
+
+		get sceneObjects () {
+			return this[sceneObjects]
+		}
+
+		set sceneObjects (value) {
+			this[sceneObjects] = value
 		}
 
 		loading () {} // метод загрузки ресурсов

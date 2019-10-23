@@ -35,7 +35,7 @@
 		}
 
 		setConfig (game) {
-			game.keyboard.settings = this.config.keyboard
+			game.keyboard.init(this.config.keyboard)
 		}
 
 		// загружает конфигурацию и выполняет переданную callback-функцию

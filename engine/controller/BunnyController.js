@@ -14,10 +14,12 @@
 		}
 
 		eventUpdate (timestamp) {
-			// this.rotation = timestamp / 1000
+			this.rotation = timestamp / 1000
 		}
 
 		jump () {
+			console.log(this)
+			console.log(this.events)
 			this.speedRotation = this.events.jump ? Math.PI / 100 : Math.PI / 200 // скорость поворота
 			this.speedMove = this.events.jump ? 2 : 1 // скорость движения
 		}

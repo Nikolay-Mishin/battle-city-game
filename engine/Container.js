@@ -18,6 +18,10 @@
 				if (!this.displayObjects.includes(displayObject)) {
 					this.displayObjects.push(displayObject) // добавляем отображаемый объект в свойство
 					displayObject.setParent(this) // в качестве родителя объекта устанавливаем данный контейнер
+					// если объект унаследован от Controller, вызываем метод для инициализации событий контроллера
+					if (displayObject instanceof Controller) {
+						displayObject.eventsInit()
+					}
 				}
 			}
 		}

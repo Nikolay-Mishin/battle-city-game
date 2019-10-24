@@ -12,11 +12,23 @@
 			this.scenesCollection = new GameEngine.Container() // коллекция (массив) сцен - объект контейнера
 			this.keyboard = new GameEngine.Keyboard() // объект клавиатуры
 			this.currentScene = null // текущая активная сцена
+			this.status = 'waiting' // статус игры по умолчанию
 
+			console.log('game ' + this.status)
+			this.status = 'config loading' // меняем статус
+			console.log('game ' + this.status)
+
+			// загружаем конфигурацию игры
 			init.loadConfig(() => {
+				this.status = 'config loaded' // меняем статус
+				console.log('game ' + this.status)
+				console.log(init)
 				init.setConfig(this) // устанавливаем настройки на основе хагруженной конфигурации
 
 				// загружаем игру
+
+				this.status = 'loading' // меняем статус
+				console.log('game ' + this.status)
 
 				// если передан родительский элемент для установки канваса и в него можно поместить дочерние элементы
 				// устанавливаем канвас в целевой элемент
@@ -37,7 +49,7 @@
 
 				// вызываем метод загрузки ресурсов
 				this.startScene(...autoStartedScenes) // загружаем ресурсы из очереди контейнера и инициализируем сцену
-
+				
 				requestAnimationFrame(timestamp => this.tick(timestamp)) // метод отрисовки фреймов (обновляется 60р в сек)
 			})
 		}
@@ -71,10 +83,18 @@
 			// чтобы не грузить самостоятельными объектами вспомогательные ресурсы,
 			// которые нужны исключительно для формирования другого ресурса а не как самостоятельный объект
 
+			this.status = 'resources loading' // меняем статус
+			console.log('game ' + this.status)
+
 			// для каждой сцены с автостартом задаем статус и вызываем метод предзагрузки ресурсов (добавление в очередь загрузки)
 			this.loadScene(...scenes) // устанавливаем ресурсы сцены в очередь на загрузку
 
 			this.loader.load(() => {
+				this.status = 'resources loaded' // меняем статус
+				console.log('game ' + this.status)
+				this.status = 'scenes init' // меняем статус
+				console.log('game ' + this.status)
+
 				for (const scene of scenes) {
 					scene.status = 'init'
 					scene.init() // инициализируем сцену
@@ -82,6 +102,14 @@
 				}
 
 				this.currentScene = scenes
+
+				this.status = 'scenes inited' // меняем статус
+				console.log('game ' + this.status)
+
+				init.showContent() // показываем контент и скрываем прелоадер
+				this.status = 'started' // меняем статус
+				console.log('game ' + this.status)
+				console.log(this)
 			})
 		}
 
@@ -118,7 +146,6 @@
 			const scenes = this.findScene(...names)
 			if (scenes) {
 				this.initScene(...scenes) // загружаем установленные в очереди ресурсы
-				init.showContent() // показываем контент и скрываем прелоадер
 				return true
 			}
 			let noStartScenes = names.join(', ')

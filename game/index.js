@@ -1,10 +1,11 @@
 ﻿'use strict'
 
 // выгружаем свойства из объекта GameEngine (деструктуризация)
-const { Body, Game, Scene, Point, Line } = GameEngine
+const { Game, Scene, Body, Controller, Point, Line } = GameEngine
+const { MainController } = Controller
 
 console.log('=> "game/main.js"')
-console.log(init)
+console.log(GameEngine)
 
 /*
  * Повторить код урока. Добиться чтобы код работал так же как.
@@ -47,7 +48,7 @@ const helloScene = new Scene({
 		// порядок отрисовки совпадает с порядком добавления в контейнер
 
 		// создаем спрайт и его тело
-		this.sceneObjects.bunny1 = new Body(bunnyTexture, {
+		this.sceneObjects.bunny1 = new MainController(bunnyTexture, {
 			scale: 0.25,
 			anchorX: 0.5,
 			anchorY: 0.5,
@@ -118,30 +119,10 @@ const helloScene = new Scene({
 
 	// метод обновления состояния спрайта
 	update (timestamp) {
-		const { keyboard } = this.parent // в качестве объекта клавиатуры записываем Game
+		const { keyboard } = this.parent // в качестве объекта клавиатуры записываем объект событий нажатия клавиш
+		const { events } = keyboard // в качестве объекта клавиатуры записываем объект событий нажатия клавиш
 
-		let speedRotation = keyboard.space ? Math.PI / 100 : Math.PI / 200 // скорость поворота
-		let speedMove = keyboard.space ? 2 : 1 // скорость движения
-
-		// обрабатываем нажатия клавиш
-
-		if (keyboard.arrowUp) {
-			this.sceneObjects.bunny1.y -= speedMove
-		}
-
-		if (keyboard.arrowDown) {
-			this.sceneObjects.bunny1.y += speedMove
-		}
-
-		if (keyboard.arrowRight) {
-			this.sceneObjects.bunny1.rotation += speedRotation
-		}
-
-		if (keyboard.arrowLeft) {
-			this.sceneObjects.bunny1.rotation -= speedRotation
-		}
-
-		// this.sceneObjects.bunny1.rotation = timestamp / 1000
+		this.eventControllers(timestamp)
 
 		this.sceneObjects.tank1.rotation = timestamp / 1000
 
@@ -151,7 +132,7 @@ const helloScene = new Scene({
 		this.sceneObjects.bunny2.frame.x = this.sceneObjects.bunny2.texture.width / 4 + 200 * Math.cos(timestamp / 200)
 		this.sceneObjects.bunny2.frame.y = this.sceneObjects.bunny2.texture.height / 3 + 200 * Math.sin(timestamp / 200)
 
-		game.changeScene(['beginScene'], keyboard.enter) // меняем сцену по нажатию Enter
+		game.changeScene(['beginScene'], events.enter) // меняем сцену по нажатию Enter
 	}
 })
 
@@ -402,5 +383,3 @@ const game = new Game({
 	// список сцен игры
 	scenes: [helloScene, beginScene]
 })
-
-console.log(game)

@@ -2,6 +2,7 @@
 	'use strict'
 
 	const sceneObjects = Symbol()
+	const sceneControllers = Symbol()
 
 	// отдельные сцены игры (меню, уровень, результат боя)
 	// сцена - расширенный контейнер
@@ -39,7 +40,7 @@
 			}
 		}
 
-		// контейнер объектов сцены (this.bunny, this.tank...)
+		// контейнер объектов сцены (this.wall, this.bunny, this.tank...)
 
 		get sceneObjects () {
 			return this[sceneObjects]
@@ -49,10 +50,36 @@
 			this[sceneObjects] = value
 		}
 
+		get sceneControllers() {
+			return this.stage.filter(x => x instanceof Controller)
+		}
+
 		loading () {} // метод загрузки ресурсов
 		init () {} // метод инициализации сцены - создает объекты загруженных ресурсов
 		update () {} // метод обновления состояния спрайта
-		beforeDestroy () {} // вызывается перед удалением сцены и удаляет все объекты, созданные сценой
+		beforeDestroy () { } // вызывается перед удалением сцены и удаляет все объекты, созданные сценой
+
+		// вызывает события контроллеров сцены (this.bunny, this.tank...)
+		eventControllers(timestamp) {
+			const { keyboard } = this.parent
+			const currentEvent = keyboard
+
+			for (const controller of this.sceneControllers) {
+				// вызывает метод контроллера для динамического обновления (не зависящих от событий контроллера)
+				if (controller.eventUpdate) {
+					controller.eventUpdate(timestamp)
+				}
+				for (const event of currentEvent) {
+					// если есть событие (!null), вызываем соответствующее событие у всех контроллеров, которые имеют это событие
+					if (controller[event]) {
+						console.log(controller.events)
+						controller.events[event] = keyboard.events[event] // получаем значение флага для данного события
+						console.log(controller.events)
+						controller[event]() // вызывает метод контроллера по имени события
+					}
+				}
+			}
+		}
 	}
 
 	namespace.set(Scene) // регистрируем класс Scene

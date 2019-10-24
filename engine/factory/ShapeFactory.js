@@ -1,4 +1,4 @@
-﻿// import Shapes from './Shapes.js';
+// import Shapes from './Shapes.js';
 
 const ShapeFactory = (function () {
 	class ShapeFactory {

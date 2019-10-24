@@ -1,4 +1,4 @@
-﻿const Shapes = {
+const Shapes = {
 	Circle: function (param) {
 		console.log("new " + param.color + " circle created with radius " + param.radius + "px");
 	},

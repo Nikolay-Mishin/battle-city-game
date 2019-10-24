@@ -1,4 +1,4 @@
-﻿;(function () {
+;(function () {
 	'use strict'
 
 	const event = Symbol()
@@ -22,13 +22,14 @@
 
 		// геттер текущего действия клавиатуры (массив)
 		get event () {
-			return this[event]
+			return this[event] || []
 		}
 
 		// сеттер текущего действия клавиатуры (массив)
 		set event (value) {
 			this[event] = this[event] || []
-			this[event] = value
+			this[event].push(value)
+			console.log(this[event])
 		}
 
 		// инициализирует клавиатуру
@@ -69,11 +70,13 @@
 				if (event = keyboard.keys[event.code]) {
 					keyboard.events[event] = isPress
 					if (isPress) {
-						keyboard.event.push(event)
+						if (!keyboard.event.includes(event)) {
+							keyboard.event = event
+						}
 					}
 					else {
 						const index = keyboard.event.indexOf(event) // получаем индекс данного объекта в массиве
-						this.event.splice(index, 1) // удаляем из массива 1 объект, начиная с найденного индекса
+						keyboard.event.splice(index, 1) // удаляем из массива 1 объект, начиная с найденного индекса
 					}
 					console.log('event: ' + keyboard.event)
 				}

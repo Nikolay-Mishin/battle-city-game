@@ -1,4 +1,4 @@
-﻿// Функция отслеживания координат мыши над элементом.
+// Функция отслеживания координат мыши над элементом.
 
 function mouseWatcher(element, callback, avtoStart = true) {
 	let started = false

@@ -1,4 +1,4 @@
-﻿;(function () {
+;(function () {
 	'use strict'
 
 	// отвечает за отрисовку точки

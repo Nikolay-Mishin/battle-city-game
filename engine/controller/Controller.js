@@ -1,4 +1,4 @@
-﻿; (function () {
+; (function () {
 	'use strict'
 
 	// занимается непосредственно отрисовкой графики (только отрисовкой отдельного конкретного изображения)
@@ -9,13 +9,14 @@
 		constructor (texture, args = {}) {
 			super(texture, args)
 			this.events = {} // объект флагов (boolean) событий нажатия клавиш
+			this.restore = [] // список событий, которые должны вызываться после завершения события (true => false)
 		}
 
 		eventsInit () {
 			const events = this.parent.parent.keyboard.events // настройки клавиатуры { event: key }
 			for (const event of Object.keys(events)) {
 				// проверяем есть ли в контроллере метод с именем данного события
-				if (this[event]) {
+				if (this[event] && this.events[event] != events[event]) {
 					this.events[event] = events[event]
 				}
 			}

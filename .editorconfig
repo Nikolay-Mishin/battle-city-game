@@ -1,4 +1,4 @@
-﻿# Top-most EditorConfig file
+# Top-most EditorConfig file
 root = true
 
 # Tab indentation
@@ -9,4 +9,4 @@ tab_width = 4
 trim_trailing_whitespace = true
 insert_final_newline = false
 end_of_line = crlf
-charset = utf-8-bom
+charset = utf-8

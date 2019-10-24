@@ -1,4 +1,4 @@
-﻿;const Waiter = (function () {
+;const Waiter = (function () {
 	'use strict'
 
 	// класс ожидания

@@ -1,4 +1,4 @@
-﻿;(function () {
+;(function () {
 	'use strict'
 
 	// Отвечает за отдельную сущность, которая будет отрисовываться (любой объект - спрайт, animationSprite, container...)

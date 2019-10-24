@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Singleton
  * https://medium.com/@frontman/реализация-одиночки-в-js-20d64da9d44b
  * https://habr.com/ru/post/132472/

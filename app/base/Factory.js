@@ -1,4 +1,4 @@
-﻿const ShapeFactory = (function () {
+const ShapeFactory = (function () {
 	class ShapeFactory {
 		constructor (size, color) {
 			this.size = size;

@@ -1,4 +1,4 @@
-﻿;const init = (function () {
+;const init = (function () {
 	'use strict'
 
 	const config = Symbol() // имя защищенного свойства объекта конфигурации

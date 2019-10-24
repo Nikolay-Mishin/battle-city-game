@@ -1,4 +1,4 @@
-﻿# battle-city-game
+# battle-city-game
 * https://nikolay-mishin.github.io/battle-city-game/
 
 ## Тип данных Symbol

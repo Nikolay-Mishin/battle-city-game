@@ -48,7 +48,7 @@ const helloScene = new Scene({
 		// порядок отрисовки совпадает с порядком добавления в контейнер
 
 		// создаем спрайт и его тело
-		this.sceneObjects.bunny1 = new MainController(bunnyTexture, {
+		this.sceneObjects.bunny1 = new BunnyController(bunnyTexture, {
 			scale: 0.25,
 			anchorX: 0.5,
 			anchorY: 0.5,

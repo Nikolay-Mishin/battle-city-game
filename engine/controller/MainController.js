@@ -50,5 +50,5 @@
 		}
 	}
 
-	namespace.set(MainController, 'Controller') // регистрируем класс Game
+	namespace.set(MainController, 'Controller') // регистрируем класс MainController
 })();

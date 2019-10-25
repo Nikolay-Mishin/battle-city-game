@@ -11,8 +11,16 @@
 
 			this.restore = ['jump'] // список событий, которые должны вызываться после завершения события (true => false)
 
-			this.speedRotation = args.speedRotation || Math.PI / 200 // скорость поворота
-			this.speedMove = args.speedMove || 1 // скорость движения
+			// параметры контроллера по умолчанию
+			this.defaults = {
+				speedMove: args.speedMove || 1, // скорость движения
+				speedRotation: args.speedRotation || Math.PI / 200 // скорость поворота
+			}
+			
+			// задаем дефолтные свойства контроллера на основе соответствующих параметров
+			for (const prop of Object.keys(this.defaults)) {
+				this[prop] = this.defaults[prop]
+			}
 		}
 
 		eventUpdate (timestamp) {
@@ -20,8 +28,11 @@
 		}
 
 		jump () {
-			this.speedRotation = this.events.jump ? Math.PI / 100 : this.speedRotation // скорость поворота
-			this.speedMove = this.events.jump ? 2 : this.speedMove // скорость движения
+			console.log(this.events.jump)
+			console.log(this.speedMove)
+			this.speedRotation = this.events.jump ? this.defaults.speedRotation * 2 : this.defaults.speedRotation // скорость поворота
+			this.speedMove = this.events.jump ? this.defaults.speedMove * 2 : this.defaults.speedMove // скорость движения
+			console.log(this.speedMove)
 		}
 
 		moveUp() {

@@ -2,6 +2,7 @@
 	'use strict'
 
 	const event = Symbol()
+	const stopEvent = Symbol()
 
 	// отвечает за отработку событий при нажатии клавиш
 
@@ -29,7 +30,20 @@
 		set event (value) {
 			this[event] = this[event] || []
 			this[event].push(value)
-			console.log(this[event])
+		}
+
+		// геттер завершенного действия клавиатуры (массив)
+		get stopEvent () {
+			return this[stopEvent] || []
+		}
+
+		// сеттер завершенного действия клавиатуры (массив)
+		set stopEvent (value) {
+			if (value === null) {
+				return this[stopEvent] = []
+			}
+			this[stopEvent] = this[stopEvent] || []
+			this[stopEvent].push(value)
 		}
 
 		// инициализирует клавиатуру
@@ -46,10 +60,6 @@
 				// устанавливаем клавиши на основе объекта конфигурации
 				this.keys[events[action]] = action // { key: event }
 			}
-
-			console.log(this.settings)
-			console.log(this.events)
-			console.log(this.keys)
 
 			// событие нажатия клавиши
 			this.addEvent('keydown')
@@ -70,6 +80,7 @@
 				if (event = keyboard.keys[event.code]) {
 					keyboard.events[event] = isPress
 					if (isPress) {
+						// жобавляем активное событие, если такого еще нет в списке
 						if (!keyboard.event.includes(event)) {
 							keyboard.event = event
 						}
@@ -77,8 +88,10 @@
 					else {
 						const index = keyboard.event.indexOf(event) // получаем индекс данного объекта в массиве
 						keyboard.event.splice(index, 1) // удаляем из массива 1 объект, начиная с найденного индекса
+						keyboard.stopEvent = event // добавляем данное событие в список завершенных
 					}
 					console.log('event: ' + keyboard.event)
+					console.log('stopEvent: ' + keyboard.stopEvent)
 				}
 			})
 		}
@@ -93,12 +106,12 @@
 			console.log('code: ' + event.code)
 			console.log('key: ' + event.key)
 
+			/*
 			let ctrl_Z = event.code == 'KeyZ' && (event.ctrlKey || event.metaKey)
 			let key = event.key
 			let phoneNumber = (key >= '0' && key <= '9') || key == '+' || key == '(' || key == ')' || key == '-' ||
 				key == 'ArrowLeft' || key == 'ArrowRight' || key == 'Delete' || key == 'Backspace'
-
-			/*
+			
 			console.log('Ctrl + Z: ' + ctrl_Z)
 			if (/^[a-z\d]$/i.test(key)) {
 				console.log('Letter or number typed: ' + key)

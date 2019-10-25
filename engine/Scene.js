@@ -61,38 +61,8 @@
 
 		// вызывает события контроллеров сцены (this.bunny, this.tank...)
 		eventControllers(timestamp) {
-			const { keyboard } = this.parent
-			const currentEvent = keyboard.event // текущие (выполнияемые) события клавиатуры
-
 			for (const controller of this.sceneControllers) {
-				// вызываем метод контроллера для динамического обновления (не зависящих от событий контроллера)
-				if (controller.eventUpdate) {
-					controller.eventUpdate(timestamp)
-				}
-
-				// обрабатываем все ьекущие события на клавиатуре
-				if (currentEvent) {
-					// для каждого активного события вызываем метод контроллера
-					console.log(controller.events)
-					for (const event of currentEvent) {
-						// вызываем соответствующее событие у всех контроллеров, которые имеют это событие
-						if (controller[event]) {
-							controller.events[event] = keyboard.events[event] // получаем значение флага для данного события
-							controller[event]() // вызывает метод контроллера по имени события
-						}
-					}
-					console.log(controller.events)
-				}
-				/*
-				// вызываем методы контроллера из свойства restore, которые завершились (не входят в массив currentEvent)
-				for (const restore of controller.restore) {
-					if (!currentEvent.includes(restore)) {
-						controller.events[restore] = keyboard.events[restore] // получаем значение флага для данного события
-						controller[restore]() // вызывает метод контроллера по имени события
-					}
-				}
-				console.log(controller.events)
-				*/
+				controller.event(timestamp)
 			}
 		}
 	}

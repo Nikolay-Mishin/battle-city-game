@@ -30,7 +30,6 @@
 		jump () {
 			this.speedRotation = this.events.jump ? this.defaults.speedRotation * 2 : this.defaults.speedRotation // скорость поворота
 			this.speedMove = this.events.jump ? this.defaults.speedMove * 2 : this.defaults.speedMove // скорость движения
-			console.log(this.speedMove)
 		}
 
 		moveUp() {

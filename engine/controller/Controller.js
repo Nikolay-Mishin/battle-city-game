@@ -76,5 +76,5 @@
 		}
 	}
 
-	namespace.set(Controller) // регистрируем класс Game
+	namespace.set(Controller) // регистрируем класс Controller
 })();

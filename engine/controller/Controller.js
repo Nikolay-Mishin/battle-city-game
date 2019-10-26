@@ -6,11 +6,33 @@
 	// следит за всеми сценами
 
 	class Controller extends GameEngine.Body {
-		constructor (texture, args = {}) {
+		constructor (texture, args = {}, params = {}) {
 			super(texture, args)
+
 			this.keyboard = {} // объект клавиатуры
 			this.events = {} // объект флагов (boolean) событий нажатия клавиш
-			this.restore = [] // список событий, которые должны вызываться после завершения события (true => false)
+			this.restore = params.restore || [] // события, которые должны вызываться после завершения события (true => false)
+
+			// параметры контроллера по умолчанию
+			this.defaults = {
+				speedMove: args.speedMove || 1, // скорость движения
+				speedRotation: args.speedRotation || Math.PI / 200 // скорость поворота
+			}
+			console.log(this.defaults)
+
+			// дефолтные параметры дочернего контроллера, переопределяющие/дополняющие данные параметры базового контроллера
+			const defaults = params.defaults || {}
+			if (Object.keys(defaults).length > 0) {
+				Object.assign(this.defaults, defaults)
+				console.log(defaults)
+			}
+			console.log(this.defaults)
+
+			// задаем свойства контроллера на основе соответствующих дефолтных параметров
+			for (const prop of Object.keys(this.defaults)) {
+				this[prop] = this.defaults[prop]
+			}
+			console.log(this)
 		}
 
 		// инициализирует список событий для данного контроллера на основе общего списка событий клавиатуры

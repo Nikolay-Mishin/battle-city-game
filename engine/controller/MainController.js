@@ -7,20 +7,12 @@
 
 	class MainController extends GameEngine.Controller {
 		constructor (texture, args = {}) {
-			super(texture, args)
-
-			this.restore = ['jump'] // список событий, которые должны вызываться после завершения события (true => false)
-
-			// параметры контроллера по умолчанию
-			this.defaults = {
-				speedMove: args.speedMove || 1, // скорость движения
-				speedRotation: args.speedRotation || Math.PI / 200 // скорость поворота
-			}
-			
-			// задаем дефолтные свойства контроллера на основе соответствующих параметров
-			for (const prop of Object.keys(this.defaults)) {
-				this[prop] = this.defaults[prop]
-			}
+			super(texture, args, {
+				restore: ['jump'], // список событий, которые должны вызываться после завершения события (true => false)
+				defaults: {
+					jumpAccel: 2
+				}
+			})
 		}
 
 		eventUpdate (timestamp) {
@@ -28,8 +20,10 @@
 		}
 
 		jump () {
-			this.speedRotation = this.events.jump ? this.defaults.speedRotation * 2 : this.defaults.speedRotation // скорость поворота
-			this.speedMove = this.events.jump ? this.defaults.speedMove * 2 : this.defaults.speedMove // скорость движения
+			// скорость поворота
+			this.speedRotation = this.events.jump ? this.defaults.speedRotation * this.jumpAccel : this.defaults.speedRotation
+			// скорость движения
+			this.speedMove = this.events.jump ? this.defaults.speedMove * this.jumpAccel : this.defaults.speedMove
 		}
 
 		moveUp() {

@@ -6,13 +6,15 @@
 			// очередь на загрузку - хранит данные, которые должны быть загружены методом load()
 			this.loadOrder = {
 				images: [],
-				jsons: []
+				jsons: [],
+				sounds: []
 			}
 
 			// хранилище ресурсов - хранит ресурсы, загруженные метод load() из очереди загрузки
 			this.resources = {
 				images: [],
-				jsons: []
+				jsons: [],
+				sounds: []
 			}
 		}
 
@@ -26,6 +28,10 @@
 			this.loadOrder.jsons.push({ name, address })
 		}
 
+		addSound(name, src) {
+			this.loadOrder.sounds.push({ name, src })
+		}
+
 		// получает изображение из ресурсов по имени
 		getImage (name) {
 			return this.resources.images[name]
@@ -34,6 +40,10 @@
 		// получает json из ресурсов по имени
 		getJson (name) {
 			return this.resources.jsons[name]
+		}
+
+		getSound(name) {
+			return this.resources.sounds[name]
 		}
 
 		// загружает данные из очереди загрузки (loadOrder) и сохраняет их в хранилище ресурсов (resources)
@@ -84,6 +94,23 @@
 				promises.push(promise)
 			}
 
+			for (const soundData of this.loadOrder.sounds) {
+				const { name, src } = soundData
+
+				const promise = Loader
+					.loadSound(src)
+					.then(audio => {
+						this.resources.sounds[name] = audio
+
+						if (this.loadOrder.sounds.includes(soundData)) {
+							const index = this.loadOrder.sounds.indexOf(soundData)
+							this.loadOrder.sounds.splice(index, 1)
+						}
+					})
+
+				promises.push(promise)
+			}
+
 			// выполняем все промисы и подписываем на результат выполнения (resolve() - выполняем callback-функцию)
 			Promise.all(promises).then(callback)
 		}
@@ -117,6 +144,20 @@
 					.then(result => result.json()) // интерпретируем result как json
 					.then(result => resolve(result)) // подписываемся на результат получения данных (файла)
 					.catch(err => reject(err)) // отлавливаем ошибки (catch - подписываемся на ошибки)
+			})
+		}
+
+		static loadSound(src) {
+			return new Promise((resolve, reject) => {
+				try {
+					const audio = new Audio
+					audio.addEventListener('canplaythrough', () => resolve(audio))
+					audio.src = src
+				}
+
+				catch (error) {
+					reject(error)
+				}
 			})
 		}
 

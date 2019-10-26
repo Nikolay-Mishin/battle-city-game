@@ -12,6 +12,16 @@
 			this.displayObjects = [] // хранилище объектов контейнера (которые отображены на экране - спрайты)
 		}
 
+
+		tick(timestamp) {
+			for (const displayObject of this.displayObjects) {
+				if (displayObject.tick) {
+					displayObject.tick(timestamp)
+				}
+			}
+		}
+
+
 		// добавляет коллекцию (массив объектов) в контейнер (если такого объекта еще нет в списке)
 		add (...displayObjects) {
 			for (const displayObject of displayObjects) {

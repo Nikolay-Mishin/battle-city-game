@@ -3,8 +3,12 @@
 
 	// Отвечает за отдельную сущность, которая будет отрисовываться (любой объект - спрайт, animationSprite, container...)
 
-	class DisplayObject {
-		constructor (args = {}) {
+	class DisplayObject extends GameEngine.EventEmitter {
+		constructor(args = {}) {
+			super()
+
+			this.uid = GameEngine.Util.generateUid()
+
 			// координаты точки отрисовки спрайта
 			this.x = args.x || 0
 			this.y = args.y || 0
@@ -38,6 +42,14 @@
 		// get (геттер) - вычисляемое на лету свойство (при обращении к нему)
 		// set (сеттер) - используется, когда мы это значение задаем
 
+		get scene() {
+			return Util.getScene(this)
+		}
+
+		get game() {
+			return this.scene.parent
+		}
+
 		// absoluteX,Y - абсолютные координаты, относительно которых отрисовывается спрайт (с учетом координат якоря - anchor)
 		// при получении абсолютных координат не умножаем на масштаб, тк scale используется в момент отрисовки спрайта
 
@@ -57,6 +69,22 @@
 		set absoluteY (value) {
 			this.y = value + this.anchorY * this.height
 			return value
+		}
+
+		get centerX() {
+			return this.absoluteX + this.width / 2 * this.scaleX
+		}
+
+		set centerX(value) {
+			return this.absoluteX = value - this.width / 2
+		}
+
+		get centerY() {
+			return this.absoluteY + this.height / 2 * this.scaleY
+		}
+
+		set centerY(value) {
+			return this.absoluteY = value - this.height / 2
 		}
 
 		// устанавливает масштаб спрайта по X и Y

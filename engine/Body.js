@@ -12,12 +12,38 @@
 
 			this.debug = args.debug || false // флаг для отображения тела спрайта
 
+			this.static = args.static || false
+
 			// тело спрайта
 			this.body = {}
 			this.body.x = body.x || 0
 			this.body.y = body.y || 0
 			this.body.width = body.width || 1
 			this.body.height = body.height || 1
+		}
+
+		get bodyRect() {
+			return {
+				x: this.absoluteX + this.width * this.scaleX * this.body.x,
+				y: this.absoluteY + this.height * this.scaleY * this.body.y,
+				width: this.width * this.scaleX * this.body.width,
+				height: this.height * this.scaleY * this.body.height
+			}
+		}
+
+		get tops() {
+			const { x, y, width, height } = this.bodyRect
+
+			return [
+				[x, y],
+				[x + width, y],
+				[x, y + height],
+				[x + width, y + height]
+			]
+		}
+
+		isInside(x, y) {
+			return GameEngine.Util.isInside({ x, y }, this.bodyRect)
 		}
 
 		// отрисовывает спрайт на основе установленных свойств
@@ -49,16 +75,24 @@
 
 			// отображает тело спрайта (collider - отвечает за определение пересечения объектов)
 			if (this.debug) {
-				context.fillStyle = 'rgba(255, 0, 0, 0.3)' // устанавливаем цвет
+				const { x, y, width, height } = this.bodyRect
+
+				context.fillStyle = 'rgba(255, 0, 0, 0.2)' // устанавливаем цвет
 				context.beginPath() // начинаем отрисовку объекта
 				// создаем прямоугольную область
-				context.rect(
-					this.absoluteX - this.x + this.body.x * this.width,
-					this.absoluteY - this.y + this.body.y * this.height,
-					this.width * this.body.width,
-					this.height * this.body.height
-				)
+				context.rect(x - this.x, y - this.y, width, height)
+				//context.rect(
+				//	this.absoluteX - this.x + this.body.x * this.width,
+				//	this.absoluteY - this.y + this.body.y * this.height,
+				//	this.width * this.body.width,
+				//	this.height * this.body.height
+				//)
 				context.fill() // отрисовываем объект
+
+				context.fillStyle = 'rgb(0, 255, 0)'
+				context.beginPath()
+				context.arc(0, 0, 3, 0, Math.PI * 2)
+				context.fill()
 			}
 
 			context.restore() // восстанавливаем контекст

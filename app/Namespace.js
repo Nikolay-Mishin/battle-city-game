@@ -38,12 +38,14 @@
 			// object_value - значение для конечного свойства пространства имен (SomeBigSubnamespace)
 			// object_name - имя пространства имен ('SomeCompany.SomeBigNamespace.SomeBigSubnamespace')
 
-			let object_name = this.init
+			let object_name = this.init // 'BattleCityGame.GameEngine'
+
 			// если передано значение для подпространства имен объекта (класса), добавляем его имя к имени пространства имен
 			// object_name = Game | 'BattleCityGame.GameEngine' => 'BattleCityGame.GameEngine.Game'
 			if (object_namespace) {
 				object_name += '.' + object_namespace
 			}
+
 			// если передано значение для объекта (класс), добавляем его имя к имени пространства имен
 			// object_value = Scene | 'BattleCityGame.GameEngine' => 'BattleCityGame.GameEngine.Scene'
 			// object_name = Game | 'BattleCityGame.GameEngine.Game' => 'BattleCityGame.GameEngine.Game.Scene'
@@ -62,7 +64,9 @@
 				}
 
 				// если это последнее свойство пространства имен (SomeBigSubnamespace), присваиваем ему переданное значение
-				if (object === object_value.name) parent[object] = object_value
+				if (object === (object_value.name || object_namespace)) {
+					parent[object] = object_value
+				}
 
 				parent = parent[object] // перезаписываем в родителя текущий объект (window => 'SomeCompany')
 			}

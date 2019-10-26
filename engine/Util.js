@@ -99,7 +99,7 @@
 		return array[Math.floor(Math.random() * array.length)]
 	}
 	
-	namespace.set(Util) // регистрируем объект Util
+	namespace.set(Util, 'Util') // регистрируем объект Util
 
 	const alphabet = 'qwerrtyahsgdfvzbxncmjiuk1239875039487'
 

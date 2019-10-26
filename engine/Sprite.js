@@ -12,7 +12,6 @@
 			const velocity = args.velocity || {}
 
 			this.texture = texture // переданное изображение (спрайт)
-
 			this.keysDefault = args.keysDefault || []
 
 			this.frames = []
@@ -34,8 +33,8 @@
 				x: frame.x || 0,
 				y: frame.y || 0,
 				// ширина и высота отрисовываемой области
-				width: frame.width || texture.width,
-				height: frame.height || texture.height
+				width: frame.width || texture ? texture.width : 0,
+				height: frame.height || texture ? texture.height : 0
 			}
 
 			// если не передана ширина, устанавливаем значение из фрейма

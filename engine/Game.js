@@ -11,9 +11,51 @@
 			this.loader = new GameEngine.Loader() // объект загрузчика
 			this.scenesCollection = new GameEngine.Container() // коллекция (массив) сцен - объект контейнера
 			this.keyboard = new GameEngine.Keyboard() // объект клавиатуры
+
 			this.currentScene = null // текущая активная сцена
 			this.status = 'waiting' // статус игры по умолчанию
 
+			this.loadGame(args)
+			// this.loadFinalGame(args)
+		}
+
+		// геттер для получения сцен из контейнера
+		get scenes () {
+			return this.scenesCollection.displayObjects
+		}
+
+		loadFinalGame (args) {
+			if (args.scenes) {
+				this.addScene(...args.scenes)
+			}
+
+			if (args.el && args.el.appendChild) {
+				args.el.appendChild(this.renderer.canvas)
+			}
+
+			const autoStartedScenes = this.scenes.filter(x => x.autoStart)
+
+			for (const scene of autoStartedScenes) {
+				scene.status = 'loading'
+				scene.loading(this.loader)
+			}
+
+			this.loader.load(() => {
+				for (const scene of autoStartedScenes) {
+					scene.status = 'init'
+					scene.init()
+				}
+
+				for (const scene of autoStartedScenes) {
+					scene.status = 'started'
+				}
+			})
+
+			requestAnimationFrame(timestamp => this.tick(timestamp))
+		}
+
+		// загружает игру
+		loadGame (args) {
 			console.log('game ' + this.status)
 			this.status = 'config loading' // меняем статус
 			console.log('game ' + this.status)
@@ -49,14 +91,9 @@
 
 				// вызываем метод загрузки ресурсов
 				this.startScene(...autoStartedScenes) // загружаем ресурсы из очереди контейнера и инициализируем сцену
-				
+
 				requestAnimationFrame(timestamp => this.tick(timestamp)) // метод отрисовки фреймов (обновляется 60р в сек)
 			})
-		}
-
-		// геттер для получения сцен из контейнера
-		get scenes () {
-			return this.scenesCollection.displayObjects
 		}
 
 		// добавляет переданную коллекцию сцен в контейнер

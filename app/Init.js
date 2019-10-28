@@ -14,9 +14,9 @@
 			this.projectNamespace = args.namespace || null // основное пространство имен проекта
 
 			// глобальное пространство имен
-			Namespace.init = this.projectNamespace ? `${this.projectName}.${this.projectNamespace}` : this.projectName
+			// Namespace.init = this.projectNamespace ? `${this.projectName}.${this.projectNamespace}` : this.projectName
 			// this.namespace = new Namespace()
-			this.namespace = Namespace.instance // регистрируем пространство имен BattleCityGame.GameEngine в объекте window
+			this.namespace = namespace // регистрируем пространство имен BattleCityGame.GameEngine в объекте window
 
 			this.project = window[`${this.projectName}`] // объект проекта приложения
 			this.core = this.project[`${this.projectNamespace}`] // объект ядра приложения
@@ -70,5 +70,6 @@
 		}
 	}
 
-	return new Init(projectSettings)
+	// регистрируем объект init в глобальном пространстве имен 'BattleCityGame.Init'
+	return namespace.set(new Init(projectSettings), 'Init', true)
 })();

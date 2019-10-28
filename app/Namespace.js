@@ -1,4 +1,4 @@
-;const Namespace = (function () {
+;const namespace = (function () {
 	'use strict'
 
 	let singleton = Symbol()
@@ -8,17 +8,16 @@
 	// Если не хотите привязываться к какому-то фреймворку, для реализации пространства имен можно написать нечто вроде этого
 
 	class Namespace /*extends Singleton*/ {
-		static init
 
-		constructor (object_value = new Object(), object_namespace = '') {
+		constructor (object_value = Symbol()) {
 			// super(singletonEnforcer) // наследуем конструктор родителя
 			if (object_value !== singletonEnforcer) {
 				try { throw "Instantiation failed: use Singleton.instance instead of new." }
 				catch (err) { console.error(err, this) }
 			}
 			// код конструктора
-			this.init = this.init || Namespace.init
-			this.set(object_value, object_namespace)
+			this.project = null
+			this.core = null
 		}
 		
 		static get instance() {
@@ -33,12 +32,26 @@
 			try { throw "Can't change constant property!" }
 			catch (err) { console.error(err) }
 		}
+
+		static init (config) {
+			this.instance.project = config.name
+			this.instance.core = config.name + '.' + config.namespace
+			console.log(this.instance)
+			this.instance.set()
+			return this.instance
+		}
 		
-		set (object_value = new Object(), object_namespace = '') {
+		set (object_value = new Object(), object_namespace = '', nonCore = false) {
 			// object_value - значение для конечного свойства пространства имен (SomeBigSubnamespace)
 			// object_name - имя пространства имен ('SomeCompany.SomeBigNamespace.SomeBigSubnamespace')
+			// nonCore - регистрируемое глобальное пространство имен (object_name) не является ядром приложения
 
-			let object_name = this.init // 'BattleCityGame.GameEngine'
+			// если object_namespace - не ядро приложения, глобальным пространством имен считаем project ('BattleCityGame')
+			// иначе - core ('BattleCityGame.GameEngine')
+			let object_name = nonCore ? this.project : this.core // 'BattleCityGame.GameEngine' || 'BattleCityGame'
+
+			// если глобальное пространство имен задано строкой, добавляем его
+			object_name = typeof nonCore === 'string' ? object_name + '.' + nonCore : object_name
 
 			// если передано значение для подпространства имен объекта (класса), добавляем его имя к имени пространства имен
 			// object_name = Game | 'BattleCityGame.GameEngine' => 'BattleCityGame.GameEngine.Game'
@@ -70,10 +83,12 @@
 
 				parent = parent[object] // перезаписываем в родителя текущий объект (window => 'SomeCompany')
 			}
+
+			return parent
 		}
 	}
 
-	return Namespace
+	return Namespace.init(projectSettings)
 
 	// После выполнения данных строк, в любом месте js-файлов можно писать
 	// new Namespace('SomeCompany.SomeBigNamespace.SomeBigSubnamespace', object_value);

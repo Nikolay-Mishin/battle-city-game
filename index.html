@@ -1,105 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Battle city</title>
-	<!-- фавиконка -->
-	<link rel="icon" type="image/png" sizes="192x192" href="./static/favicon/favicon-192.png">
-	<!-- Стили -->
-	<link rel="stylesheet" href="./app/css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Battle city</title>
 </head>
-
 <body>
-	<!-- контент приложения (игра) -->
-	<div id="game"></div>
-
-	<!-- прелоадер для скрытия контента при ожидании ответа от сервера (ajax-запрос) -->
-	<div class="preloader">
-		<div class="content">
-			<img src="static/preloader/ring.svg" alt="preloader">
-		</div>
-	</div>
-
-	<!-- библиотеки -->
-	<script src="app/libs/jquery-3.3.1.min.js"></script>
-	<!-- // библиотеки -->
-
-	<!-- скрипт конфигурации проекта (установка пространства имени Приложения (Имя Проекта) и констант проекта) -->
-	<script src="config/config.js"></script>
-
-	<!-- пользовательские скрипты -->
-	<script src="app/base/Singleton.js"></script>
-	<!-- скрипт для установки пространств имен -->
-	<script src="app/Namespace.js"></script>
-
-	<!-- скрипт инициализации -->
-	<script src="app/Waiter.js"></script>
-	<script src="app/Init.js"></script>
-
-	<!-- скрипт для инициализации глобальных переменных, основных объектов и классов -->
-	<script src="config/global.js"></script>
-
-	<!-- подключаем самостоятельные классы -->
-	<script src="engine/Game.js"></script>
-	<script src="engine/Loader.js"></script>
-	<script src="engine/Renderer.js"></script>
-	<script src="engine/EventEmitter.js"></script>
-	<script src="engine/DisplayObject.js"></script>
-	<script src="engine/Keyboard.js"></script>
-	<script src="engine/Mouse.js"></script>
-
-	<!-- подключаем наследуемые классы -->
-	<script src="engine/Container.js"></script>
-		<script src="engine/Scene.js"></script>
-	<script src="engine/Sprite.js"></script>
-		<script src="engine/Body.js"></script>
-			<script src="engine/controller/Controller.js"></script>
-				<script src="engine/controller/MainController.js"></script>
-				<script src="engine/controller/BunnyController.js"></script>
-	<script src="engine/Point.js"></script>
-	<script src="engine/Line.js"></script>
-
-	<script src="engine/Util.js"></script>
-	<script src="engine/ArcadePhysics.js"></script>
-	<script src="game/Man.js"></script>
-	<script src="game/Tank.js"></script>
-	<script src="game/Bullet.js"></script>
-	<script src="game/Intro.js"></script>
-	<script src="game/Party.js"></script>
-	<script src="game/Topology.js"></script>
-	<script src="game/EnemyTank.js"></script>
-
-	<!--
-	<script src="engine/EventEmitter.js"></script>
-	<script src="engine/DisplayObject.js"></script>
-	<script src="engine/Container.js"></script>
-	<script src="engine/Loader.js"></script>
-	<script src="engine/Renderer.js"></script>
-	<script src="engine/Sprite.js"></script>
-	<script src="engine/Scene.js"></script>
-	<script src="engine/Mouse.js"></script>
-	<script src="engine/Keyboard.js"></script>
-	<script src="engine/Point.js"></script>
-	<script src="engine/Line.js"></script>
-	<script src="engine/Body.js"></script>
-	<script src="engine/Game.js"></script>
-	<script src="engine/Util.js"></script>
-	<script src="engine/ArcadePhysics.js"></script>
-	<script src="game/Man.js"></script>
-	<script src="game/Tank.js"></script>
-	<script src="game/Bullet.js"></script>
-	<script src="game/Intro.js"></script>
-	<script src="game/Party.js"></script>
-	<script src="game/Topology.js"></script>
-	<script src="game/EnemyTank.js"></script>
-	-->
-
-	<!-- главный скрипт с основной логикой и функционалом приложения -->
-	<script src="config/variables.js"></script>
-	<script src="game/index.js"></script>
-	<!--<script src="game/game.js"></script>-->
-	<!-- // пользовательские скрипты -->
+    <script src="/dist/app.js"></script>
+    <!-- <script src="game/Man.js"></script>
+    <script src="game/Tank.js"></script>
+    <script src="game/Bullet.js"></script>
+    <script src="game/Intro.js"></script>
+    <script src="game/Party.js"></script>
+    <script src="game/Topology.js"></script>
+    <script src="game/EnemyTank.js"></script>
+    <script src="game/index.js"></script> -->
 </body>
 </html>

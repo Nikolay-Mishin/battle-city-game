@@ -1,17 +1,14 @@
-'use strict'
+import { Body, Game, Scene, ArcadePhysics, Util, Sprite } from '../engine'
+import Intro from './Intro'
+import Party from './Party'
 
-console.log('=> "game/index.js"')
-console.log(GameEngine)
-
-const DEBUG_MODE = false
-
-const game = new Game({
-	el: document.body,
-	width: 650,
-	height: 650,
-	background: 'black',
-	scenes: [
-		new Intro({ autoStart: false }),
-		new Party({ autoStart: true })
-	]
+export default new Game({
+    el: document.body,
+    width: 650,
+    height: 650,
+    background: 'black',
+    scenes: [
+        new Intro({ autoStart: false }),
+        new Party({ autoStart: true })
+    ]
 })

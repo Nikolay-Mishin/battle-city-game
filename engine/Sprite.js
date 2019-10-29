@@ -1,160 +1,144 @@
-;(function () {
-	'use strict'
+import DisplayObject from './DisplayObject'
+import Util from './Util'
 
-	// занимается непосредственно отрисовкой графики (только отрисовкой отдельного конкретного изображения)
-	// отвечает за отрисовку отдельного изображения (или его участка)
+export default class Sprite extends DisplayObject {
+    constructor (texture, args = {}) {
+        super(args)
+        
+        const frame = args.frame || {}
+        const velocity = args.velocity || {}
 
-	class Sprite extends GameEngine.DisplayObject {
-		constructor (texture, args = {}) {
-			super(args) // метод super вызывает родительский конструктор (доступ к родителю идет через super - super.funA())
+        this.texture = texture
+        this.keysDefault = args.keysDefault || []
 
-			const frame = args.frame || {} // участок изображения, который требуется отрисовать (по умолчанию весь спрайт)
-			const velocity = args.velocity || {}
+        this.frames = []
+        this.frameNumber = 0
+        this.frameDelay = 0
 
-			this.texture = texture // переданное изображение (спрайт)
-			this.keysDefault = args.keysDefault || []
+        this.animations = {}
+        this.animation = ''
+        this.animationPaused = false
 
-			this.frames = []
-			this.frameNumber = 0
-			this.frameDelay = 0
+        this.velocity = {
+            x: velocity.x || 0,
+            y: velocity.y || 0
+        }
 
-			this.animations = {}
-			this.animation = ''
-			this.animationPaused = false
+        this.frame = {
+            x: frame.x || 0,
+            y: frame.y || 0,
+            width: frame.width || texture ? texture.width : 0,
+            height: frame.height || texture ? texture.height : 0
+        }
 
-			this.velocity = {
-				x: velocity.x || 0,
-				y: velocity.y || 0
-			}
+        if (args.width === undefined) {
+            this.width = this.frame.width
+        }
 
-			// определяем параметры фрейма
-			this.frame = {
-				// координаты точки начала отрисовываемого участка
-				x: frame.x || 0,
-				y: frame.y || 0,
-				// ширина и высота отрисовываемой области
-				width: frame.width || texture ? texture.width : 0,
-				height: frame.height || texture ? texture.height : 0
-			}
+        if (args.height === undefined) {
+            this.height = this.frame.height
+        }
+    }
 
-			// если не передана ширина, устанавливаем значение из фрейма
-			if (args.width === undefined) {
-				this.width = this.frame.width
-			}
+    setFramesCollection (framesCollection) {
+        this.frames = framesCollection
+    }
 
-			// если не передана высота, устанавливаем значение из фрейма
-			if (args.height === undefined) {
-				this.height = this.frame.height
-			}
-		}
+    setAnimationsCollection (animationsCollection) {
+        this.animations = animationsCollection
+    }
 
-		setFramesCollection(framesCollection) {
-			this.frames = framesCollection
-		}
+    startAnimation (name) {
+        if (!this.animations.hasOwnProperty(name)) {
+            return false
+        }
 
-		setAnimationsCollection(animationsCollection) {
-			this.animations = animationsCollection
-		}
+        const { duration = Infinity, keys } = this.animations[name]
 
-		startAnimation(name) {
-			if (!this.animations.hasOwnProperty(name)) {
-				return false
-			}
+        this.animation = name
+        this.frameDelay = duration / keys.length
+        this.setFrameByKeys(...keys[0])
+    }
 
-			const { duration = Infinity, keys } = this.animations[name]
+    pauseAnimation () {
+        this.animationPaused = true
+    }
+    
+    resumeAnimation () {
+        this.animationPaused = false
+    }
 
-			this.animation = name
-			this.frameDelay = duration / keys.length
-			this.setFrameByKeys(...keys[0])
-		}
+    setFrameByKeys (...keys) {
+        const frame = this.getFrameByKeys(...keys, ...this.keysDefault)
 
-		pauseAnimation() {
-			this.animationPaused = true
-		}
+        if (!frame) {
+            return false
+        }
 
-		resumeAnimation() {
-			this.animationPaused = false
-		}
+        this.frame.x = frame.x
+        this.frame.y = frame.y
+        this.frame.width = frame.width
+        this.frame.height = frame.height
 
-		setFrameByKeys(...keys) {
-			const frame = this.getFrameByKeys(...keys, ...this.keysDefault)
+        this.width = this.frame.width
+        this.height = this.frame.height
+    }
 
-			if (!frame) {
-				return false
-			}
+    getFrameByKeys (...keys) {
+        let flag = false
 
-			this.frame.x = frame.x
-			this.frame.y = frame.y
-			this.frame.width = frame.width
-			this.frame.height = frame.height
+        for (const frame of this.frames) {
+            flag = true
 
-			this.width = this.frame.width
-			this.height = this.frame.height
-		}
+            for (const key of keys) {
+                if (!frame.keys.includes(key)) {
+                    flag = false
+                    break
+                }
+            }
 
-		getFrameByKeys(...keys) {
-			let flag = false
+            if (flag) {
+                return frame
+            }
+        }
+    }
 
-			for (const frame of this.frames) {
-				flag = true
+    tick (timestamp) {
+        if (!this.animationPaused && this.animation && Util.delay(this.animation + this.uid, this.frameDelay)) {
+            const { keys } = this.animations[this.animation]
 
-				for (const key of keys) {
-					if (!frame.keys.includes(key)) {
-						flag = false
-						break
-					}
-				}
+            this.frameNumber = (this.frameNumber + 1) % keys.length
+            this.setFrameByKeys(...keys[this.frameNumber])
 
-				if (flag) {
-					return frame
-				}
-			}
-		}
+            this.emit('frameChange', this)
+        }
 
-		tick(timestamp) {
-			if (!this.animationPaused && this.animation && GameEngine.Util.delay(this.animation + this.uid, this.frameDelay)) {
-				const { keys } = this.animations[this.animation]
+        this.x += this.velocity.x
+        this.y += this.velocity.y
+    }
 
-				this.frameNumber = (this.frameNumber + 1) % keys.length
-				this.setFrameByKeys(...keys[this.frameNumber])
+    draw (canvas, context) {
+        super.draw(() => {
+            context.save()
+            context.translate(this.x, this.y)
+            context.rotate(-this.rotation)
+            // context.scale(this.scaleX, this.scaleY)
 
-				this.emit('frameChange', this)
-			}
+            if (this.texture) {
+                context.drawImage(
+                    this.texture,
+                    this.frame.x,
+                    this.frame.y,
+                    this.frame.width,
+                    this.frame.height,
+                    this.absoluteX - this.x,
+                    this.absoluteY - this.y,
+                    this.width * this.scaleX,
+                    this.height * this.scaleY
+                )
+            }
 
-			this.x += this.velocity.x
-			this.y += this.velocity.y
-		}
-		
-		// отрисовывает спрайт на основе установленных свойств
-		draw (canvas, context) {
-			// вызываем родительский метод отрисовки и передаем callback-функцию
-			super.draw(() => {
-				context.save() // сохраняем текущее состояние контекста
-				context.translate(this.x, this.y) // переназначает начало системы координат
-				context.rotate(this.rotation) // поворачивает объект (по часовой стрелке)
-				// context.scale(this.scaleX, this.scaleY) // масштабирует объект
-
-				if (this.texture) {
-					// отрисовываем спрайт
-					context.drawImage(
-						this.texture,
-						this.frame.x,
-						this.frame.y,
-						// ширину и высоту не умножаем на масштаб, тк scale используется в момент отрисовки спрайта
-						this.frame.width,
-						this.frame.height,
-						// абсолютные координаты для отрисовки указывает без учета смещения (translate)
-						this.absoluteX - this.x,
-						this.absoluteY - this.y,
-						this.width * this.scaleX,
-						this.height * this.scaleY
-					)
-				}
-	
-				context.restore() // восстанавливаем контекст
-			})
-		}
-	}
-
-	namespace.set(Sprite) // регистрируем класс Sprite
-})();
+            context.restore()
+        })
+    }
+}

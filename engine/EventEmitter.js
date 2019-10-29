@@ -1,39 +1,33 @@
-;(function () {
-	'use strict'
+export default class EventEmitter {
+    constructor () {
+        this.handlers = {}
+    }
 
-	class EventEmitter {
-		constructor () {
-			this.handlers = {}
-		}
+    on (...args) {
+        this.addEventListener(...args)
+    }
 
-		on (...args) {
-			this.addEventListener(...args)
-		}
+    off (...args) {
+        this.removeEventListener(...args)
+    }
 
-		off (...args) {
-			this.removeEventListener(...args)
-		}
+    addEventListener (name, handler) {
+        if (!this.handlers.hasOwnProperty(name)) {
+            this.handlers[name] = []
+        }
 
-		addEventListener (name, handler) {
-			if (!this.handlers.hasOwnProperty(name)) {
-				this.handlers[name] = []
-			}
+        this.handlers[name].push(handler)
+    }
 
-			this.handlers[name].push(handler)
-		}
+    removeEventListener (name = null, handler = null) {}
 
-		removeEventListener (name = null, handler = null) {}
+    emit (name, ...args) {
+        if (!this.handlers.hasOwnProperty(name)) {
+            return
+        }
 
-		emit (name, ...args) {
-			if (!this.handlers.hasOwnProperty(name)) {
-				return
-			}
-
-			for (const handler of this.handlers[name]) {
-				handler(...args)
-			}
-		}
-	}
-	
-	namespace.set(EventEmitter) // регистрируем класс EventEmitter
-})();
+        for (const handler of this.handlers[name]) {
+            handler(...args)
+        }
+    }
+}

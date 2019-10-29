@@ -1,26 +1,18 @@
-;(function () {
-	'use strict'
+import DisplayObject from './DisplayObject'
 
-	// отвечает за отрисовку точки
+export default class Point extends DisplayObject {
+    constructor (args = {}) {
+        super(args)
 
-	class Point extends GameEngine.DisplayObject {
-		constructor (args = {}) {
-			super(args)
+        this.color = args.color || 'red'
+    }
 
-			this.color = args.color || 'red'
-		}
-
-		draw (canvas, context) {
-			// вызываем метод отрисовки родителя
-			super.draw(() => {
-				context.fillStyle = this.color // цвет точки
-				context.beginPath()
-				// координаты x,y - 
-				context.arc(this.x, this.y, 3, 0, Math.PI * 2) //параметры точки
-				context.fill() // отрисовываем точку
-			})
-		}
-	}
-	
-	namespace.set(Point) // регистрируем класс Point
-})();
+    draw (canvas, context) {
+        super.draw(() => {
+            context.fillStyle = this.color
+            context.beginPath()
+            context.arc(this.x, this.y, 3, 0, Math.PI * 2)
+            context.fill()
+        })
+    }
+}

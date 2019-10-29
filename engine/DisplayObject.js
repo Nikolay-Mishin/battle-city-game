@@ -1,120 +1,96 @@
-;(function () {
-	'use strict'
+import EventEmitter from './EventEmitter'
+import Util from './Util'
 
-	// Отвечает за отдельную сущность, которая будет отрисовываться (любой объект - спрайт, animationSprite, container...)
+export default class DisplayObject extends EventEmitter {
+    constructor (args = {}) {
+        super()
 
-	class DisplayObject extends GameEngine.EventEmitter {
-		constructor(args = {}) {
-			super()
+        this.uid = Util.generateUid()
 
-			this.uid = GameEngine.Util.generateUid()
+        this.x = args.x || 0
+        this.y = args.y || 0
 
-			// координаты точки отрисовки спрайта
-			this.x = args.x || 0
-			this.y = args.y || 0
+        this.width = args.width || 0
+        this.height = args.height || 0
 
-			// ширина и высота спрайта
-			this.width = args.width || 0
-			this.height = args.height || 0
+        this.rotation = args.rotation || 0
 
-			// повород объкута (в радианах)
-			this.rotation = args.rotation || 0
+        this.anchorX = args.anchorX || 0
+        this.anchorY = args.anchorY || 0
 
-			// якорь спрайта - точка для позиционирования спрайта относительно canvas - % отношение к размеру спрайта
-			this.anchorX = args.anchorX || 0
-			this.anchorY = args.anchorY || 0
+        this.scaleX = args.scaleX || 1
+        this.scaleY = args.scaleY || 1
 
-			// масштаб
-			this.scaleX = args.scaleX || 1
-			this.scaleY = args.scaleY || 1
+        this.parent = null
+        this.visible = true
 
-			this.parent = null // родитель объекта (ссылается на верхний по иерархии объект)
-			this.visible = true
+        if (args.scale !== undefined) {
+            this.setScale(args.scale)
+        }
+    }
 
-			// если передан масштаб, устанавливаем его
-			if (args.scale !== undefined) {
-				this.setScale(args.scale)
-			}
-		}
+    get scene () {
+        return Util.getScene(this)
+    }
 
-		// геттер и сеттер - псевдо свойства класса, которые могут выступать в роли метода
-		// обычно все геттеры и сеттеры идут сразу после конструктора
-		// get (геттер) - вычисляемое на лету свойство (при обращении к нему)
-		// set (сеттер) - используется, когда мы это значение задаем
+    get game () {
+        return this.scene.parent
+    }
 
-		get scene() {
-			return Util.getScene(this)
-		}
+    get absoluteX () {
+        return this.x - this.anchorX * this.width * this.scaleX
+    }
 
-		get game() {
-			return this.scene.parent
-		}
+    set absoluteX (value) {
+        this.x = value + this.anchorX * this.width * this.scaleX
+        return value
+    }
+    
+    get absoluteY () {
+        return this.y - this.anchorY * this.height * this.scaleY
+    }
+    
+    set absoluteY (value) {
+        this.y = value + this.anchorY * this.height * this.scaleY
+        return value
+    }
 
-		// absoluteX,Y - абсолютные координаты, относительно которых отрисовывается спрайт (с учетом координат якоря - anchor)
-		// при получении абсолютных координат не умножаем на масштаб, тк scale используется в момент отрисовки спрайта
+    get centerX () {
+        return this.absoluteX + this.width / 2 * this.scaleX
+    }
 
-		get absoluteX () {
-			return this.x - this.anchorX * this.width
-		}
+    set centerX (value) {
+        return this.absoluteX = value - this.width / 2
+    }
 
-		set absoluteX (value) {
-			this.x = value + this.anchorX * this.width
-			return value
-		}
-		
-		get absoluteY () {
-			return this.y - this.anchorY * this.height
-		}
-		
-		set absoluteY (value) {
-			this.y = value + this.anchorY * this.height
-			return value
-		}
+    get centerY () {
+        return this.absoluteY + this.height / 2 * this.scaleY
+    }
 
-		get centerX() {
-			return this.absoluteX + this.width / 2 * this.scaleX
-		}
+    set centerY (value) {
+        return this.absoluteY = value - this.height / 2
+    }
 
-		set centerX(value) {
-			return this.absoluteX = value - this.width / 2
-		}
+    setScale (scale) {
+        this.scaleX = scale
+        this.scaleY = scale
+    }
 
-		get centerY() {
-			return this.absoluteY + this.height / 2 * this.scaleY
-		}
+    setParent (parent) {
+        if (this.parent && this.parent.remove) {
+            this.parent.remove(this)
+        }
 
-		set centerY(value) {
-			return this.absoluteY = value - this.height / 2
-		}
+        if (parent && parent.add) {
+            parent.add(this)
+        }
+        
+        this.parent = parent
+    }
 
-		// устанавливает масштаб спрайта по X и Y
-		setScale (scale) {
-			this.scaleX = scale
-			this.scaleY = scale
-		}
-
-		// устанавливает родителя текущего объекта
-		setParent(parent) {
-			// если родитель уже присутствует, удаляем его
-			if (this.parent && this.parent.remove) {
-				this.parent.remove(this)
-			}
-
-			// если родитель, передан, добавляем его в контейнер и записываем в свойство
-			if (parent && parent.add) {
-				parent.add(this) // добавляем в родительский контейнер данный объект
-			}
-			
-			this.parent = parent // записываем родителя в свойство
-		}
-
-		draw (callback) {
-			// вызываем callback-функцию, если объект не скрыт
-			if (this.visible) {
-				callback()
-			}
-		}
-	}
-
-	namespace.set(DisplayObject) // регистрируем класс DisplayObject
-})();
+    draw (callback) {
+        if (this.visible) {
+            callback()
+        }
+    }
+}

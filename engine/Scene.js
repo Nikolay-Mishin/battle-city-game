@@ -1,71 +1,34 @@
-;(function () {
-	'use strict'
+import Container from './Container'
 
-	const sceneObjects = Symbol()
-	const sceneControllers = Symbol()
+export default class Scene extends Container {
+    constructor (args = {}) {
+        super()
 
-	// отдельные сцены игры (меню, уровень, результат боя)
-	// сцена - расширенный контейнер
+        this.autoStart = args.autoStart || false
+        this.name = args.name || ''
 
-	class Scene extends GameEngine.Container {
-		constructor (args = {}) {
-			super(args)
+        this.status = 'waiting'
+        this.stage = this.displayObjects
 
-			this.autoStart = args.autoStart || false // запускать сцену автоматически или нет
-			this.name = args.name || ''
+        if (args.loading) {
+            this.loading = args.loading.bind(this)
+        }
 
-			this.status = 'waiting' // статус сцены по умолчанию
-			this.stage = this.displayObjects // хранилище объектов? отображаемых на сцене (stage - алиас)
-			this.sceneObjects = {} // контейнер объектов сцены (this.bunny, this.tank...)
-			// this.game = null // ссылка на объект игры, к которой принадлежит сцена ()
+        if (args.init) {
+            this.init = args.init.bind(this)
+        }
 
-			// loading, update и init переопределяем на уровне конструктора
-			// bind(this) - копирует код функции и подменяет контекст(this - экземпляр данного класса)
-			// без bind this бы ссылался на объект args при определении параметров экземпляра класса
+        if (args.update) {
+            this.update = args.update.bind(this)
+        }
 
-			if (args.loading) {
-				this.loading = args.loading.bind(this)
-			}
+        if (args.beforeDestroy) {
+            this.beforeDestroy = args.beforeDestroy.bind(this)
+        }
+    }
 
-			if (args.init) {
-				this.init = args.init.bind(this)
-			}
-
-			if (args.update) {
-				this.update = args.update.bind(this)
-			}
-
-			if (args.beforeDestroy) {
-				this.beforeDestroy = args.beforeDestroy.bind(this)
-			}
-		}
-
-		// контейнер объектов сцены (this.wall, this.bunny, this.tank...)
-
-		get sceneObjects () {
-			return this[sceneObjects]
-		}
-
-		set sceneObjects (value) {
-			this[sceneObjects] = value
-		}
-
-		get sceneControllers() {
-			return this.stage.filter(x => x instanceof Controller)
-		}
-
-		loading () {} // метод загрузки ресурсов
-		init () {} // метод инициализации сцены - создает объекты загруженных ресурсов
-		update () {} // метод обновления состояния спрайта
-		beforeDestroy () { } // вызывается перед удалением сцены и удаляет все объекты, созданные сценой
-
-		// вызывает события контроллеров сцены (this.bunny, this.tank...)
-		eventControllers(timestamp) {
-			for (const controller of this.sceneControllers) {
-				controller.event(timestamp)
-			}
-		}
-	}
-
-	namespace.set(Scene) // регистрируем класс Scene
-})();
+    loading () {}
+    init () {}
+    update () {}
+    beforeDestroy () {}
+}

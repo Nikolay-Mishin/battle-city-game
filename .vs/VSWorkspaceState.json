@@ -1,13 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\app",
-    "\\config",
-    "\\engine",
-    "\\engine\\controller",
-    "\\game",
-    "\\test"
+    "\\dist",
+    "\\game"
   ],
-  "SelectedNode": "\\app\\Namespace.js",
+  "SelectedNode": "\\README.md",
   "PreviewInSolutionExplorer": false
 }
